@@ -9,10 +9,11 @@ package cafepos;
  */
 public class Order {
     String OrderNum;
-    Item itemList[];
-    int iQty;
-    char type;
+    ItemOrder itemList[];
+    char OrderType;
     int tableNo;
-    String staffIncharge;
+    float totalPrice;
+    Member member;
+    Staff staffIncharge;
     
 }
