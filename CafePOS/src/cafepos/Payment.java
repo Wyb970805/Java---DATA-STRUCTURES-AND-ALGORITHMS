@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author OEM
+ * @author Tong Chein Leng
  */
 public class Payment {
     
