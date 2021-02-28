@@ -13,7 +13,7 @@ package ADT;
 public interface QueueInterface<E> {
     
     boolean addToQueue(E e); //add new element into queue; return true if added successful
-    E removeFQuque(E e);    //delete specific element;
+    E removeFQueue();    //delete last element;
     boolean isEmpty();  // identify whether the queue is empty; return true if the queue is empty
     E getFirst();   // to get first element in queue; return first element if queue is not empty
 }

@@ -27,22 +27,34 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
     }
     
     public boolean addToQueue(E e){
-        if(lastIndex != line.length - 1){
-            lastIndex=(lastIndex++)%line.length;
+        if((lastIndex+2)%line.length!=firstIndex){
+            lastIndex=(lastIndex+1)%line.length;
+            line[lastIndex]=e;
+            return true;
+        }
+        else if((lastIndex+2)%line.length==firstIndex){
+            resize();
+            lastIndex=(lastIndex+1)%line.length;
             line[lastIndex]=e;
             return true;
         }
         else
             return false;
+            
         
     }
-    public E removeFQuque(E e){
-        E queue = null;
+    public E removeFQueue(){
+        E first = null;
         
-        return queue;
+        if(!isEmpty()){
+            first=line[firstIndex];
+            line[firstIndex]=null;
+            firstIndex=(firstIndex+1)%line.length;
+        }
+        return first;
     }
     public boolean isEmpty(){
-        if(((lastIndex + 1) % line.length)==firstIndex)
+        if((lastIndex+1)%line.length==firstIndex)
             return true;
         else
             return false;
@@ -51,8 +63,22 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
         E first = null;
         
         if(isEmpty()!=true){
-           first = line[firstIndex]; return first;
+           first = line[firstIndex]; 
+           
         }
-        return first;
+            return first;
+    }
+    
+    public void resize(){
+        E[] temp = line;
+        int length = line.length;
+        line = (E[]) new Object[length*2+1];
+        
+        for(int i=0; i<length; i++){
+            line[i]=temp[(i+firstIndex)%length];
+        }
+        
+        firstIndex =0;
+        lastIndex = length;
     }
 }
