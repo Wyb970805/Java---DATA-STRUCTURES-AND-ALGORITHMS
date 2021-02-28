@@ -12,8 +12,8 @@ package ADT;
  */
 public class CircularLineQueue<E> implements QueueInterface<E>{
     private E[] line; // circular queue of queue entries and leave one unused location
-    private int frontIndex;
-    private int backIndex;
+    private int firstIndex;
+    private int lastIndex;
     private static final int DEFAULT_CAPACITY = 10;
     
     public CircularLineQueue(){
@@ -22,13 +22,19 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
     
     public CircularLineQueue(int initialCapacity) {
     line = (E[]) new Object[initialCapacity + 1];
-    frontIndex = 0;
-    backIndex = initialCapacity;
+    firstIndex = 0;
+    lastIndex = initialCapacity;
     }
     
     public boolean addToQueue(E e){
+        if(lastIndex != line.length - 1){
+            lastIndex=(lastIndex++)%line.length;
+            line[lastIndex]=e;
+            return true;
+        }
+        else
+            return false;
         
-        return true;
     }
     public E removeFQuque(E e){
         E queue = null;
@@ -36,12 +42,17 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
         return queue;
     }
     public boolean isEmpty(){
-        
-        return true;
+        if(((lastIndex + 1) % line.length)==firstIndex)
+            return true;
+        else
+            return false;
     }
     public E getFirst(){
         E first = null;
         
+        if(isEmpty()!=true){
+           first = line[firstIndex]; return first;
+        }
         return first;
     }
 }
