@@ -3,14 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cafepos;
+package Entity;
 
 /**
  *
  * @author Wen
  */
 public class ItemOrder {
-    Item itemOrder;
-    int itemQty;
-    float subTotal;
+    private Item itemOrder;
+    private int itemQty;
+    private float subTotal;
+    
+    public void addItemOrder(){
+        this.itemOrder = itemOrder;
+        this.subTotal = 0;
+        this.itemQty = itemQty;
+    }
 }
+
