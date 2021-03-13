@@ -8,31 +8,43 @@ package Entity;
  * @author Wen
  */
 public class Order {
-    private String orderNum;
-    private ItemOrder itemList[];
-    private char orderType;
-    private int tableNo;
-    private float totalPrice;
-    private Member member;
-    private Staff staffIncharge;
+    private int orderNum;        // 1001
+    private ItemOrder itemList[];   //
+    private char orderType;         // T - take away, D - Dine in
+    private int tableNo;            // 01-15
+    private float totalPrice;       // 0.0
+    //private Member member;          // mid
+    //private Staff staffIncharge;    // sid
     
-    public void createOrder(){
+    public Order(int orderNum, char orderType, int tableNo/*, Member mid,Staff sid*/){
         this.orderNum = orderNum;
         ItemOrder itemList = new ItemOrder();
         this.orderType = orderType;
         this.tableNo = tableNo;
-        this.totalPrice = 0;
-        this.member = member;
-        this.staffIncharge = staffIncharge;
+        this.totalPrice = (float) 0.0;
+        //this.member = member;
+        //this.staffIncharge = staffIncharge;
     }
     
+    public boolean createOrder(){
+        this.orderNum = orderNum;
+        ItemOrder itemList = new ItemOrder();
+        this.orderType = orderType;
+        this.tableNo = tableNo;
+        this.totalPrice = (float) 0.0;
+        //this.member = member;
+        //this.staffIncharge = staffIncharge;
+        return true;
+    }
+        
     public Order getOrder(){
         return this;
     }
     
     public String toString(){
-        return "Order Number: " + orderNum+ "Item Order: " + itemList 
-                + "Table No.: " + tableNo + "Total: " + totalPrice 
-                + "Membership: " + member + "Staff Incharge: " + staffIncharge;
+        return "Order Number: " + orderNum + "\nItem Order: " + itemList 
+                + "\nOrder Type: " + orderType +"\nTable No.: " + tableNo + "\nTotal: " + totalPrice 
+                /*+ "Membership: " + member + "Staff Incharge: " + staffIncharge*/;
     }
+        
 }

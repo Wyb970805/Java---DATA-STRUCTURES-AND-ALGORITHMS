@@ -5,6 +5,10 @@
  */
 package cafepos;
 
+import Entity.*;
+import ADT.*;
+import java.util.Scanner;
+
 /**
  *
  * @author Wen
@@ -16,6 +20,16 @@ public class CafePOS {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        OrderModule ordering = new OrderModule();
+        ordering.placeOrder();
+        
+        
+        
+        
+        
+        
+        
     }
     
 }

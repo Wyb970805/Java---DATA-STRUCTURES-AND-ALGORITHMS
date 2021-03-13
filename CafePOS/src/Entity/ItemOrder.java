@@ -10,14 +10,28 @@ package Entity;
  * @author Wen
  */
 public class ItemOrder {
-    private Item itemOrder;
+   // private Item itemOrder;
     private int itemQty;
     private float subTotal;
     
-    public void addItemOrder(){
-        this.itemOrder = itemOrder;
+    public ItemOrder(){
+        
+    }
+    
+    public ItemOrder(/*Item itemOrder,*/ int qty){
+       // this.itemOrder = itemOrder;
         this.subTotal = 0;
         this.itemQty = itemQty;
     }
+    public void addItemOrder(){
+       // this.itemOrder = itemOrder;
+        this.subTotal = 0;
+        this.itemQty = itemQty;
+    }
+    
+    public ItemOrder getItemOrder(){
+        return this;
+    }
 }
 
+// for loop to return each item.

@@ -12,8 +12,7 @@ package ADT;
  */
 public class CircularLineQueue<E> implements QueueInterface<E>{
     private E[] line; // circular queue of queue entries and leave one unused location
-    private int firstIndex;
-    private int lastIndex;
+    private int firstIndex, lastIndex, counter;
     private static final int DEFAULT_CAPACITY = 10;
     
     public CircularLineQueue(){
@@ -22,20 +21,23 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
     
     public CircularLineQueue(int initialCapacity) {
     line = (E[]) new Object[initialCapacity + 1];
-    firstIndex = 0;
+    firstIndex = counter = 0;
     lastIndex = initialCapacity;
+    
     }
     
     public boolean addToQueue(E e){
-        if((lastIndex+2)%line.length!=firstIndex){
+        if(counter!=line.length){
             lastIndex=(lastIndex+1)%line.length;
             line[lastIndex]=e;
+            counter+=1;
             return true;
         }
-        else if((lastIndex+2)%line.length==firstIndex){
+        else if(counter==line.length-1){
             resize();
             lastIndex=(lastIndex+1)%line.length;
             line[lastIndex]=e;
+            counter+=1;
             return true;
         }
         else
@@ -50,6 +52,7 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
             first=line[firstIndex];
             line[firstIndex]=null;
             firstIndex=(firstIndex+1)%line.length;
+            counter--;
         }
         return first;
     }
@@ -81,4 +84,42 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
         firstIndex =0;
         lastIndex = length;
     }
+    
+    
+   /*   public String toString()
+  {
+    String result = "";
+    int scan = 0;
+ 
+    while(scan < count)
+    {
+     if(line[scan]!=null)
+     {
+       result += queue[scan].toString()+"\n";
+     }
+    scan++;
+    }
+
+    return result;
+
+  }*/
+    public String toString(){
+        String str = "";
+        if(!isEmpty()){
+            if(lastIndex>firstIndex){
+                for(int i=0;i<lastIndex-firstIndex+1; i++)
+                    str += line[i] + "\n";
+            }
+            else{
+                for (int i=0; i<(lastIndex+firstIndex)+1; i++){      //+iterator
+                    str += line[i] + "\n";
+            }
+        }
+        }else{
+            str = "No order at all.";
+        }
+        
+        return str;
+    }
+
 }

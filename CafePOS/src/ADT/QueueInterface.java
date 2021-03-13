@@ -16,4 +16,5 @@ public interface QueueInterface<E> {
     E removeFQueue();    //delete last element;
     boolean isEmpty();  // identify whether the queue is empty; return true if the queue is empty
     E getFirst();   // to get first element in queue; return first element if queue is not empty
+    String toString();
 }
