@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
  */
 public class Payment {
     
-    String paymentID;
-    float paymentAmount;
-    String paymentMethod;
-    LocalDateTime paid;    //https://www.w3schools.com/java/java_date.asp
-    String paymentType;
-    Order orderList[];
+    private String paymentID;
+    private float paymentAmount;
+    private String paymentMethod;
+    private LocalDateTime paid;    //https://www.w3schools.com/java/java_date.asp
+    private String paymentType;
+    private Order orderList[];
 }
