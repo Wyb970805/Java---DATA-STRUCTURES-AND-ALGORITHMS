@@ -11,32 +11,34 @@ package ADT;
  * @param <E>
  */
 public class CircularLineQueue<E> implements QueueInterface<E>{
-    private E[] line; // circular queue of queue entries and leave one unused location
+    private E[] line; // circular queue of counter to identify the number of element.
     private int firstIndex, lastIndex, counter;
-    private static final int DEFAULT_CAPACITY = 10;
+    private static final int DEFAULT_CAPACITY = 2;
     
     public CircularLineQueue(){
         this(DEFAULT_CAPACITY);
     }
     
     public CircularLineQueue(int initialCapacity) {
-    line = (E[]) new Object[initialCapacity + 1];
-    firstIndex = counter = 0;
-    lastIndex = initialCapacity;
+    line = (E[]) new Object[initialCapacity];
+    firstIndex = lastIndex = counter = 0;
+    //lastIndex = initialCapacity;
     
     }
     
     public boolean addToQueue(E e){
         if(counter!=line.length){
-            lastIndex=(lastIndex+1)%line.length;
+            
             line[lastIndex]=e;
+            lastIndex = (lastIndex+1)%line.length;
             counter+=1;
             return true;
         }
-        else if(counter==line.length-1){
+        else if(counter==line.length){
             resize();
-            lastIndex=(lastIndex+1)%line.length;
+            
             line[lastIndex]=e;
+            lastIndex = (lastIndex+1)%line.length;
             counter+=1;
             return true;
         }
@@ -57,7 +59,9 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
         return first;
     }
     public boolean isEmpty(){
-        if((lastIndex+1)%line.length==firstIndex)
+        
+      //  if((lastIndex+1)%line.length==firstIndex)
+        if(counter == 0)
             return true;
         else
             return false;
@@ -75,46 +79,21 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
     public void resize(){
         E[] temp = line;
         int length = line.length;
-        line = (E[]) new Object[length*2+1];
+        line = (E[]) new Object[length*2];
         
         for(int i=0; i<length; i++){
-            line[i]=temp[(i+firstIndex)%length];
+            line[i]=temp[(firstIndex+i)%length];
         }
         
-        firstIndex =0;
-        lastIndex = length;
+        firstIndex = 0;
+        lastIndex = counter;     ///maybehere
     }
     
-    
-   /*   public String toString()
-  {
-    String result = "";
-    int scan = 0;
- 
-    while(scan < count)
-    {
-     if(line[scan]!=null)
-     {
-       result += queue[scan].toString()+"\n";
-     }
-    scan++;
-    }
-
-    return result;
-
-  }*/
     public String toString(){
         String str = "";
         if(!isEmpty()){
-            if(lastIndex>firstIndex){
-                for(int i=0;i<lastIndex-firstIndex+1; i++)
-                    str += line[i] + "\n";
-            }
-            else{
-                for (int i=0; i<(lastIndex+firstIndex)+1; i++){      //+iterator
-                    str += line[i] + "\n";
-            }
-        }
+            for(int i=0; i<counter; i++)
+                str += line[firstIndex+i] + "\n";
         }else{
             str = "No order at all.";
         }

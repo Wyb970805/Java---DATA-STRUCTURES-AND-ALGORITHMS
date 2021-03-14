@@ -22,7 +22,8 @@ public class CafePOS {
         // TODO code application logic here
         
         OrderModule ordering = new OrderModule();
-        ordering.placeOrder();
+        ordering.orderMenu();
+        
         
         
         
