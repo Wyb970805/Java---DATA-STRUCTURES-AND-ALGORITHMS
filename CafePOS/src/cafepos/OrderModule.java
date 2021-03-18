@@ -61,32 +61,46 @@ public class OrderModule {
     }
     
     public void placeOrder(){
-        System.out.println("Welcome!!");
+        boolean error = false;
         System.out.println("New Order (Y/N)?");
         char order = sc.nextLine().charAt(0);
         while(order == 'Y' || order == 'y'){
-            orderNum++;
+            
         //    System.out.print("Member ID: ");
         //    String mid = sc.nextLine();
-            System.out.print("Dine in - D, Take Away - T : ");
+            do{
+            System.out.print("Dine in - D, Take Away - T (q to exit): ");
             char orderType = sc.nextLine().charAt(0);
-            
             orderType = Character.toUpperCase(orderType);
-            
-            if(orderType !='D' && orderType != 'T'){
-                System.out.println("Not to create order? Will go back to main menu.");
-                break;
-            }else{
-                if(orderType == 'D'){
+            if(orderType == 'D'){
                     System.out.print("Table Number: ");
                     tbNum = sc.nextInt();
                     sc.nextLine();
-                }else{
+                    orderNum++;
+                    System.out.println("Select item");
+                    System.out.println("=======================");
+                    ItemOrderModule orderList = new ItemOrderModule();
+                    boolean created = orderList.createOrderList();
+                    if(created == true){
+                        Order od = new Order(orderNum,orderType, tbNum);
+                        boolean added = orderLine.addToQueue(od);
+                        if(added == true){
+                            System.out.println("Order created.");
+                            System.out.println(od);
+                            System.out.println("==========" + orderLine);
+                        }else{
+                            System.out.println("ERROR! Order haven't created.");
+                        }
+                    }else{
+                        System.out.println("Error");
+                    }
+                    
+                
+                }else if(orderType == 'T'){
                     tbNum = 0;
                     System.out.println("This is a take away order.");
-                }
-                
-                Order od = new Order(orderNum,orderType, tbNum);
+                    orderNum++;
+                    Order od = new Order(orderNum,orderType, tbNum);
                 boolean added = orderLine.addToQueue(od);
                 if(added == true){
                     System.out.println("Order created.");
@@ -96,7 +110,15 @@ public class OrderModule {
                     System.out.println("ERROR! Order haven't created.");
                 }
                 
-            }
+                }else if(orderType == 'Q'){
+                    System.out.println("Ok. Will go back.");
+                    break;
+                }else{
+                    System.out.println("Please enter D or T. q to exit.");
+                    error = true;
+                }
+            }while(error == true);
+            
             
             
         
@@ -159,19 +181,94 @@ public class OrderModule {
                 sc.nextLine();
                 switch(choice){
                     case 1:
-                        
+                     //   editItem();
                         break;
                     case 2:
+                     //   editMember();
                         break;
                     case 3:
+                        editTableNum();
                         break;
                     case 4:
+                        editOrderType();
                         break;
                     default:
                         System.out.println("Only 1 - 4 are offered to change.");
                 }
                 
             }
+        }
+        
+        public void editTableNum(){
+            boolean error = false;
+            if(!orderLine.isEmpty()){
+                do{
+            Order first = orderLine.getFirst();
+            System.out.println("Current table number = " + first.getTbNum());
+            System.out.println("New table (0 to cancel): ");
+            int newTable = sc.nextInt();
+            sc.nextLine();
+            if(newTable >= 1 && newTable <= 20){
+                Order editedOrder = orderLine.getFirst();
+                editedOrder.setTableNum(newTable);
+                boolean result = orderLine.setFirst(editedOrder);
+                if(result == true){
+                System.out.println(orderLine.getFirst());
+                
+                }else{
+                    System.out.println("Changes has not apply.");
+                }
+                
+            }
+            else if(newTable==0){
+              break;  
+            }else{
+                System.out.println("Please enter table number between 01-20.");
+                error = true;
+            }
+            
+            }while(error==true);
+            }else{
+                System.out.println("No order in queue.");
+                
+            }
+            
+        }
+        
+        public void editOrderType(){
+            boolean error = false;
+            if(!orderLine.isEmpty()){
+                do{
+            Order first = orderLine.getFirst();
+            System.out.println("Current Order Type = " + first.getOrderType());
+            System.out.println("Change to Dine in (D) or Take away (T) (q to cancel): ");
+            char newOType = sc.nextLine().charAt(0);
+            newOType = Character.toUpperCase(newOType);
+            if(newOType == 'D' || newOType == 'T'){
+                Order editedOrder = orderLine.getFirst();
+                editedOrder.setOrderType(newOType);
+                boolean result = orderLine.setFirst(editedOrder);
+                if(result == true){
+                System.out.println(orderLine.getFirst());
+                }else{
+                    System.out.println("Changes has not apply.");
+                }
+            }
+            else if(newOType=='q'){
+              break;  
+            }else{
+                System.out.println("Please enter D for Dine in or T for Take Away.");
+                error = true;
+            }
+            
+            }while(error==true);
+            
+        }
+            else{
+                System.out.println("No order in queue.");
+                
+            }
+            //return changed;
         }
         
         

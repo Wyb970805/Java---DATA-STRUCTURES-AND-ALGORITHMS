@@ -5,6 +5,8 @@
  */
 package ADT;
 
+import Entity.Order;
+
 /**
  *
  * @author Wen
@@ -16,5 +18,7 @@ public interface QueueInterface<E> {
     E removeFQueue();    //delete last element;
     boolean isEmpty();  // identify whether the queue is empty; return true if the queue is empty
     E getFirst();   // to get first element in queue; return first element if queue is not empty
-    String toString();
+    boolean setFirst(E e); // to replace the first element; return true if replace successful;
+    String toString();  // display all element in adt
+    
 }

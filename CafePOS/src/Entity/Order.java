@@ -3,6 +3,8 @@
  */
 package Entity;
 
+import java.util.regex.Pattern;
+
 /**
  *
  * @author Wen
@@ -39,6 +41,26 @@ public class Order {
         
     public Order getOrder(){
         return this;
+    }
+    
+    //public String getmemberId(){
+        
+    //}
+    
+    public int getTbNum(){
+        return this.tableNo;
+    }
+    
+    public void setTableNum(int tbNum){
+        this.tableNo = tbNum;
+    }
+    
+    public char getOrderType(){
+        return this.orderType;
+    }
+    
+    public void setOrderType(char orderType){
+        this.orderType = orderType;
     }
     
     public String toString(){
