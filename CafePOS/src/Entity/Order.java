@@ -27,27 +27,24 @@ public class Order {
         //this.member = member;
         //this.staffIncharge = staffIncharge;
     }
-    
-    public boolean createOrder(){
-        this.orderNum = orderNum;
-        ItemOrder itemList = new ItemOrder();
-        this.orderType = orderType;
-        this.tableNo = tableNo;
-        this.totalPrice = (float) 0.0;
-        //this.member = member;
-        //this.staffIncharge = staffIncharge;
-        return true;
-    }
         
     public Order getOrder(){
         return this;
     }
     
-    //public String getmemberId(){
-        
-    //}
+    public int getOrderNum(){
+        return orderNum;
+    }
+
+    public ItemOrder[] getItemList() {
+        return itemList;
+    }
+
+    public float getTotalPrice() {        
+        return totalPrice;
+    }
     
-    public int getTbNum(){
+    public int getTbNum() {
         return this.tableNo;
     }
     
@@ -62,6 +59,24 @@ public class Order {
     public void setOrderType(char orderType){
         this.orderType = orderType;
     }
+
+    public void setOrderNum(int orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public void setItemList(ItemOrder[] itemList) {
+        this.itemList = itemList;
+    }
+
+    public void setTableNo(int tableNo) {
+        this.tableNo = tableNo;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+    
+    
     
     public String toString(){
         return "Order Number: " + orderNum + "\nItem Order: " + itemList 

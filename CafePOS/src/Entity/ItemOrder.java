@@ -32,6 +32,24 @@ public class ItemOrder {
     public ItemOrder getItemOrder(){
         return this;
     }
+
+    public int getItemQty() {
+        return itemQty;
+    }
+
+    public float getSubTotal() {
+        return subTotal;
+    }
+
+    public void setItemQty(int itemQty) {
+        this.itemQty = itemQty;
+    }
+
+    public void setSubTotal(float subTotal) {
+        this.subTotal = subTotal;
+    }
+    
+    
 }
 
 // for loop to return each item.
