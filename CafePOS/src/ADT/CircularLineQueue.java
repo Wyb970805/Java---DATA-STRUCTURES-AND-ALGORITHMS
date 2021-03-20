@@ -21,25 +21,25 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
     
     public CircularLineQueue(int initialCapacity) {
     line = (E[]) new Object[initialCapacity];
-    firstIndex = lastIndex = counter = 0;
-    //lastIndex = initialCapacity;
+    firstIndex = counter /*= lastIndex*/ = 0;
+    lastIndex = -1;
     
     }
     
     public boolean addToQueue(E e){
         if(counter!=line.length){
-            
-            line[lastIndex]=e;
             lastIndex = (lastIndex+1)%line.length;
-            counter+=1;
+            line[lastIndex]=e;
+            
+            ++counter;
             return true;
         }
         else if(counter==line.length){
             resize();
-            
-            line[lastIndex]=e;
             lastIndex = (lastIndex+1)%line.length;
-            counter+=1;
+            line[lastIndex]=e;
+            
+            ++counter;
             return true;
         }
         else
@@ -54,7 +54,7 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
             first=line[firstIndex];
             line[firstIndex]=null;
             firstIndex=(firstIndex+1)%line.length;
-            counter--;
+            --counter;
         }
         return first;
     }
@@ -94,19 +94,39 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
         }
         
         firstIndex = 0;
-        lastIndex = counter;     ///maybehere
+        lastIndex = counter-1;     ///maybehere
     }
-    
-    public String toString(){
+   
+    public String toString()
+  {
+    String result = "";
+    int scan = 0;
+ 
+    while(scan < counter)
+    {
+     if(line[scan]!=null)
+     {
+       result += line[scan].toString()+"\n";
+     }
+    scan++;
+    }
+    System.out.println("-----------------"+ getFirst());
+    return result;
+
+  }
+   /* public String toString(){
         String str = "";
         if(!isEmpty()){
-            for(int i=0; i<counter; i++)
-                str += line[firstIndex+i] + "\n";
+            
+            for(int i=0; i<counter && line[firstIndex+i] != null; ++i){
+                System.out.println(counter);
+                str += i + "." + line[firstIndex+i] + "\n";
+            }
         }else{
             str = "No order at all.";
         }
         
         return str;
-    }
+    }*/
 
 }

@@ -15,24 +15,42 @@ import java.util.Scanner;
 public class OrderModule {
     char exit = 'a';
         
-    int orderNum = 1000, tbNum = 0;
+    int orderNum = 1004, tbNum = 0;
     String orderList = null;
     Scanner sc = new Scanner(System.in);
     static QueueInterface<Order> orderLine = new CircularLineQueue<>();
     static QueueInterface<Order> completedOrder = new CircularLineQueue<>();
-        
+     
+    // initialize existed order
+    Order a = new Order(1001,'T',0 );
+    Order b = new Order(1002,'T',0 );
+    Order c = new Order(1003,'T',0 );
+    Order d = new Order(1004,'T',0 );
+    
+    
     public void orderMenu(){
+        orderLine.addToQueue(a);
+        orderLine.addToQueue(b);
+        orderLine.addToQueue(c);
+        orderLine.addToQueue(d);
+        
         int choice;
+        
         do{
-        System.out.println("Hi, welcome!");
-        System.out.println("Order");
-        System.out.println("==========");
-        System.out.println("1. Place Oredr");
+        //System.out.println("Hi, welcome!");
+        System.out.println("Order Module");
+        System.out.println("==============");
+        System.out.println("1. Place Order");
         System.out.println("2. Update Status");
         System.out.println("3. Edit Order");
         System.out.println("4. Remove Order");
         System.out.println("5. Show all order");
         System.out.println("0. Exit");
+        System.out.printf("Please enter the index (1-5): ");
+        while (!sc.hasNextInt()) {
+            System.out.println("That's not a number! \nPlease enter again: ");
+            sc.next(); // this is important!
+            }
         choice = sc.nextInt();
         sc.nextLine();
         switch(choice){
@@ -54,7 +72,7 @@ public class OrderModule {
             case 0:
                 break;
             default:
-                System.out.println("Error! Please select between 1 - 4!");
+                System.out.println("Error! Please select between 1 - 5!");
                         
         }
         }while(choice != 0 );
@@ -64,6 +82,10 @@ public class OrderModule {
         boolean error = false;
         System.out.println("New Order (Y/N)?");
         char order = sc.nextLine().charAt(0);
+        while (!Character.isLetter(order)) {
+            System.out.println("Please enter yes (Y) or no (n): ");
+            order = sc.nextLine().charAt(0);
+            }
         while(order == 'Y' || order == 'y'){
             
         //    System.out.print("Member ID: ");
@@ -77,12 +99,12 @@ public class OrderModule {
                     tbNum = sc.nextInt();
                     sc.nextLine();
                     orderNum++;
-                    System.out.println("Select item");
+               /*     System.out.println("Select item");
                     System.out.println("=======================");
                     ItemOrderModule orderList = new ItemOrderModule();
                     boolean created = orderList.createOrderList();
-                    if(created == true){
-                        Order od = new Order(orderNum,orderType, tbNum);
+                    if(created){
+                   */     Order od = new Order(orderNum,orderType, tbNum);
                         boolean added = orderLine.addToQueue(od);
                         if(added == true){
                             System.out.println("Order created.");
@@ -91,10 +113,10 @@ public class OrderModule {
                         }else{
                             System.out.println("ERROR! Order haven't created.");
                         }
-                    }else{
+                   /* }else{
                         System.out.println("Error");
                     }
-                    
+                    */
                 
                 }else if(orderType == 'T'){
                     tbNum = 0;
@@ -124,6 +146,10 @@ public class OrderModule {
         
         System.out.println("Next Order (Y/N)?");
         order = sc.nextLine().charAt(0);
+        while (!Character.isLetter(order)) {
+            System.out.println("Please enter yes (Y) or no (N): ");
+            order = sc.nextLine().charAt(0);
+            }
         }
         
         
@@ -136,12 +162,16 @@ public class OrderModule {
         
         public void removeOrder(){
             Order removed = null;
-            System.out.println("Are you sure you want to cancel the first order(Y/N)?");
+            System.out.println("Are you sure you want to cancel the first order in queue (Y/N)?");
             char confirm = sc.nextLine().charAt(0);
+            while (!Character.isLetter(confirm)) {
+            System.out.println("Please enter yes (Y) or no (N): ");
+            confirm = sc.nextLine().charAt(0);
+            }
             if(confirm == 'Y' || confirm == 'y'){
                 if(!orderLine.isEmpty()){
                 System.out.println(orderLine.getFirst());
-                System.out.println("Are you sure you want to cancel this order(Y/N)?");
+                System.out.println("Are you sure you want to cancel this order(Y - Yes /other to cancel)?");
                 char con = sc.nextLine().charAt(0);
                 if(con == 'Y' || con == 'y')
                 removed = orderLine.removeFQueue();
@@ -159,10 +189,10 @@ public class OrderModule {
         public void updateOrderStatus(){
             if(!orderLine.isEmpty()){
                 System.out.println("Update the Order to the completed status.");
-                Order completed = orderLine.getFirst();
+                Order completed = orderLine.removeFQueue();
                 System.out.println(completed);
                 completedOrder.addToQueue(completed);
-                orderLine.removeFQueue();
+                
                 System.out.println("Your order is completed.");
             }else{
                 System.out.println("There is no order in queue.");
@@ -274,15 +304,20 @@ public class OrderModule {
         
         
         public void showOrder(){
-            int choice;
+            int choice = 0;
             do{
             System.out.println("\n\n =========================");
             System.out.println("1. Show Order Queue");
             System.out.println("2. Show Completed Order");
             System.out.println("0. Back to preious");
             System.out.println("=========================");
+            while (!sc.hasNextInt()) {
+            System.out.println("That's not a number!\n Please enter again: ");
+            sc.next(); // this is important!
+            }
             choice = sc.nextInt();
             sc.nextLine();
+            
             switch(choice){
                 case 1:
                     showOrderQueue();
@@ -293,7 +328,7 @@ public class OrderModule {
                 case 0:
                     break;
                 default:
-                    System.out.println("Please select 1 pr 2, 0 to back.");
+                    System.out.println("Please select 1 or 2, 0 to back.");
             }
             }while(choice != 0);
         }
