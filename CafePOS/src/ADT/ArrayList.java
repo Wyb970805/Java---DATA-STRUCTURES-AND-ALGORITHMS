@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ADT;
 
 import java.io.Serializable;
@@ -11,7 +16,7 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
 
     private T[] listArray;
     private int length;
-    private static final int DEFAULT_CAPACITY = 50;
+    private static final int DEFAULT_CAPACITY = 5;
 
     //constructor
     public ArrayList() {
@@ -24,16 +29,9 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
     }
 
     public boolean add(T newEntry) {
-        //check first if newEntry already exist
-        for (int i = 0; i < length; i++) {
-            if (listArray[i].equals(newEntry)) {
-                return false;
-            }
-        }
-
         // check if the list(array) is full or not.
-        // if not full add newID
-        // if full, double the capacity then add new ID
+        // if not full add newEntry
+        // if full, double the capacity then add newEntry
         // Chapter 4 slide 25 - 27
         if (isArrayFull()) {
             doubleArray();
@@ -89,6 +87,8 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
         return isSuccessful;
     }
 
+    //Returns the elements at the specified position in this list
+    @Override
     public T getEntry(int givenPosition) {
         T result = null;
 
@@ -97,6 +97,27 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean contains(int givenIndex) {
+        boolean found = false;
+        for (int index = 0; index < length; index++) {
+            if (givenIndex == index) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    public boolean containsID(int givenID) {
+        boolean found = false;
+        for (int id = 1; id <= length; id++) {
+            if (givenID == id) {
+                found = true;
+            }
+        }
+        return found;
     }
 
     public boolean contains(T anEntry) {
