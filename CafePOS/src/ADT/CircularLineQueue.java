@@ -99,19 +99,18 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
    
     public String toString()
   {
-    String result = "";
+    String str = "";
     int scan = 0;
  
     while(scan < counter)
     {
      if(line[scan]!=null)
      {
-       result += line[scan].toString()+"\n";
+       str += line[scan].toString()+"\n";
      }
     scan++;
     }
-    System.out.println("-----------------"+ getFirst());
-    return result;
+    return str;
 
   }
    /* public String toString(){

@@ -38,8 +38,9 @@ public class OrderModule {
         
         do{
         //System.out.println("Hi, welcome!");
-        System.out.println("Order Module");
-        System.out.println("==============");
+        System.out.println("----------------------------");
+        System.out.println("-------=Order Module=-------");
+        System.out.println("----------------------------");
         System.out.println("1. Place Order");
         System.out.println("2. Update Status");
         System.out.println("3. Edit Order");
@@ -109,7 +110,8 @@ public class OrderModule {
                         if(added == true){
                             System.out.println("Order created.");
                             System.out.println(od);
-                            System.out.println("==========" + orderLine);
+                            System.out.println("----------------------------");
+                            System.out.println(orderLine);
                         }else{
                             System.out.println("ERROR! Order haven't created.");
                         }
@@ -127,7 +129,8 @@ public class OrderModule {
                 if(added == true){
                     System.out.println("Order created.");
                     System.out.println(od);
-                    System.out.println("==========" + orderLine);
+                    System.out.println("----------------------------");
+                    System.out.println(orderLine);
                 }else{
                     System.out.println("ERROR! Order haven't created.");
                 }
@@ -188,13 +191,16 @@ public class OrderModule {
         
         public void updateOrderStatus(){
             if(!orderLine.isEmpty()){
-                System.out.println("Update the Order to the completed status.");
+                System.out.println("\nUpdate the Order to the completed status.");
+                System.out.println("------------------------");
                 Order completed = orderLine.removeFQueue();
                 System.out.println(completed);
+                System.out.println("------------------------");
                 completedOrder.addToQueue(completed);
                 
                 System.out.println("Your order is completed.");
             }else{
+                System.out.println("------------------------");
                 System.out.println("There is no order in queue.");
             }
            
@@ -202,7 +208,8 @@ public class OrderModule {
         
         public void editOrder(){
             if(!orderLine.isEmpty()){
-                System.out.println("Any changes of the order on? ");
+                System.out.println("\nAny changes of the order on? ");
+                System.out.println("----------------------------");
                 System.out.println("1. Ordered Item");
                 System.out.println("2. Member ID");
                 System.out.println("3. Table Number");
@@ -242,9 +249,10 @@ public class OrderModule {
                 Order editedOrder = orderLine.getFirst();
                 editedOrder.setTableNum(newTable);
                 boolean result = orderLine.setFirst(editedOrder);
+                System.out.println("----------------------------");
                 if(result == true){
-                System.out.println(orderLine.getFirst());
-                
+                    System.out.println(orderLine.getFirst());
+                    System.out.println("----------------------------");
                 }else{
                     System.out.println("Changes has not apply.");
                 }
@@ -278,8 +286,10 @@ public class OrderModule {
                 Order editedOrder = orderLine.getFirst();
                 editedOrder.setOrderType(newOType);
                 boolean result = orderLine.setFirst(editedOrder);
+                System.out.println("----------------------------");
                 if(result == true){
                 System.out.println(orderLine.getFirst());
+                System.out.println("----------------------------");
                 }else{
                     System.out.println("Changes has not apply.");
                 }
@@ -306,11 +316,12 @@ public class OrderModule {
         public void showOrder(){
             int choice = 0;
             do{
-            System.out.println("\n\n =========================");
+            System.out.println("\n---------Show Order--------");
             System.out.println("1. Show Order Queue");
             System.out.println("2. Show Completed Order");
             System.out.println("0. Back to preious");
-            System.out.println("=========================");
+            System.out.println("----------------------------");
+            System.out.printf("Please enter index (1-2): ");
             while (!sc.hasNextInt()) {
             System.out.println("That's not a number!\n Please enter again: ");
             sc.next(); // this is important!
@@ -335,9 +346,8 @@ public class OrderModule {
         
         private void showOrderQueue(){
             if(!orderLine.isEmpty()){
-                System.out.println("============================");
-                System.out.println("Show All Order");
-                System.out.println("============================");
+                System.out.println("\n-------Show All Order-------");
+                System.out.println("----------------------------");
                 System.out.println(orderLine); 
             }else{
                 System.out.println("There is no order in queue");
@@ -345,9 +355,8 @@ public class OrderModule {
         }
         private void showCompletedQueue(){
             if(!completedOrder.isEmpty()){
-                System.out.println("============================");
-                System.out.println("Show All Completed Order");
-                System.out.println("============================");
+                System.out.println("\n--Show All Completed Order--");
+                System.out.println("----------------------------");
                 System.out.println(completedOrder); 
             }else{
                 System.out.println("There is no completed order.");
