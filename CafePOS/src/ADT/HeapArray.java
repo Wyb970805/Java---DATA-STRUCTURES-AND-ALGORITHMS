@@ -10,7 +10,6 @@ public class HeapArray<S> implements HeapInterface<S> {
     
   private S[] arrayVar; //make  a array  variable
   private int topIndexHeap; // index of top entry
-  private int btmIndexHeap; // index of btm entry
   private static final int DEFAULT_CAPACITY = 50; // make the limit of stack
   private int size = heapCount();
 
@@ -93,10 +92,21 @@ public class HeapArray<S> implements HeapInterface<S> {
     }
 
     @Override
-    public boolean isIndexEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean isContains(S promptResult) {
+        S contains = null;
+        
+        if(!isEmpty()) {
+            for (int i=0; i < size; i++) {
+                if(arrayVar[i] == promptResult) {
+                    contains = arrayVar[i];
+                }
+            }
+        }
+        
+        return contains == null;
     }
 
+    @Override
     public int heapCount() {
         
         while(arrayVar != null) {
