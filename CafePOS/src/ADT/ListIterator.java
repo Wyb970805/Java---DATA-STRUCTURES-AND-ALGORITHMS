@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ADT;
 
 import java.util.Iterator;
@@ -11,7 +16,7 @@ public class ListIterator<T> implements IteratorInterface<T> {
 
     private T[] listArray;
     private int length;
-    private static final int DEFAULT_CAPACITY = 50;
+    private static final int DEFAULT_CAPACITY = 5;
 
     public ListIterator() {
         this(DEFAULT_CAPACITY);
@@ -30,6 +35,13 @@ public class ListIterator<T> implements IteratorInterface<T> {
     }
 
     public boolean add(T newEntry) {
+        // check if the list(array) is full or not.
+        // if not full add newID
+        // if full, double the capacity then add new ID
+        // Chapter 4 slide 25 - 27
+        if (isArrayFull()) {
+            doubleArray();
+        }
         listArray[length] = newEntry;
         length++;
         return true;
@@ -92,6 +104,27 @@ public class ListIterator<T> implements IteratorInterface<T> {
 
         return result;
     }
+    
+    @Override
+    public boolean contains(int givenIndex) {
+        boolean found = false;
+        for (int index = 0; index < length; index++) {
+            if (givenIndex == index) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    public boolean containsID(int givenID) {
+        boolean found = false;
+        for (int id = 1; id <= length; id++) {
+            if (givenID == id) {
+                found = true;
+            }
+        }
+        return found;
+    }
 
     public boolean contains(T anEntry) {
         boolean found = false;
@@ -127,6 +160,18 @@ public class ListIterator<T> implements IteratorInterface<T> {
 
     private boolean isArrayFull() {
         return length == listArray.length;
+    }
+    
+    private void doubleArray() {
+        T[] oldList = listArray;
+        int oldSize = oldList.length;
+
+        listArray = (T[]) new Object[oldSize * 2];
+
+        // copy all elements from old list
+        for (int i = 0; i < oldSize; i++) {
+            listArray[i] = oldList[i];
+        }
     }
 
     private void makeRoom(int newPosition) {

@@ -8,7 +8,6 @@ package ADT;
 /**
  *
  * @author Tong Chein Leng
- * @param <T>
  */
 public interface ListInterface<T> {
 
@@ -24,7 +23,6 @@ public interface ListInterface<T> {
     public int getLength();
     public boolean isEmpty();
     public boolean isFull();
-    @Override
     public String toString();
 }
 
