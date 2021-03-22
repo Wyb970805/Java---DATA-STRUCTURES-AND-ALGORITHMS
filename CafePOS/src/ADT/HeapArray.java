@@ -12,7 +12,7 @@ public class HeapArray<S> implements HeapInterface<S> {
   private int topIndexHeap; // index of top entry
   private static final int DEFAULT_CAPACITY = 50; // make the limit of stack
   private int size = heapCount();
-
+  
     public HeapArray() {
       this(DEFAULT_CAPACITY); // this line cannot understand
     }
@@ -115,5 +115,7 @@ public class HeapArray<S> implements HeapInterface<S> {
         
         return size;
     }
-  
+    
+    // Retrieve all result
+    
 }

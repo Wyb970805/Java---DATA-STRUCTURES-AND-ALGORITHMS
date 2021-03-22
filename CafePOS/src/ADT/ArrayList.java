@@ -183,4 +183,8 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
             listArray[i] = oldList[i];
         }
     }
+    
+    private void printAll() {
+        
+    }
 }
