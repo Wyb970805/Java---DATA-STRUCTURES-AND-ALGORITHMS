@@ -6,7 +6,7 @@
 package cafepos;
 
 import Entity.*;
-import ADT.*;
+import ADT.Queue.*;
 import java.util.Scanner;
 /**
  *
@@ -18,8 +18,8 @@ public class OrderModule {
     int orderNum = 1004, tbNum = 0;
     String orderList = null;
     Scanner sc = new Scanner(System.in);
-    static QueueInterface<Order> orderLine = new CircularLineQueue<>();
-    static QueueInterface<Order> completedOrder = new CircularLineQueue<>();
+    static QueueWithIteratorInterface<Order> orderLine = new CircularCounterQueueWithIterator<>();
+    static QueueWithIteratorInterface<Order> completedOrder = new CircularCounterQueueWithIterator<>();
      
     // initialize existed order
     Order a = new Order(1001,'T',0, 0.0 );

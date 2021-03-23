@@ -3,23 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ADT;
+package ADT.Queue;
+
+import java.util.Iterator;
 
 /**
  *
  * @author Wen
  * @param <E>
  */
-public class CircularLineQueue<E> implements QueueInterface<E>{
+public class CircularCounterQueue<E>{
     private E[] line; // circular queue of counter to identify the number of element.
     private int firstIndex, lastIndex, counter;
     private static final int DEFAULT_CAPACITY = 2;
     
-    public CircularLineQueue(){
+    public CircularCounterQueue(){
         this(DEFAULT_CAPACITY);
     }
     
-    public CircularLineQueue(int initialCapacity) {
+    public CircularCounterQueue(int initialCapacity) {
     line = (E[]) new Object[initialCapacity];
     firstIndex = counter /*= lastIndex*/ = 0;
     lastIndex = -1;
@@ -34,7 +36,7 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
             ++counter;
             return true;
         }
-        else if(counter==line.length){
+        else if(isFull()){
             resize();
             lastIndex = (lastIndex+1)%line.length;
             line[lastIndex]=e;
@@ -96,8 +98,12 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
         firstIndex = 0;
         lastIndex = counter-1;     ///maybehere
     }
+    
+    public boolean isFull(){
+       return counter==line.length;
+    }
    
-    public String toString()
+    /*public String toString()
   {
     String str = "";
     int i = 0;
@@ -112,7 +118,7 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
     }
     return str;
 
-  }
+  }*/
    /* public String toString(){
         String str = "";
         if(!isEmpty()){

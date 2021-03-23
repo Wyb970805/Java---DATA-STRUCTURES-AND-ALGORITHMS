@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ADT;
+package ADT.Queue;
 
 import Entity.Order;
+import java.util.Iterator;
 
 /**
  *
@@ -18,7 +19,7 @@ public interface QueueInterface<E> {
     E removeFQueue();    //delete last element;
     boolean isEmpty();  // identify whether the queue is empty; return true if the queue is empty
     E getFirst();   // to get first element in queue; return first element if queue is not empty
-    boolean setFirst(E e); // to replace the first element; return true if replace successful;
-    String toString();  // display all element in adt
+   // boolean setFirst(E e); // to replace the first element; return true if replace successful;
+   // String toString();  // display all element in adt
     
 }
