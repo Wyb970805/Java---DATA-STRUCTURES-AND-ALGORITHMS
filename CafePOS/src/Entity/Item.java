@@ -13,12 +13,14 @@ public class Item {
     String itemId;
     String itemName;
     double price;
+    Ingredient IngredientList[];
     char category;
     
     public Item(String itemId, String itemName, double price, char category){
         this.itemId = itemId;
         this.itemName = itemName;
         this.price = price;
+        //this.IngredientList = new Ingredient();
         this.category = category;
     }
 
@@ -44,6 +46,10 @@ public class Item {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+    
+    public Ingredient[] getIngredientList() {
+        return IngredientList;
     }
 
     public char getCategory() {

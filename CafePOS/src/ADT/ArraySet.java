@@ -144,6 +144,21 @@ public class ArraySet<T> implements SetInterface<T> {
         return numberOfElements == 0;
     }
 
+    public int getNum() {
+        return numberOfElements;
+    }
+    
+    public T getEntry(int items) {
+        T outcome = null;
+
+        if ((items >= 1) && (items <= numberOfElements)) {
+            outcome = setArray[items - 1];
+        }
+
+        return outcome;
+    }
+    
+    
     public String toString(){
         String str="";
         for (int i=0; i<numberOfElements;i++){

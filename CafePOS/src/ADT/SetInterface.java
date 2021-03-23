@@ -15,5 +15,8 @@ public interface SetInterface<T> {
     boolean checkSubset(SetInterface anotherSet);   //check if another set is a subset of current set
     void union(SetInterface anotherSet); // add another set to current set
     SetInterface intersection(SetInterface anotherSet);
+    public T getNums(int items);
+    public boolean replace(int items, T newNums);
     boolean isEmpty();
+    
 }
