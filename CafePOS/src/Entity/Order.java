@@ -14,16 +14,16 @@ public class Order {
     private ItemOrder itemList[];   //
     private char orderType;         // T - take away, D - Dine in
     private int tableNo;            // 01-15
-    private float totalPrice;       // 0.0
+    private double totalPrice;       // 0.0
     //private Member member;          // mid
     //private Staff staffIncharge;    // sid
     
-    public Order(int orderNum, char orderType, int tableNo/*, Member mid,Staff sid*/){
+    public Order(int orderNum, char orderType, int tableNo, double totalPrice/*, Member mid,Staff sid*/){
         this.orderNum = orderNum;
         ItemOrder itemList = new ItemOrder();
         this.orderType = orderType;
         this.tableNo = tableNo;
-        this.totalPrice = (float) 0.0;
+        this.totalPrice = 0.0;
         //this.member = member;
         //this.staffIncharge = staffIncharge;
     }
@@ -40,7 +40,7 @@ public class Order {
         return itemList;
     }
 
-    public float getTotalPrice() {        
+    public double getTotalPrice() {        
         return totalPrice;
     }
     

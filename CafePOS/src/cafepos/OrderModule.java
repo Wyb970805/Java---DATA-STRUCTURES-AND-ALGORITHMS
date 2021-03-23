@@ -22,10 +22,10 @@ public class OrderModule {
     static QueueInterface<Order> completedOrder = new CircularLineQueue<>();
      
     // initialize existed order
-    Order a = new Order(1001,'T',0 );
-    Order b = new Order(1002,'T',0 );
-    Order c = new Order(1003,'T',0 );
-    Order d = new Order(1004,'T',0 );
+    Order a = new Order(1001,'T',0, 0.0 );
+    Order b = new Order(1002,'T',0, 0.0 );
+    Order c = new Order(1003,'T',0, 0.0 );
+    Order d = new Order(1004,'T',0, 0.0 );
     
     
     public void orderMenu(){
@@ -95,17 +95,22 @@ public class OrderModule {
             System.out.print("Dine in - D, Take Away - T (q to exit): ");
             char orderType = sc.nextLine().charAt(0);
             orderType = Character.toUpperCase(orderType);
-            if(orderType == 'D'){
+            if(orderType == 'D'|| orderType == 'T'){
+                    if(orderType == 'D'){
                     System.out.print("Table Number: ");
                     tbNum = sc.nextInt();
                     sc.nextLine();
+                    }else{
+                        tbNum = 'T';
+                    }
                     orderNum++;
-               /*     System.out.println("Select item");
-                    System.out.println("=======================");
-                    ItemOrderModule orderList = new ItemOrderModule();
+                    
+               /*   ItemOrderModule orderList = new ItemOrderModule();
                     boolean created = orderList.createOrderList();
                     if(created){
-                   */     Order od = new Order(orderNum,orderType, tbNum);
+                   */     
+                        double total = calculateTotal();
+                        Order od = new Order(orderNum,orderType, tbNum, total);
                         boolean added = orderLine.addToQueue(od);
                         if(added == true){
                             System.out.println("Order created.");
@@ -120,11 +125,12 @@ public class OrderModule {
                     }
                     */
                 
-                }else if(orderType == 'T'){
+                /*}else if(orderType == 'T'){
                     tbNum = 0;
                     System.out.println("This is a take away order.");
                     orderNum++;
-                    Order od = new Order(orderNum,orderType, tbNum);
+                    
+                    Order od = new Order(orderNum,orderType, tbNum, total);
                 boolean added = orderLine.addToQueue(od);
                 if(added == true){
                     System.out.println("Order created.");
@@ -134,7 +140,7 @@ public class OrderModule {
                 }else{
                     System.out.println("ERROR! Order haven't created.");
                 }
-                
+                */
                 }else if(orderType == 'Q'){
                     System.out.println("Ok. Will go back.");
                     break;
@@ -214,6 +220,12 @@ public class OrderModule {
                 System.out.println("2. Member ID");
                 System.out.println("3. Table Number");
                 System.out.println("4. Order Type");
+                System.out.println("0. Back to preious");
+                System.out.printf("Please enter the index (1-4): ");
+                while (!sc.hasNextInt()) {
+                System.out.println("That's not a number! \nPlease enter again: ");
+                sc.next(); // this is important!
+                }
                 int choice = sc.nextInt();
                 sc.nextLine();
                 switch(choice){
@@ -228,6 +240,8 @@ public class OrderModule {
                         break;
                     case 4:
                         editOrderType();
+                        break;
+                    case 0:
                         break;
                     default:
                         System.out.println("Only 1 - 4 are offered to change.");
@@ -362,6 +376,13 @@ public class OrderModule {
                 System.out.println("There is no completed order.");
             }
         }
+        
+        
+    public double calculateTotal(){
+        double total = 0.0;
+       
+       return total;
+    }
     
 }
 

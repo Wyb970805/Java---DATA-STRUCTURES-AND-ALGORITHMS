@@ -100,15 +100,15 @@ public class CircularLineQueue<E> implements QueueInterface<E>{
     public String toString()
   {
     String str = "";
-    int scan = 0;
+    int i = 0;
  
-    while(scan < counter)
+    while(i < counter)
     {
-     if(line[scan]!=null)
+     if(line[i]!=null)
      {
-       str += line[scan].toString()+"\n";
+       str += line[i].toString()+"\n";
      }
-    scan++;
+    i++;
     }
     return str;
 
