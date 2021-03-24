@@ -7,10 +7,10 @@ package ADT;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
 /**
  *
  * @author Tong Chein Leng
+ * @param <T>
  */
 public class ListIterator<T> implements IteratorInterface<T> {
 
@@ -38,7 +38,6 @@ public class ListIterator<T> implements IteratorInterface<T> {
         // check if the list(array) is full or not.
         // if not full add newID
         // if full, double the capacity then add new ID
-        // Chapter 4 slide 25 - 27
         if (isArrayFull()) {
             doubleArray();
         }
@@ -75,7 +74,6 @@ public class ListIterator<T> implements IteratorInterface<T> {
 
             length--;
         }
-
         return result;
     }
 
@@ -95,6 +93,7 @@ public class ListIterator<T> implements IteratorInterface<T> {
         return isSuccessful;
     }
 
+    @Override
     public T getEntry(int givenPosition) {
         T result = null;
 
@@ -116,6 +115,7 @@ public class ListIterator<T> implements IteratorInterface<T> {
         return found;
     }
 
+    @Override
     public boolean containsID(int givenID) {
         boolean found = false;
         for (int id = 1; id <= length; id++) {
@@ -126,6 +126,7 @@ public class ListIterator<T> implements IteratorInterface<T> {
         return found;
     }
 
+    @Override
     public boolean contains(T anEntry) {
         boolean found = false;
         for (int index = 0; !found && (index < length); index++) {

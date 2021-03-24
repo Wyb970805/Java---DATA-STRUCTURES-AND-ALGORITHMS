@@ -32,12 +32,9 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
         // check if the list(array) is full or not.
         // if not full add newEntry
         // if full, double the capacity then add newEntry
-        // Chapter 4 slide 25 - 27
         if (isArrayFull()) {
             doubleArray();
         }
-
-        // add new element
         listArray[length] = newEntry;
         length++;
         return true;
@@ -65,7 +62,6 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
             if (givenPosition < length) {
                 removeGap(givenPosition);
             }
-
             length--;
         }
         return result;
@@ -110,16 +106,17 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
         return found;
     }
 
+    @Override
     public boolean containsID(int givenID) {
-        boolean found = false;
         for (int id = 1; id <= length; id++) {
             if (givenID == id) {
-                found = true;
+                return true;
             }
         }
-        return found;
+        return false;
     }
 
+    @Override
     public boolean contains(T anEntry) {
         boolean found = false;
         for (int index = 0; !found && (index < length); index++) {
@@ -182,9 +179,5 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
         for (int i = 0; i < oldSize; i++) {
             listArray[i] = oldList[i];
         }
-    }
-    
-    private void printAll() {
-        
     }
 }

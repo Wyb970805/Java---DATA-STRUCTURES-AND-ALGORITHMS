@@ -8,6 +8,8 @@ package cafepos;
 import Entity.*;
 import ADT.*;
 import java.util.Scanner;
+import static cafepos.EditPayment.modifyPayment;
+import static cafepos.RecordPayment.*;
 
 /**
  *
@@ -24,14 +26,7 @@ public class CafePOS {
         OrderModule ordering = new OrderModule();
         ordering.orderMenu();
         
-      //  mainMenu();
-        
-        
-        
-        
-        
-        
-        
+      //  mainMenu();   
     }
     
     public static void mainMenu(){
@@ -59,7 +54,7 @@ public class CafePOS {
                 ordering.orderMenu();
                 break;
             case 2:
-                
+                selectAction();
                 break;
             case 3:
                 
@@ -73,6 +68,52 @@ public class CafePOS {
             default:
                 System.out.println("Error! Please select between 1 - 4!");
         }
+    }
+    
+    public static void selectAction() {
+        Scanner scanA = new Scanner(System.in);
+        int action = 0;
+        boolean selectIsDigit = false;
+        do {
+            do {
+                try {
+                    System.out.println("\t\t\t\t                Payment Module ");
+                    System.out.println("\t\t\t\t _______________________________________");
+                    System.out.println("\t\t\t\t| No. |            Actions              |");
+                    System.out.println("\t\t\t\t|  1  | Make Payment                    |");
+                    System.out.println("\t\t\t\t|  2  | Display Records                 |");
+                    System.out.println("\t\t\t\t|  3  | Edit Records                    |");
+                    System.out.println("\t\t\t\t|  0  | Exit                            |");
+                    System.out.println("\t\t\t\t|_____|_________________________________|\n");
+                    System.out.print("Please enter a number: ");
+                    action = scanA.nextInt();
+                    selectIsDigit = true;
+                } catch (Exception e) {
+                    System.out.println("Please enter an integer number and try again!");
+                    scanA.nextLine();
+                }
+            } while (!selectIsDigit);
+            switch (action) {
+                case 1:
+                    records();
+                    paymentSystem();
+                    break;
+                case 2:
+                    records();
+                    displayRecords();
+                    yesNo();
+                    break;
+                case 3:
+                    records();
+                    modifyPayment();
+                    yesNo();
+                    break;
+                case 0:
+                    break;
+                default:
+                    errorMessage();
+            }
+        } while (action < 0 || action > 3);
     }
     
 }
