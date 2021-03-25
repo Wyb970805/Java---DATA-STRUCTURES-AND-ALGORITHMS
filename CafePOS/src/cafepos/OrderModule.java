@@ -7,6 +7,7 @@ package cafepos;
 
 import Entity.*;
 import ADT.Queue.*;
+import static cafepos.CafePOS.mainMenu;
 import java.util.Scanner;
 
 /**
@@ -72,6 +73,7 @@ public class OrderModule {
                     showOrder();
                     break;
                 case 0:
+                    mainMenu();
                     break;
                 default:
                     System.out.println("Error! Please select between 1 - 5!");

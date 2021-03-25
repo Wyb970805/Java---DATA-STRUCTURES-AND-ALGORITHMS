@@ -25,7 +25,7 @@ public class RecordPayment {
     static Payment pay = new Payment();
     static Cash blc = new Cash();
     static CreditCard cc = new CreditCard();
-    float paymentAmount = 100; //pay.getPaymentAmount();
+    float paymentAmount = (float)orderLine.getFirst().getTotalPrice();
     LocalDateTime paid = LocalDateTime.now();
 
     public static void records() {
@@ -74,16 +74,16 @@ public class RecordPayment {
                 }
             } while (selectIsDigit == false);
 
-            if (selectOrderNo < 1001) {
-                System.out.println("Wrong Order No.! Please enter correct Order No.!");
-            } else {
+            if (selectOrderNo >= 1001 && selectOrderNo == orderLine.getFirst().getOrderNum()) {
                 rp.displayAmount(selectOrderNo);
+            } else {
+                System.out.println("Wrong Order No.! Please enter correct Order No.!");
             }
-        } while (selectOrderNo < 1001);
+        } while (selectOrderNo < 1001 || selectOrderNo != orderLine.getFirst().getOrderNum());
     }
 
     public void displayAmount(int selectOrderNo) {
-        System.out.println(orderLine.getFirst()); // null!!!
+        //System.out.println(orderLine.getFirst()); 
         System.out.println("Order No: " + selectOrderNo);
         System.out.printf("Total Amount: RM %.2f \n", paymentAmount);
         selectPaymentMethod();

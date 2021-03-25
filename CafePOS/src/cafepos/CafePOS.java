@@ -22,7 +22,7 @@ public class CafePOS {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        //mainMenu();
+        mainMenu();
         OrderModule ordering = new OrderModule();
         ordering.orderMenu();
         
