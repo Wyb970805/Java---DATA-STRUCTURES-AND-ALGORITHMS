@@ -35,26 +35,19 @@ public class RecordPayment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime formatDateTime = LocalDateTime.parse(dateTime, formatter);
         Cash cashList1 = new Cash(1, 100, "Cash", formatDateTime, 0, 100);
-        System.out.println("\nPayment Records\n--------");
         if (cashIterator.add(cashList1) == true) {
-            System.out.println("Total number of records paid by cash: " + cashIterator.getLength());
             blc.setBalance(100);
             income = pay.getTotalIncome() + 100;
             pay.setTotalIncome(income);
-        } else {
-            System.out.println("No records paid by cash.");
         }
         String ccdateTime = "2021-02-16 08:05:55";
         LocalDateTime ccformatDateTime = LocalDateTime.parse(ccdateTime, formatter);
         CreditCard cardList1 = new CreditCard(1, 200, "Credit Card", ccformatDateTime, "1997080520000216", "Wang Yi Bo", "02/24");
         if (creditCardIterator.add(cardList1) == true) {
-            System.out.println("Total number of records paid by credit card: " + creditCardIterator.getLength());
             cc.setCCTotalAmt(200);
             income = pay.getTotalIncome() + 200;
             pay.setTotalIncome(income);
-        } else {
-            System.out.println("No records paid by credit card.");
-        }
+        } 
     }
 
     public static void paymentSystem() {
@@ -289,9 +282,11 @@ public class RecordPayment {
 
     public static void displayRecords() {
         int total = creditCardIterator.getLength() + cashIterator.getLength();
-        System.out.println("\nDisplay\n-----------");
+        System.out.println("\nDisplay Payment Records\n-----------");
         System.out.printf("Cash Balance: RM %.2f \n", blc.getBalance());
         System.out.printf("Total amount from credit card: RM %.2f \n", cc.getCCTotalAmt());
+        System.out.println("Total number of records paid by cash: " + cashIterator.getLength());
+        System.out.println("Total number of records paid by credit card: " + creditCardIterator.getLength());
         System.out.println("Total number of payment bills: " + total);
         System.out.printf("Total income: RM %.2f\n\n", pay.getTotalIncome());
         System.out.println("Cash List\n---------");

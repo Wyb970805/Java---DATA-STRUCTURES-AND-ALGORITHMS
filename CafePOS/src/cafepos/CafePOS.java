@@ -23,6 +23,7 @@ public class CafePOS {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        records();
         mainMenu();
         OrderModule ordering = new OrderModule();
         ordering.orderMenu();
@@ -34,7 +35,6 @@ public class CafePOS {
         System.out.println("-------------------");
         System.out.println("Welcome to 063 Cafe");
         System.out.println("-------------------");
-
         System.out.println("--------Menu-------");
         System.out.println("1. Order");
         System.out.println("2. Payment");
@@ -95,7 +95,6 @@ public class CafePOS {
             } while (!selectIsDigit);
             switch (action) {
                 case 1:
-                    records();
                     if (orderLine.getFirst() == null) {
                         System.out.println("\nNo Order has been stored. Please Order.\n");
                         OrderModule ordering = new OrderModule();
@@ -104,16 +103,15 @@ public class CafePOS {
                     paymentSystem();
                     break;
                 case 2:
-                    records();
                     displayRecords();
                     yesNo();
                     break;
                 case 3:
-                    records();
                     modifyPayment();
                     yesNo();
                     break;
                 case 0:
+                    mainMenu();
                     break;
                 default:
                     errorMessage();
