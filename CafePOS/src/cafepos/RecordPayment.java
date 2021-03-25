@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import static cafepos.EditPayment.modifyPayment;
 import static cafepos.OrderModule.orderLine;
+
 /**
  *
  * @author Tong Chein Leng
@@ -25,7 +26,7 @@ public class RecordPayment {
     static Payment pay = new Payment();
     static Cash blc = new Cash();
     static CreditCard cc = new CreditCard();
-    float paymentAmount = (float)orderLine.getFirst().getTotalPrice();
+    float paymentAmount = (float) orderLine.getFirst().getTotalPrice();
     LocalDateTime paid = LocalDateTime.now();
 
     public static void records() {
@@ -34,7 +35,7 @@ public class RecordPayment {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime formatDateTime = LocalDateTime.parse(dateTime, formatter);
         Cash cashList1 = new Cash(1, 100, "Cash", formatDateTime, 0, 100);
-        System.out.println("\nRecords\n--------");
+        System.out.println("\nPayment Records\n--------");
         if (cashIterator.add(cashList1) == true) {
             System.out.println("Total number of records paid by cash: " + cashIterator.getLength());
             blc.setBalance(100);

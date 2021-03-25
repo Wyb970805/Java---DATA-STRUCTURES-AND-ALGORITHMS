@@ -9,6 +9,7 @@ import Entity.*;
 import ADT.*;
 import java.util.Scanner;
 import static cafepos.EditPayment.modifyPayment;
+import static cafepos.OrderModule.orderLine;
 import static cafepos.RecordPayment.*;
 
 /**
@@ -25,17 +26,15 @@ public class CafePOS {
         mainMenu();
         OrderModule ordering = new OrderModule();
         ordering.orderMenu();
-        
-      //  mainMenu();   
     }
-    
-    public static void mainMenu(){
+
+    public static void mainMenu() {
         Scanner input = new Scanner(System.in);
         OrderModule ordering = new OrderModule();
         System.out.println("-------------------");
         System.out.println("Welcome to 063 Cafe");
         System.out.println("-------------------");
-        
+
         System.out.println("--------Menu-------");
         System.out.println("1. Order");
         System.out.println("2. Payment");
@@ -46,10 +45,10 @@ public class CafePOS {
         while (!input.hasNextInt()) {
             System.out.println("That's not a number! \nPlease enter again: ");
             input.next(); // this is important!
-            }
+        }
         int index = input.nextInt();
         input.nextLine();
-        switch(index){
+        switch (index) {
             case 1:
                 ordering.orderMenu();
                 break;
@@ -57,19 +56,20 @@ public class CafePOS {
                 selectAction();
                 break;
             case 3:
-                
+
                 break;
             case 4:
-                
+
                 break;
-            case 0: 
+            case 0:
                 System.out.println("Thank you. See you tomorrow");
                 break;
             default:
                 System.out.println("Error! Please select between 1 - 4!");
         }
     }
-    
+
+    // Menu of Payment Module
     public static void selectAction() {
         Scanner scanA = new Scanner(System.in);
         int action = 0;
@@ -96,6 +96,11 @@ public class CafePOS {
             switch (action) {
                 case 1:
                     records();
+                    if (orderLine.getFirst() == null) {
+                        System.out.println("\nNo Order has been stored. Please Order.\n");
+                        OrderModule ordering = new OrderModule();
+                        ordering.orderMenu();
+                    }
                     paymentSystem();
                     break;
                 case 2:
@@ -115,5 +120,5 @@ public class CafePOS {
             }
         } while (action < 0 || action > 3);
     }
-    
+
 }
