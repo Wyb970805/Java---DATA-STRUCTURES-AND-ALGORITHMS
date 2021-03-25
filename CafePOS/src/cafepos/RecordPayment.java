@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import static cafepos.EditPayment.modifyPayment;
-
+import static cafepos.OrderModule.orderLine;
 /**
  *
  * @author Tong Chein Leng
@@ -83,7 +83,8 @@ public class RecordPayment {
     }
 
     public void displayAmount(int selectOrderNo) {
-        System.out.println("\nOrder No: " + selectOrderNo);
+        System.out.println(orderLine.getFirst()); // null!!!
+        System.out.println("Order No: " + selectOrderNo);
         System.out.printf("Total Amount: RM %.2f \n", paymentAmount);
         selectPaymentMethod();
     }
