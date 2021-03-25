@@ -3,6 +3,7 @@
  */
 package Entity;
 
+import ADT.ArrayList;
 import java.util.regex.Pattern;
 
 /**
@@ -11,16 +12,17 @@ import java.util.regex.Pattern;
  */
 public class Order {
     private int orderNum;        // 1001
-    private ItemOrder itemList[];   //
+    ArrayList<ItemOrder> OrderList;
+   // private ItemOrder itemList;   //
     private char orderType;         // T - take away, D - Dine in
     private int tableNo;            // 01-15
     private double totalPrice;       // 0.0
     //private Member member;          // mid
     //private Staff staffIncharge;    // sid
     
-    public Order(int orderNum, char orderType, int tableNo, double totalPrice/*, Member mid,Staff sid*/){
+    public Order(int orderNum, /*ArrayList<ItemOrder> orderList,*/ char orderType, int tableNo/*, double totalPrice*/ /*, Member mid,Staff sid*/){
         this.orderNum = orderNum;
-        ItemOrder itemList = new ItemOrder();
+        this.OrderList = new ArrayList<ItemOrder>();
         this.orderType = orderType;
         this.tableNo = tableNo;
         this.totalPrice = 0.0;
@@ -36,20 +38,25 @@ public class Order {
         return orderNum;
     }
 
-    public ItemOrder[] getItemList() {
-        return itemList;
+    public ArrayList<ItemOrder> getOrderList() {
+        return OrderList;
     }
+
+    public void setOrderList(ArrayList<ItemOrder> OrderList) {
+        this.OrderList = OrderList;
+    }
+
+    
+    //public ItemOrder getItemList() {
+    //    return itemList;
+    //}
 
     public double getTotalPrice() {        
         return totalPrice;
     }
     
-    public int getTbNum() {
+    public int getTableNo() {
         return this.tableNo;
-    }
-    
-    public void setTableNum(int tbNum){
-        this.tableNo = tbNum;
     }
     
     public char getOrderType(){
@@ -64,24 +71,29 @@ public class Order {
         this.orderNum = orderNum;
     }
 
-    public void setItemList(ItemOrder[] itemList) {
-        this.itemList = itemList;
-    }
+    //public void setItemList(ItemOrder itemList) {
+    //    this.itemList = itemList;
+    //}
 
     public void setTableNo(int tableNo) {
         this.tableNo = tableNo;
     }
 
-    public void setTotalPrice(float totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
     
     
     
     public String toString(){
-        return "Order Number: " + orderNum + "\nItem Order: " + itemList 
-                + "\nOrder Type: " + orderType +"\nTable No.: " + tableNo + "\nTotal: " + totalPrice 
-                /*+ "Membership: " + member + "Staff Incharge: " + staffIncharge*/;
+        return "\nOrder Number: " + orderNum + 
+                "\nItem Order: \n" + 
+                String.format("%-3s %-6s %-20s %3s %8s\n", "No.", "Item(s)","Name","Qty","Price(RM)")+
+                OrderList 
+                + "\nOrder Type: " + orderType 
+                +"\nTable No.: " + tableNo + 
+                "\nTotal: RM" + totalPrice 
+                /*+ "Membership: " + member + "Staff Incharge: " + staffIncharge*/+ "\n";
     }
         
 }

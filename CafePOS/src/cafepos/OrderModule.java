@@ -7,7 +7,7 @@ package cafepos;
 
 import Entity.*;
 import ADT.Queue.*;
-import static cafepos.CafePOS.mainMenu;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -25,17 +25,17 @@ public class OrderModule {
     static QueueWithIteratorInterface<Order> completedOrder = new CircularCounterQueueWithIterator<>();
 
     // initialize existed order
-    Order a = new Order(1001, 'T', 0, 0.0);
+    /*Order a = new Order(1001, 'T', 0, 0.0);
     Order b = new Order(1002, 'T', 0, 0.0);
     Order c = new Order(1003, 'T', 0, 0.0);
     Order d = new Order(1004, 'T', 0, 0.0);
-
+     */
     public void orderMenu() {
-        orderLine.addToQueue(a);
+        /*     orderLine.addToQueue(a);
         orderLine.addToQueue(b);
         orderLine.addToQueue(c);
         orderLine.addToQueue(d);
-
+         */
         int choice;
 
         do {
@@ -45,7 +45,7 @@ public class OrderModule {
             System.out.println("----------------------------");
             System.out.println("1. Place Order");
             System.out.println("2. Update Status");
-            System.out.println("3. Edit Order");
+            System.out.println("3. Modify and Requeue Order");
             System.out.println("4. Remove Order");
             System.out.println("5. Show all order");
             System.out.println("0. Exit");
@@ -73,7 +73,6 @@ public class OrderModule {
                     showOrder();
                     break;
                 case 0:
-                    mainMenu();
                     break;
                 default:
                     System.out.println("Error! Please select between 1 - 5!");
@@ -104,46 +103,28 @@ public class OrderModule {
                         tbNum = sc.nextInt();
                         sc.nextLine();
                     } else {
-                        tbNum = 'T';
+                        tbNum = 0;
                     }
                     orderNum++;
 
-                    /*   ItemOrderModule orderList = new ItemOrderModule();
-                    boolean created = orderList.createOrderList();
-                    if(created){
-                     */
-                    double total = calculateTotal();
-                    Order od = new Order(orderNum, orderType, tbNum, total);
-                    boolean added = orderLine.addToQueue(od);
-                    if (added == true) {
-                        System.out.println("Order created.");
-                        System.out.println(od);
-                        System.out.println("----------------------------");
-                        System.out.println(orderLine);
+                    ItemOrderModule itemMenu = new ItemOrderModule();
+                    boolean created = itemMenu.createOrderList();
+                    if (created) {
+
+                        Order od = new Order(orderNum, orderType, tbNum);
+                        od.setOrderList(itemMenu.getItemOrderList());
+                        od.setTotalPrice(itemMenu.getTotal());
+                        boolean added = orderLine.addToQueue(od);
+                        if (added == true) {
+                            System.out.println("Order created.");
+                            System.out.println(od);
+                            System.out.println("----------------------------");
+                        } else {
+                            System.out.println("ERROR! Order haven't created.");
+                        }
                     } else {
-                        System.out.println("ERROR! Order haven't created.");
-                    }
-                    /* }else{
                         System.out.println("Error");
                     }
-                     */
-
- /*}else if(orderType == 'T'){
-                    tbNum = 0;
-                    System.out.println("This is a take away order.");
-                    orderNum++;
-                    
-                    Order od = new Order(orderNum,orderType, tbNum, total);
-                boolean added = orderLine.addToQueue(od);
-                if(added == true){
-                    System.out.println("Order created.");
-                    System.out.println(od);
-                    System.out.println("----------------------------");
-                    System.out.println(orderLine);
-                }else{
-                    System.out.println("ERROR! Order haven't created.");
-                }
-                     */
                 } else if (orderType == 'Q') {
                     System.out.println("Ok. Will go back.");
                     break;
@@ -159,9 +140,7 @@ public class OrderModule {
                 System.out.println("Please enter yes (Y) or no (N): ");
                 order = sc.nextLine().charAt(0);
             }
-        }
-
-        //System.out.println("Show first order");
+        } //System.out.println("Show first order");
         //System.out.println(orderLine.getFirst());
     }
 
@@ -225,7 +204,7 @@ public class OrderModule {
             sc.nextLine();
             switch (choice) {
                 case 1:
-                    //   editItem();
+                    //itemOrderMenu();
                     break;
                 case 2:
                     //   editMember();
@@ -250,23 +229,20 @@ public class OrderModule {
         if (!orderLine.isEmpty()) {
             do {
                 Order first = orderLine.getFirst();
-                System.out.println("Current table number = " + first.getTbNum());
-                System.out.println("New table (0 to cancel): ");
+                System.out.println("Current table number = " + first.getTableNo());
+                System.out.print("New table 1-20 (0 to cancel): ");
+                while (!sc.hasNextInt()) {
+                    System.out.println("That's not a number! \nPlease enter again: ");
+                    sc.next(); // this is important!
+                }
                 int newTable = sc.nextInt();
                 sc.nextLine();
                 if (newTable >= 1 && newTable <= 20) {
-                    Order editedOrder = orderLine.getFirst();
-                    editedOrder.setTableNum(newTable);
-                    /*
-                boolean result = orderLine.setFirst(editedOrder);
-                System.out.println("----------------------------");
-                if(result == true){
+                    orderLine.getFirst().setTableNo(newTable);
+                    System.out.println("Your changes is done.");
+                    System.out.println("----------------------------");
                     System.out.println(orderLine.getFirst());
                     System.out.println("----------------------------");
-                }else{
-                    System.out.println("Changes has not apply.");
-                }
-                     */
                 } else if (newTable == 0) {
                     break;
                 } else {
@@ -292,18 +268,15 @@ public class OrderModule {
                 char newOType = sc.nextLine().charAt(0);
                 newOType = Character.toUpperCase(newOType);
                 if (newOType == 'D' || newOType == 'T') {
-                    Order editedOrder = orderLine.getFirst();
-                    editedOrder.setOrderType(newOType);
-                    /*
-                boolean result = orderLine.setFirst(editedOrder);
-                System.out.println("----------------------------");
-                if(result == true){
-                System.out.println(orderLine.getFirst());
-                System.out.println("----------------------------");
-                }else{
-                    System.out.println("Changes has not apply.");
-                }
-                     */
+                    orderLine.getFirst().setOrderType(newOType);
+                    if (newOType == 'T') {
+                        orderLine.getFirst().setTableNo(0);
+                    } else {
+                        editTableNum();
+                    }
+                    System.out.println("----------------------------");
+                    System.out.println(orderLine.getFirst());
+                    System.out.println("----------------------------");
                 } else if (newOType == 'q') {
                     break;
                 } else {
@@ -355,7 +328,11 @@ public class OrderModule {
         if (!orderLine.isEmpty()) {
             System.out.println("\n-------Show All Order-------");
             System.out.println("----------------------------");
-            System.out.println(orderLine);
+            Iterator<Order> iter = orderLine.getIterator();
+            while (iter.hasNext()) {
+                Order o = iter.next();
+                System.out.printf(o.getOrder().toString());
+            }
         } else {
             System.out.println("There is no order in queue");
         }
@@ -365,16 +342,14 @@ public class OrderModule {
         if (!completedOrder.isEmpty()) {
             System.out.println("\n--Show All Completed Order--");
             System.out.println("----------------------------");
-            System.out.println(completedOrder);
+            Iterator<Order> iter = completedOrder.getIterator();
+            while (iter.hasNext()) {
+                Order o = iter.next();
+                System.out.printf(o.getOrder().toString());
+            }
         } else {
             System.out.println("There is no completed order.");
         }
-    }
-
-    public double calculateTotal() {
-        double total = 0.0;
-
-        return total;
     }
 
 }

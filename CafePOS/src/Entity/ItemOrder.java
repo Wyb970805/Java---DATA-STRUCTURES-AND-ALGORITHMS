@@ -10,23 +10,20 @@ package Entity;
  * @author Wen
  */
 public class ItemOrder {
-   // private Item itemOrder;
+    private int itemNum = 0;
+    private Item itemOrder;
     private int itemQty;
-    private float subTotal;
+    private double subTotal;
     
     public ItemOrder(){
         
     }
     
-    public ItemOrder(/*Item itemOrder,*/ int qty){
-       // this.itemOrder = itemOrder;
-        this.subTotal = 0;
-        this.itemQty = itemQty;
-    }
-    public void addItemOrder(){
-       // this.itemOrder = itemOrder;
-        this.subTotal = 0;
-        this.itemQty = itemQty;
+    public ItemOrder(int itemNum, Item itemOrder, int qty){
+        this.itemNum = itemNum;
+        this.itemOrder = itemOrder;
+        this.subTotal = calculateSubTotal(qty);
+        this.itemQty = qty;
     }
     
     public ItemOrder getItemOrder(){
@@ -37,7 +34,7 @@ public class ItemOrder {
         return itemQty;
     }
 
-    public float getSubTotal() {
+    public double getSubTotal() {
         return subTotal;
     }
 
@@ -49,6 +46,15 @@ public class ItemOrder {
         this.subTotal = subTotal;
     }
     
+    public double calculateSubTotal(int qty){
+        return itemOrder.getPrice()*qty;
+    }
+
+    @Override
+    public String toString() {
+        
+        return String.format("%3d. %-6s %-20s %3d %3.2f", itemNum+1,itemOrder.getItemId(), itemOrder.getItemName(), itemQty, subTotal);
+    }
     
 }
 
