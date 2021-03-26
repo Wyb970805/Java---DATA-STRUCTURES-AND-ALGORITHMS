@@ -55,13 +55,18 @@ public class StaffModule {
             System.out.print("|\t\t    6. Check Date Of Staff Attendance \n");
             System.out.print("|\t\t    0. Back To Menu    \n");
             System.out.print("---------------------------------------------------------------\n");
+            
             System.out.print("\t\t     Choose (1 - 5) : ");
-            option = scanner.nextInt(); // capture option to know response with user to the demending method
+            
+            while (!scanner.hasNextInt()) {
+                System.out.print("\nPlease Enter numeric number only, number 1-6: ");
+                scanner.next(); // this is important!
+            }
+            option = scanner.nextInt();
             
             switch(option) {
                 case 1:
-                    addStaff(); // Add Staff method calling 
-                    menuStaff(); // Come back to menu again, because of static method it is, it wont reset
+                    addStaff(); // Add Staff method calling
                     break;
                     
                 case 2:
@@ -70,12 +75,10 @@ public class StaffModule {
 
                 case 3: 
                     deleteStaff(); // Delete Staff method calling
-                    menuStaff();
                     break;
 
                 case 4:
                     showAllStaff(); // Select All Staff
-                    menuStaff();
                     break;
 
                 case 5:
@@ -87,13 +90,13 @@ public class StaffModule {
                     break;
 
                 case 0:
-                    CafePOS.mainMenu(); // Go back to the largest main menu of the system
+                    break; // Go back to the largest main menu of the system
                     
                 default:
-                    error = true; // Set error to true will trigger loop for validation
+                    System.out.print("You entered wrong input!\n");
             }
             
-        }while (error == true);
+        }while (option != 0);
 
     }
     
@@ -262,7 +265,7 @@ public class StaffModule {
                         ListStaff.getEntry(i).setSalary(salary);
                     }
                     else if (choice == 0){
-                        menuStaff();
+                        break;
                     }
                 } while(choice != 0);     
             } 
@@ -416,11 +419,9 @@ public class StaffModule {
               System.out.println("An error occurred.");
               e.printStackTrace();
             }
-            menuStaff(); 
         }
         else {
             System.out.print("\nEither Time Passed 9 AM or You have Ticked Today, Check Attendance at Staff Menu!\n\n");
-            menuStaff();
         }
     }
     

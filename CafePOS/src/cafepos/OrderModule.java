@@ -11,13 +11,15 @@ import ADT.Queue.*;
 import static cafepos.ItemModule.ItemSet;
 import java.util.Iterator;
 import java.util.Scanner;
+import static cafepos.StaffModule.ListStaff;
 
 /**
  *
  * @author Wen
  */
 public class OrderModule {
-
+    
+    
     char exit = 'a';
 
     int orderNum = 1000, tbNum = 0;
@@ -35,6 +37,7 @@ public class OrderModule {
     Order d = new Order(1004, 'T', 0);
      */
     public void orderMenu() {
+        
         //a.setOrderList();
         /* orderLine.addToQueue(a);
         orderLine.addToQueue(b);
