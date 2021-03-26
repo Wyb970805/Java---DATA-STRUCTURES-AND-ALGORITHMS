@@ -5,8 +5,10 @@
  */
 package cafepos;
 
+import ADT.*;
 import Entity.*;
 import ADT.Queue.*;
+import static cafepos.ItemModule.ItemSet;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -18,20 +20,23 @@ public class OrderModule {
 
     char exit = 'a';
 
-    int orderNum = 1004, tbNum = 0;
+    int orderNum = 1000, tbNum = 0;
     String orderList = null;
     Scanner sc = new Scanner(System.in);
     static QueueWithIteratorInterface<Order> orderLine = new CircularCounterQueueWithIterator<>();
     static QueueWithIteratorInterface<Order> completedOrder = new CircularCounterQueueWithIterator<>();
+    //ItemOrderModule itemMenu = new ItemOrderModule();
 
+    /*
     // initialize existed order
-    /*Order a = new Order(1001, 'T', 0, 0.0);
-    Order b = new Order(1002, 'T', 0, 0.0);
-    Order c = new Order(1003, 'T', 0, 0.0);
-    Order d = new Order(1004, 'T', 0, 0.0);
+    Order a = new Order(1001, 'T', 0);
+    Order b = new Order(1002, 'T', 0);
+    Order c = new Order(1003, 'T', 0);
+    Order d = new Order(1004, 'T', 0);
      */
     public void orderMenu() {
-        /*     orderLine.addToQueue(a);
+        //a.setOrderList();
+        /* orderLine.addToQueue(a);
         orderLine.addToQueue(b);
         orderLine.addToQueue(c);
         orderLine.addToQueue(d);
@@ -85,10 +90,12 @@ public class OrderModule {
         boolean error = false;
         System.out.println("New Order (Y/N)?");
         char order = sc.nextLine().charAt(0);
+
         while (!Character.isLetter(order)) {
             System.out.println("Please enter yes (Y) or no (n): ");
             order = sc.nextLine().charAt(0);
         }
+
         while (order == 'Y' || order == 'y') {
 
             //    System.out.print("Member ID: ");
@@ -97,21 +104,35 @@ public class OrderModule {
                 System.out.print("Dine in - D, Take Away - T (q to exit): ");
                 char orderType = sc.nextLine().charAt(0);
                 orderType = Character.toUpperCase(orderType);
+
                 if (orderType == 'D' || orderType == 'T') {
+
                     if (orderType == 'D') {
-                        System.out.print("Table Number: ");
-                        tbNum = sc.nextInt();
+
+                        do {
+                            System.out.print("Table Number (1-20): ");
+                            while (!sc.hasNextInt()) {
+                                System.out.println("That's not a number! \nPlease enter again: ");
+                                sc.next(); // this is important!
+                            }
+                            tbNum = sc.nextInt();
+                            sc.nextLine();
+                        } while (tbNum < 1 || tbNum > 20);
+
+                        /*tbNum = sc.nextInt();
                         sc.nextLine();
+                         */
                     } else {
                         tbNum = 0;
                     }
                     orderNum++;
 
                     ItemOrderModule itemMenu = new ItemOrderModule();
+
                     boolean created = itemMenu.createOrderList();
                     if (created) {
 
-                        Order od = new Order(orderNum, orderType, tbNum);
+                        Order od = new Order(orderNum/*, itemMenu.getItemOrderList()*/, orderType, tbNum);
                         od.setOrderList(itemMenu.getItemOrderList());
                         od.setTotalPrice(itemMenu.getTotal());
                         boolean added = orderLine.addToQueue(od);
@@ -142,6 +163,7 @@ public class OrderModule {
             }
         } //System.out.println("Show first order");
         //System.out.println(orderLine.getFirst());
+
     }
 
     public void removeOrder() {
@@ -204,7 +226,7 @@ public class OrderModule {
             sc.nextLine();
             switch (choice) {
                 case 1:
-                    //itemOrderMenu();
+                    editItem();
                     break;
                 case 2:
                     //   editMember();
@@ -222,6 +244,204 @@ public class OrderModule {
             }
 
         }
+    }
+
+    public void editItem() {
+        System.out.println("\n--------Modify Item---------");
+        System.out.println("----------------------------");
+        System.out.println("1. Add Order item");
+        System.out.println("2. Modify Order item");
+        System.out.println("3. Remove Order item");
+        System.out.println("0. Exit");
+        System.out.printf("Please enter the index (1-4): ");
+        while (!sc.hasNextInt()) {
+            System.out.println("That's not a number! \nPlease enter again: ");
+            sc.next(); // this is important!
+        }
+        int choice = sc.nextInt();
+        double oldTotal;
+        double total = 0;
+        double addPayment;
+        sc.nextLine();
+        String itemId;
+        Item itemsOrder;
+        int num;
+        boolean found = false;
+        char more = 'n';
+        switch (choice) {
+            case 1:
+
+                System.out.println(orderLine.getFirst().getOrderList());
+                oldTotal = orderLine.getFirst().getTotalPrice();
+                System.out.println("Current Total: " + oldTotal);
+                System.out.println("-----------Menu-------------");
+                ItemModule.displayItem();
+                do {
+                    System.out.println("Please enter the item id (exp: x0000): ");
+                    while (!sc.hasNext("[A-Za-z]\\d{4}")) {
+                        System.out.println("The item id is wrong. \nPlease enter again: ");
+                        sc.nextLine();
+                    }
+                    itemId = sc.nextLine().toUpperCase();
+
+                    itemsOrder = null;
+                    for (int i = 1; i <= ItemSet.getNum(); i++) {
+
+                        if (ItemSet.getEntry(i).getItemId().equals(itemId)) {
+                            itemsOrder = ItemSet.getEntry(i);
+                            found = true;
+                            break;
+                        } else {
+                            found = false;
+                        }
+                    }
+                    if (found) {
+                        System.out.print("Quantity: ");
+                        while (!sc.hasNextInt()) {
+                            System.out.println("That's not a number! \nPlease enter again: ");
+                            sc.next(); // this is important!
+                        }
+                        int qty = sc.nextInt();
+                        sc.nextLine();
+                        int lastIndex = orderLine.getFirst().getOrderList().getLength();
+                        lastIndex++;
+                        ItemOrder newEntry = new ItemOrder(lastIndex, itemsOrder, qty);
+                        orderLine.getFirst().getOrderList().add(newEntry);
+
+                        System.out.println("More item to add (Y/other)?");
+                        more = sc.nextLine().charAt(0);
+                        while (!Character.isLetter(more)) {
+                            System.out.println("Please enter yes (Y) or no (n): ");
+                            more = sc.nextLine().charAt(0);
+                        }
+
+                    } else {
+                        System.out.println("Not found.");
+                    }
+                } while (more == 'y' || more == 'Y');
+
+                for (int i = 1; i <= orderLine.getFirst().getOrderList().getLength(); i++) {
+                    total += orderLine.getFirst().getOrderList().getEntry(i).getSubTotal();
+                }
+                addPayment = total - oldTotal;
+                orderLine.getFirst().setTotalPrice(total);
+
+                System.out.printf("%-3s  %-6s %-20s %3s %8s", "No.", "Item(s)", "Name", "Qty", "Price(RM)");
+                System.out.print("\n" + orderLine.getFirst().getOrderList());
+                System.out.println("----------------------------");
+                System.out.println("Total : RM" + orderLine.getFirst().getTotalPrice()); // total is wrong - recalculate subtotal
+
+                System.out.println("Additional payment: " + addPayment);
+                break;
+            case 2:
+                System.out.println(orderLine.getFirst().getOrderList());
+                oldTotal = orderLine.getFirst().getTotalPrice();
+                System.out.println("Current Total: " + oldTotal);
+                System.out.println("Which Item you want to modify? \nPlease enter the index (1):");
+                while (!sc.hasNextInt()) {
+                    System.out.println("That's not a number! \nPlease enter again: ");
+                    sc.next(); // this is important!
+                }
+                num = sc.nextInt();
+                sc.nextLine();
+                System.out.println(orderLine.getFirst().getOrderList().getEntry(num));
+                System.out.println("-----------Menu-------------");
+                ItemModule.displayItem();
+
+                System.out.println("Please enter the item id (exp: x0000): ");
+                while (!sc.hasNext("[A-Za-z]\\d{4}")) {
+                    System.out.println("The item id is wrong. \nPlease enter again: ");
+                    sc.nextLine();
+                }
+                itemId = sc.nextLine().toUpperCase();
+
+                itemsOrder = null;
+                for (int i = 1; i <= ItemSet.getNum(); i++) {
+
+                    if (ItemSet.getEntry(i).getItemId().equals(itemId)) {
+                        itemsOrder = ItemSet.getEntry(i);
+                        found = true;
+                        break;
+                    } else {
+                        found = false;
+                    }
+                }
+                if (found) {
+                    System.out.print("Quantity: ");
+                    while (!sc.hasNextInt()) {
+                        System.out.println("That's not a number! \nPlease enter again: ");
+                        sc.next(); // this is important!
+                    }
+                    int qty = sc.nextInt();
+                    sc.nextLine();
+
+                    orderLine.getFirst().getOrderList().getEntry(num).setItemOrder(itemsOrder);
+                    orderLine.getFirst().getOrderList().getEntry(num).setItemQty(qty);
+                    double newSub = orderLine.getFirst().getOrderList().getEntry(num).calculateSubTotal(qty);
+                    orderLine.getFirst().getOrderList().getEntry(num).setSubTotal(newSub);
+
+                    for (int i = 1; i <= orderLine.getFirst().getOrderList().getLength(); i++) {
+                        total += orderLine.getFirst().getOrderList().getEntry(i).getSubTotal();
+                    }
+                    addPayment = total - oldTotal;
+                    orderLine.getFirst().setTotalPrice(total);
+
+                    System.out.printf("%-3s  %-6s %-20s %3s %8s", "No.", "Item(s)", "Name", "Qty", "Price(RM)");
+                    System.out.print("\n" + orderLine.getFirst().getOrderList());
+                    System.out.println("----------------------------");
+                    System.out.println("Total : RM" + orderLine.getFirst().getTotalPrice()); // total is wrong - recalculate subtotal
+
+                    System.out.println("Additional payment: " + addPayment);
+
+                } else {
+                    System.out.println("Not found.");
+                }
+
+                break;
+            case 3:
+                System.out.println(orderLine.getFirst().getOrderList());
+                oldTotal = orderLine.getFirst().getTotalPrice();
+                System.out.println("Current Total: " + oldTotal);
+                System.out.println("Which Item you want to modify? \nPlease enter the index (1):");
+                while (!sc.hasNextInt()) {
+                    System.out.println("That's not a number! \nPlease enter again: ");
+                    sc.next(); // this is important!
+                }
+                num = sc.nextInt();
+                sc.nextLine();
+                System.out.print("Are you sure to remove (Y/other)? ");
+                char conf = sc.nextLine().charAt(0);
+                while (!Character.isLetter(conf)) {
+                    System.out.println("Please enter an alphabel: ");
+                    conf = sc.nextLine().charAt(0);
+                }
+                if (conf == 'Y' || conf == 'y') {
+                    orderLine.getFirst().getOrderList().remove(num);
+                } else {
+                    System.out.println("The items is not remove yet.");
+                }
+                for (int i = 1; i <= orderLine.getFirst().getOrderList().getLength(); i++) {
+                    orderLine.getFirst().getOrderList().getEntry(i).setItemNum(i);
+                    total += orderLine.getFirst().getOrderList().getEntry(i).getSubTotal();
+                }
+                addPayment = total - oldTotal;
+                orderLine.getFirst().setTotalPrice(total);
+
+                System.out.printf("%-3s  %-6s %-20s %3s %8s", "No.", "Item(s)", "Name", "Qty", "Price(RM)");
+                System.out.print("\n" + orderLine.getFirst().getOrderList());
+                System.out.println("----------------------------");
+                System.out.println("Total : RM" + orderLine.getFirst().getTotalPrice()); // total is wrong - recalculate subtotal
+
+                System.out.println("Additional payment: " + addPayment);
+
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println("Error! Please select between 1 - 4!");
+
+        }
+
     }
 
     public void editTableNum() {

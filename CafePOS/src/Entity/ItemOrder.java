@@ -10,24 +10,38 @@ package Entity;
  * @author Wen
  */
 public class ItemOrder {
-    private int itemNum = 0;
+
+    private int itemNum;
     private Item itemOrder;
     private int itemQty;
     private double subTotal;
-    
-    public ItemOrder(){
-        
+
+    public ItemOrder() {
+
     }
-    
-    public ItemOrder(int itemNum, Item itemOrder, int qty){
+
+    public ItemOrder(int itemNum, Item itemOrder, int qty) {
+        //this.count++;
         this.itemNum = itemNum;
         this.itemOrder = itemOrder;
         this.subTotal = calculateSubTotal(qty);
         this.itemQty = qty;
     }
-    
-    public ItemOrder getItemOrder(){
+
+    public int getItemNum() {
+        return itemNum;
+    }
+
+    public void setItemNum(int itemNum) {
+        this.itemNum = itemNum;
+    }
+
+    public ItemOrder getItemOrder() {
         return this;
+    }
+
+    public void setItemOrder(Item itemOrder) {
+        this.itemOrder = itemOrder;
     }
 
     public int getItemQty() {
@@ -42,20 +56,20 @@ public class ItemOrder {
         this.itemQty = itemQty;
     }
 
-    public void setSubTotal(float subTotal) {
+    public void setSubTotal(double subTotal) {
         this.subTotal = subTotal;
     }
-    
-    public double calculateSubTotal(int qty){
-        return itemOrder.getPrice()*qty;
+
+    public double calculateSubTotal(int qty) {
+        return itemOrder.getPrice() * qty;
     }
 
     @Override
     public String toString() {
-        
-        return String.format("%3d. %-6s %-20s %3d %3.2f", itemNum+1,itemOrder.getItemId(), itemOrder.getItemName(), itemQty, subTotal);
+
+        return String.format("%3d. %-6s %-20s %3d %3.2f", itemNum, itemOrder.getItemId(), itemOrder.getItemName(), itemQty, subTotal);
     }
-    
+
 }
 
 // for loop to return each item.
