@@ -78,14 +78,6 @@ public class CircularCounterQueue<E>{
             return first;
     }
     
-    public boolean setFirst(E e){
-        if(isEmpty()!=true){
-           line[firstIndex]=e;
-           return true;
-        }else{
-            return false;
-        }
-    }
     public void resize(){
         E[] temp = line;
         int length = line.length;

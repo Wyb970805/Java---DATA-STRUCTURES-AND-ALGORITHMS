@@ -78,14 +78,6 @@ public class CircularCounterQueueWithIterator<E> implements QueueWithIteratorInt
             return first;
     }
     
-    public boolean setFirst(E e){
-        if(isEmpty()!=true){
-           line[firstIndex]=e;
-           return true;
-        }else{
-            return false;
-        }
-    }
     public void resize(){
         E[] temp = line;
         int length = line.length;
@@ -111,18 +103,21 @@ public class CircularCounterQueueWithIterator<E> implements QueueWithIteratorInt
     private class QueueIterator implements Iterator{
         
         private int currentIndex = firstIndex;
-        
+        int num = counter;
         @Override
         public boolean hasNext() {
-            return currentIndex+1%line.length < counter;
+               return num!=0;
         }
 
         @Override
         public E next() {
             E nextElement = null; 
             if (hasNext()) {
+                num--;
                 nextElement = line[currentIndex];
                 currentIndex = (currentIndex+1)%line.length;
+                //System.out.println("--------------------next"+firstIndex+currentIndex+counter+lastIndex+num);                                           
+                        
             }
            return nextElement;
         }

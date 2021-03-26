@@ -8,7 +8,6 @@ package cafepos;
 import ADT.*;
 import Entity.*;
 import ADT.Queue.*;
-import static cafepos.CafePOS.mainMenu;
 import static cafepos.ItemModule.ItemSet;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -21,7 +20,7 @@ public class OrderModule {
 
     char exit = 'a';
 
-    int orderNum = 1003, tbNum = 0;
+    int orderNum = 1000, tbNum = 0;
     String orderList = null;
     Scanner sc = new Scanner(System.in);
     static QueueWithIteratorInterface<Order> orderLine = new CircularCounterQueueWithIterator<>();
@@ -79,7 +78,6 @@ public class OrderModule {
                     showOrder();
                     break;
                 case 0:
-                    mainMenu();
                     break;
                 default:
                     System.out.println("Error! Please select between 1 - 5!");
