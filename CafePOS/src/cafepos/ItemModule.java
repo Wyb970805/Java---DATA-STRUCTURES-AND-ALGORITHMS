@@ -30,8 +30,8 @@ public class ItemModule {
        
        int select;
        do{
-           System.out.println("----------- Item -----------");
-           System.out.println("----------------------------");
+           System.out.println("----------- Item Module -----------");
+           System.out.println("-----------------------------------");
            System.out.println("1. Enter new Item");
            System.out.println("2. Edit Item");
            System.out.println("3. Delete Item");
@@ -85,9 +85,10 @@ public class ItemModule {
         itemPrice = scan.nextDouble();
         
         //do {
-            System.out.print("-------- Choose category --------\n");
-            System.out.print("1. 'F'= Food\n");
-            System.out.print("2. 'B' = Beverage\n");
+            System.out.println("-------- Choose category --------");
+            System.out.println("---------------------------------");
+            System.out.println("1. 'F'= Food");
+            System.out.println("2. 'B' = Beverage");
             System.out.print("Enter number (1-2): ");
             while (!scan.hasNextInt()) {
             System.out.print("Input invalid! Please re-enter: ");
@@ -123,7 +124,9 @@ public class ItemModule {
         for(int i = 1; i <= ItemSet.getNum(); i++) {
             
             if(ItemSet.getEntry(i).getItemId().equals(itemID)) {
+                System.out.println("--------------------- Edit Item -----------------------");
                 System.out.println(ItemSet.getEntry(i).toString() + " ");
+                System.out.println("-------------------------------------------------------");
                 System.out.println("1. Edit Item Name: ");
                 System.out.println("2. Edit Item Price: ");
                 System.out.println("3. Edit Item Ingredient: ");
@@ -149,7 +152,7 @@ public class ItemModule {
                 }
                 else if (select == 4) {
                     int editCategory;
-                    System.out.println("The old staff role: " + ItemSet.getEntry(i).getCategory() + "");
+                    System.out.println("Old Item Category: " + ItemSet.getEntry(i).getCategory() + "");
                     System.out.print("1. 'F'= Food\n");
                     System.out.print("2. 'B' = Beverage\n");
                     System.out.print("Enter New Item Category (1-2): ");
