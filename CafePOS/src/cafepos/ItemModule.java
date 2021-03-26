@@ -13,7 +13,7 @@ import static cafepos.CafePOS.mainMenu;
 
 /**
  *
- * @author Wen
+ * @author User10
  */
 public class ItemModule {
     public static ArraySet<Item> ItemSet = new ArraySet<Item>();
@@ -52,7 +52,7 @@ public class ItemModule {
                 editItem();
                 break;
             case 3:
-                //deleteItem();
+                deleteItem();
                 break;
             case 4:
                 displayItem();
@@ -71,7 +71,7 @@ public class ItemModule {
         String itemId, itemName;
         double itemPrice;
         int select;
-        char category;
+        char category = 0;
         
         Scanner scan = new Scanner(System.in);
         
@@ -85,12 +85,12 @@ public class ItemModule {
         itemPrice = scan.nextDouble();
         
         //do {
-            System.out.print("-------- Choose category --------");
-            System.out.print("1. 'F'= Food");
-            System.out.print("2. 'B' = Beverage");
+            System.out.print("-------- Choose category --------\n");
+            System.out.print("1. 'F'= Food\n");
+            System.out.print("2. 'B' = Beverage\n");
             System.out.print("Enter number (1-2): ");
             while (!scan.hasNextInt()) {
-            System.out.println("Input invalid! Please re-enter: ");
+            System.out.print("Input invalid! Please re-enter: ");
             scan.next();
             }
             select = scan.nextInt();
@@ -102,15 +102,20 @@ public class ItemModule {
                 category = 'B';
             }
             
-        //ItemSet.add(new Item(itemId, itemName, itemPrice, category));
+        ItemSet.add(new Item(itemId, itemName, itemPrice, category));
         
     }
    
-   public static void editItem() {
+   public void editItem() {
         
         String itemID;
+        String editName;
+        double editPrice;
         int select;
         Scanner scan = new Scanner(System.in);
+        Scanner scanName = new Scanner(System.in);
+        Scanner scanPrice = new Scanner(System.in);
+        Scanner scanCat = new Scanner(System.in);
         
         System.out.print("Enter ItemID to modify item: ");
         itemID = scan.nextLine();
@@ -118,50 +123,94 @@ public class ItemModule {
         for(int i = 1; i <= ItemSet.getNum(); i++) {
             
             if(ItemSet.getEntry(i).getItemId().equals(itemID)) {
-                System.out.print(ItemSet.getEntry(i).toString() + " ");
-                System.out.print("1. Edit Item Name: ");
-                System.out.print("2. Edit Item Price: ");
-                System.out.print("3. Edit Item Ingredient: ");
-                System.out.print("4. Edit Item Category: ");
-                System.out.print("7. Cancel Modifying or Switch Staff: ");
+                System.out.println(ItemSet.getEntry(i).toString() + " ");
+                System.out.println("1. Edit Item Name: ");
+                System.out.println("2. Edit Item Price: ");
+                System.out.println("3. Edit Item Ingredient: ");
+                System.out.println("4. Edit Item Category: ");
+                System.out.println("0. Exit: ");
                 System.out.print("Enter number (1-4): ");
                 select = scan.nextInt();
 
                 if (select == 1) {
-                    System.out.print("Old Item Name ( " + ItemSet.getEntry(i).getItemName().toString() + " ).");
+                    
+                    System.out.println("Old Item Name: " + ItemSet.getEntry(i).getItemName() + "");//.toString()
                     System.out.print("Enter New Item Name: ");
-                    String editName = scan.nextLine();
+                    editName = scanName.nextLine();
                     
                     ItemSet.getEntry(i).setItemName(editName);
                 }
                 else if (select == 2) {
-                    //System.out.print("Old Item Price( " + ItemSet.getEntry(i).getPrice().toString() + " ).");
+                    System.out.println("Old Item Price: " + ItemSet.getEntry(i).getPrice() + "");
                     System.out.print("Enter New Item Price: ");
-                    double editPrice = scan.nextDouble();
+                    editPrice = scanPrice.nextDouble();
                     
                     ItemSet.getEntry(i).setPrice(editPrice);
                 }
                 else if (select == 4) {
-                    //System.out.print("The old staff role ( " + ItemSet.getEntry(i).getCategory().toString() + " ).");
-                    System.out.print("Enter New Item Category: ");
-                    //char editCategory = scan.nextInt();
+                    int editCategory;
+                    System.out.println("The old staff role: " + ItemSet.getEntry(i).getCategory() + "");
+                    System.out.print("1. 'F'= Food\n");
+                    System.out.print("2. 'B' = Beverage\n");
+                    System.out.print("Enter New Item Category (1-2): ");
+                    editCategory = scanCat.nextInt();
                     
-                    //ItemSet.getEntry(i).setCategory(editCategory);
+                    char category = 0;
+            
+            if (editCategory == 1) {
+                category = 'F';
+            }
+            else if (editCategory == 2) {
+                category = 'B';
+            }
+                    ItemSet.getEntry(i).setCategory(category);
                 }
-                else {
-                    
+                else{
+                    itemMenu();
                 }
+                
     
             }
         }
         
     }
+   
+   public void deleteItem() {
+        
+        String itemID;
+        char confirm;
+        Item delete = null;
+        Scanner scan = new Scanner(System.in);
+        
+        
+        System.out.print("Enter ItemID to delete the item: ");
+        itemID = scan.nextLine();
+        
+        for(int i = 1; i <= ItemSet.getNum(); i++) {
+            
+        if(ItemSet.getEntry(i).getItemId().equals(itemID)){
+        System.out.print("Do you confirm delete this item? (Y/N): ");
+        confirm = scan.nextLine().charAt(0);
+        
+        if(confirm == 'Y'){
+            ItemSet.getEntry(i).toString();
+        }
+        else{
+            itemMenu();
+        }
+        }
+        }
+   }
+   
    public static void displayItem() {
         System.out.print(ItemSet.getNum());
         
+        if (!ItemSet.isEmpty()) {
         for(int i = 1; i <= ItemSet.getNum(); i++){
             System.out.println(ItemSet.getEntry(i).toString());
         
         }
+        }else
+            System.out.println("The Item List is Empty!");
     }
 }
