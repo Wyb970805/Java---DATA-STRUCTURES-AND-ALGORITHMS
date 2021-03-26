@@ -8,6 +8,7 @@ package cafepos;
 import java.util.Scanner;
 import Entity.*;
 import ADT.*;
+import static cafepos.CafePOS.mainMenu;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
@@ -27,6 +28,7 @@ public class RecordPayment {
     static Cash blc = new Cash();
     static CreditCard cc = new CreditCard();
     float paymentAmount = (float) orderLine.getFirst().getTotalPrice();
+    int orderNum = orderLine.getFirst().getOrderNum();
     LocalDateTime paid = LocalDateTime.now();
 
     public static void records() {
@@ -34,7 +36,7 @@ public class RecordPayment {
         String dateTime = "2021-01-09 11:55:55";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime formatDateTime = LocalDateTime.parse(dateTime, formatter);
-        Cash cashList1 = new Cash(1, 100, "Cash", formatDateTime, 0, 100);
+        Cash cashList1 = new Cash(1, 1001, 100, "Cash", formatDateTime, 0, 100);
         if (cashIterator.add(cashList1) == true) {
             blc.setBalance(100);
             income = pay.getTotalIncome() + 100;
@@ -42,7 +44,7 @@ public class RecordPayment {
         }
         String ccdateTime = "2021-02-16 08:05:55";
         LocalDateTime ccformatDateTime = LocalDateTime.parse(ccdateTime, formatter);
-        CreditCard cardList1 = new CreditCard(1, 200, "Credit Card", ccformatDateTime, "1997080520000216", "Wang Yi Bo", "02/24");
+        CreditCard cardList1 = new CreditCard(1, 1002, 200, "Credit Card", ccformatDateTime, "1997080520000216", "Wang Yi Bo", "02/24");
         if (creditCardIterator.add(cardList1) == true) {
             cc.setCCTotalAmt(200);
             income = pay.getTotalIncome() + 200;
@@ -77,7 +79,6 @@ public class RecordPayment {
     }
 
     public void displayAmount(int selectOrderNo) {
-        //System.out.println(orderLine.getFirst()); 
         System.out.println("Order No: " + selectOrderNo);
         System.out.printf("Total Amount: RM %.2f \n", paymentAmount);
         selectPaymentMethod();
@@ -159,7 +160,7 @@ public class RecordPayment {
         while (cashIterator.containsID(paymentID) == true) {
             paymentID++;
         }
-        Cash cash1 = new Cash(paymentID, paymentAmount, paymentMethod, paid, change, amt);
+        Cash cash1 = new Cash(paymentID, orderNum, paymentAmount, paymentMethod, paid, change, amt);
         if (cashIterator.add(cash1) == true) {
             blc.setChange(change);
             System.out.printf("\nReceived Cash: RM %.2f\n", amt);
@@ -223,7 +224,7 @@ public class RecordPayment {
         }
         float amt = cc.getCCTotalAmt() + paymentAmount;
         cc.setCCTotalAmt(amt);
-        CreditCard credit = new CreditCard(paymentID, paymentAmount, paymentMethod, paid, cardNo, name, expiryDate);
+        CreditCard credit = new CreditCard(paymentID, orderNum, paymentAmount, paymentMethod, paid, cardNo, name, expiryDate);
         if (creditCardIterator.add(credit) == true) {
             System.out.printf("\nPay by credit card: RM %.2f\n", paymentAmount);
             System.out.println("Credit Card Info was added Successfully.\n");
@@ -264,8 +265,11 @@ public class RecordPayment {
             case 3:
                 modifyPayment();
                 break;
+            case 0:
+                mainMenu();
+                break;
             default:
-                System.out.println("Thank you!");
+                errorMessage();
         }
     }
 
@@ -282,7 +286,7 @@ public class RecordPayment {
 
     public static void displayRecords() {
         int total = creditCardIterator.getLength() + cashIterator.getLength();
-        System.out.println("\nDisplay Payment Records\n-----------");
+        System.out.println("\nDisplay Payment Records\n------------------------");
         System.out.printf("Cash Balance: RM %.2f \n", blc.getBalance());
         System.out.printf("Total amount from credit card: RM %.2f \n", cc.getCCTotalAmt());
         System.out.println("Total number of records paid by cash: " + cashIterator.getLength());

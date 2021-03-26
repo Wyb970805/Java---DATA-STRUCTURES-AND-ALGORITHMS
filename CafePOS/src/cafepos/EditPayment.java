@@ -18,7 +18,6 @@ public class EditPayment {
 
     Cash blc = new Cash();
     CreditCard cc = new CreditCard();
-    float paymentAmount = 100; //pay.getPaymentAmount();
     LocalDateTime paid = LocalDateTime.now();
 
     public static void modifyPayment() {
@@ -73,7 +72,6 @@ public class EditPayment {
             System.out.printf("Enter Payment ID: ");
             int id = scanRecords.nextInt();
             int index = id - 1;
-
             if (cashIterator.contains(index) == true) {
                 System.out.println(cashIterator.getEntry(id));
                 char yn;
@@ -98,7 +96,6 @@ public class EditPayment {
             System.out.printf("Enter Payment ID: ");
             int id = scanRecords.nextInt();
             int index = id - 1;
-
             if (creditCardIterator.contains(index) == true) {
                 System.out.println(creditCardIterator.getEntry(id));
                 char yn;
@@ -123,6 +120,8 @@ public class EditPayment {
         float change = 0;
         float cashBlc = 0;
         String paymentMethod = "Cash";
+        float paymentAmount = cashIterator.getEntry(id).getPaymentAmount();
+        int orderNum = cashIterator.getEntry(id).getOrderNum();
         do {
             try {
                 System.out.printf("Enter paid amount: RM ");
@@ -145,8 +144,7 @@ public class EditPayment {
                 scanCash.nextLine();
             }
         } while (is2dec == false);
-
-        Cash cash1 = new Cash(id, paymentAmount, paymentMethod, paid, change, amt);
+        Cash cash1 = new Cash(id, orderNum, paymentAmount, paymentMethod, paid, change, amt);
         boolean editCashInfo = cashIterator.replace(id, cash1);
         if (editCashInfo == true) {
             System.out.println("\nReceipt\n---------");
@@ -169,6 +167,8 @@ public class EditPayment {
         String paymentMethod = "Credit Card";
         boolean check = false;
         boolean check1 = false;
+        float paymentAmount = creditCardIterator.getEntry(id).getPaymentAmount();
+        int orderNum = creditCardIterator.getEntry(id).getOrderNum();
         do {
             System.out.printf("Credit card No.: ");
             cardNo = scanCard.nextLine();
@@ -197,7 +197,7 @@ public class EditPayment {
                 System.out.println("Please enter correct format and try again!");
             }
         } while (check1 == false);
-        CreditCard credit = new CreditCard(id, paymentAmount, paymentMethod, paid, cardNo, name, expiryDate);
+        CreditCard credit = new CreditCard(id, orderNum, paymentAmount, paymentMethod, paid, cardNo, name, expiryDate);
         boolean editCardInfo = creditCardIterator.replace(id, credit);
         if (editCardInfo == true) {
             System.out.println("\nReceipt\n---------");

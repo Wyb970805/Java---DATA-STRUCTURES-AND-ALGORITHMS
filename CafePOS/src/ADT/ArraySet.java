@@ -13,7 +13,7 @@ package ADT;
 public class ArraySet<T> implements SetInterface<T> {
     //declare array 
     private T[] setArray; 
-//int [] arr = new int[5];
+    //int [] arr = new int[5];
     private int numberOfElements;
     private static final int INITIAL_DEFAULT_CAPACITY = 5;
     
@@ -165,6 +165,16 @@ public class ArraySet<T> implements SetInterface<T> {
             str+=setArray[i]+", ";
         }
         return str;
+    }
+
+    @Override
+    public T getNums(int items) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean replace(int items, T newNums) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

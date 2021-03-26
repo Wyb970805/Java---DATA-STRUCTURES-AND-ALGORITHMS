@@ -5,8 +5,6 @@
  */
 package cafepos;
 
-import Entity.*;
-import ADT.*;
 import java.util.Scanner;
 import static cafepos.EditPayment.modifyPayment;
 import static cafepos.OrderModule.orderLine;
@@ -25,13 +23,12 @@ public class CafePOS {
         // TODO code application logic here
         records();
         mainMenu();
-        OrderModule ordering = new OrderModule();
-        ordering.orderMenu();
     }
 
     public static void mainMenu() {
         Scanner input = new Scanner(System.in);
         OrderModule ordering = new OrderModule();
+        ItemModule item = new ItemModule();
         System.out.println("-------------------");
         System.out.println("Welcome to 063 Cafe");
         System.out.println("-------------------");
@@ -53,10 +50,11 @@ public class CafePOS {
                 ordering.orderMenu();
                 break;
             case 2:
+                
                 selectAction();
                 break;
             case 3:
-
+                item.itemMenu();
                 break;
             case 4:
 
@@ -118,5 +116,4 @@ public class CafePOS {
             }
         } while (action < 0 || action > 3);
     }
-
 }

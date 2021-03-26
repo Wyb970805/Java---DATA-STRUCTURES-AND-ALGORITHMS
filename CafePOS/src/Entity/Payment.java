@@ -18,24 +18,25 @@ public class Payment implements Serializable {
     private float paymentAmount;
     private String paymentMethod;
     private LocalDateTime paid = LocalDateTime.now();   
-    private Order orderList[];
+    private int orderNum;
     private float totalIncome;
 
     //contructor
     public Payment() {
     }
 
-    public Payment(int paymentID, float paymentAmount, String paymentMethod, LocalDateTime paid, Order orderList[], float totalIncome) {
+    public Payment(int paymentID, float paymentAmount, String paymentMethod, LocalDateTime paid, int orderNum, float totalIncome) {
         this.paymentID = paymentID;
         this.paymentAmount = paymentAmount;
         this.paymentMethod = paymentMethod;
         this.paid = paid;
-        this.orderList = orderList;
+        this.orderNum = orderNum;
         this.totalIncome = totalIncome;
     }
 
-    public Payment(int paymentID, float paymentAmount, String paymentMethod, LocalDateTime paid) {
+    public Payment(int paymentID, int orderNum, float paymentAmount, String paymentMethod, LocalDateTime paid) {
         this.paymentID = paymentID;
+        this.orderNum = orderNum;
         this.paymentAmount = paymentAmount;
         this.paymentMethod = paymentMethod;
         this.paid = paid;
@@ -70,12 +71,12 @@ public class Payment implements Serializable {
         return paid;
     }
 
-    public Order[] getOrderList() {
-
-        for (int i = 0; i <= orderList.length; i++) {
-            System.out.println("Order List: " + this.orderList[i]);
-        }
-        return orderList;
+    public int getOrderNum() {
+        return orderNum;
+    }
+    
+    public void setOrderNum(int orderNum){
+        this.orderNum = orderNum;
     }
 
     public void setTotalIncome(float income) {
@@ -93,6 +94,7 @@ public class Payment implements Serializable {
         String formattedDate = paid.format(formatObj);
 
         return "Payment ID        : " + paymentID
+                + "\nOrder Number      : " + orderNum
                 + "\nPayment Amount    : RM " + String.format("%.2f", paymentAmount)
                 + "\nPaid Date and Time: " + formattedDate
                 + "\nPayment Method    : " + paymentMethod

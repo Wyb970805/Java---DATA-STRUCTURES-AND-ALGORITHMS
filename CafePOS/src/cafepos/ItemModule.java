@@ -9,6 +9,7 @@ import ADT.ArraySet;
 import Entity.Item;
 import java.util.Scanner;
 import Entity.Ingredient;
+import static cafepos.CafePOS.mainMenu;
 
 /**
  *
@@ -20,6 +21,13 @@ public class ItemModule {
    Scanner scan = new Scanner(System.in);
    
    public void itemMenu(){
+       
+       // add exist item into adt set
+       ItemSet.add(new Item("F1001","food1",5.0,'F'));
+       ItemSet.add(new Item("F1002","food2",7.5,'F'));
+       ItemSet.add(new Item("B1001","drink1",5.0,'B'));
+       ItemSet.add(new Item("B1002","drink2",3.5,'B'));
+       
        int select;
        do{
            System.out.println("----------- Item -----------");
@@ -50,6 +58,7 @@ public class ItemModule {
                 displayItem();
                 break;
             case 0:
+                mainMenu();
                 break;
             default:
                 System.out.println("Invalid number! Please re-enter: ");            

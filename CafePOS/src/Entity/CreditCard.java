@@ -22,16 +22,15 @@ public class CreditCard extends Payment{
     public CreditCard() {
     }
 
-    public CreditCard(int paymentID, float paymentAmount, String paymentMethod, LocalDateTime paid, String cardNo, String nameOnCard, String expiryDate, float totalCCAmount) {
-        super(paymentID, paymentAmount, paymentMethod, paid);
+    public CreditCard(String cardNo, String nameOnCard, String expiryDate, float totalCCAmount) {
         this.cardNo = cardNo;
         this.nameOnCard = nameOnCard;
         this.expiryDate = expiryDate;
         this.totalCCAmount = totalCCAmount;
     }
     
-    public CreditCard(int paymentID, float paymentAmount, String paymentMethod, LocalDateTime paid, String cardNo, String nameOnCard, String expiryDate) {
-        super(paymentID, paymentAmount, paymentMethod, paid);
+    public CreditCard(int paymentID, int orderNum, float paymentAmount, String paymentMethod, LocalDateTime paid, String cardNo, String nameOnCard, String expiryDate) {
+        super(paymentID, orderNum, paymentAmount, paymentMethod, paid);
         this.cardNo = cardNo;
         this.nameOnCard = nameOnCard;
         this.expiryDate = expiryDate;

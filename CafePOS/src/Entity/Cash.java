@@ -28,8 +28,8 @@ public class Cash extends Payment{
         this.custPaidAmt = custPaidAmt;
     }
     
-    public Cash(int paymentID, float paymentAmount, String paymentMethod, LocalDateTime paid, float change, float custPaidAmt) {
-        super(paymentID, paymentAmount, paymentMethod, paid);
+    public Cash(int paymentID, int orderNum, float paymentAmount, String paymentMethod, LocalDateTime paid, float change, float custPaidAmt) {
+        super(paymentID,orderNum, paymentAmount, paymentMethod, paid);
         this.change = change;
         this.custPaidAmt = custPaidAmt;
     }
