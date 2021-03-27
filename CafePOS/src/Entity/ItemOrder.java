@@ -24,8 +24,16 @@ public class ItemOrder {
         //this.count++;
         this.itemNum = itemNum;
         this.itemOrder = itemOrder;
-        this.subTotal = calculateSubTotal(qty);
         this.itemQty = qty;
+        this.subTotal = calculateSubTotal(qty);
+    }
+    
+    public ItemOrder(int itemNum, Item itemOrder, int qty, double subTotal) {
+        //this.count++;
+        this.itemNum = itemNum;
+        this.itemOrder = itemOrder;
+        this.itemQty = qty;
+        this.subTotal = subTotal;
     }
 
     public int getItemNum() {

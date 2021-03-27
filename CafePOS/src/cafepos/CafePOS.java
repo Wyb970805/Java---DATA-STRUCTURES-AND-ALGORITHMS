@@ -5,10 +5,12 @@
  */
 package cafepos;
 
+import Entity.Item;
 import Entity.Member;
 import Entity.Staff;
 import java.util.Scanner;
 import static cafepos.EditPayment.modifyPayment;
+import static cafepos.ItemModule.ItemSet;
 import static cafepos.MemberModule.ListMember;
 import static cafepos.MemberModule.menuMember;
 import static cafepos.OrderModule.orderLine;
@@ -27,9 +29,8 @@ public class CafePOS {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        userRecords();
-        records(); //payment records
         checkLogIn();
+
     }
 
     public static void userRecords() {
@@ -39,16 +40,20 @@ public class CafePOS {
         ListMember.add(new Member("Adam", "016-5486248", "adam@gmail.com"));
         ListMember.add(new Member("David", "018-1364897", "david@gmail.com"));
         ListMember.add(new Member("Davinson", "014-1236484", "davinson@gmail.com"));
+        ItemSet.add(new Item("F1001", "food1", 5.0, 'F'));
+        ItemSet.add(new Item("F1002", "food2", 7.5, 'F'));
+        ItemSet.add(new Item("B1001", "drink1", 5.0, 'B'));
+        ItemSet.add(new Item("B1002", "drink2", 3.5, 'B'));
     }
-    
+
     public static void checkLogIn() {
         int session = 0;
-        
+
         ListStaff.add(new Staff("owner", "ownerPhone", "ownerEmail@gmail.com", "123456", "Owner", 1500, 10000));
         ListMember.add(new Member("guestName", "guestPhoneNo", "guestEmail@gmail.com"));
-        
+
         Scanner scanlog = new Scanner(System.in);
-        
+
         do {
             System.out.print("Enter Log In User ID : ");
             String ownerID = scanlog.nextLine();
@@ -56,25 +61,27 @@ public class CafePOS {
             System.out.print("Enter Log In Password : ");
             String ownerPass = scanlog.nextLine();
 
-            for(int i = 1; i <= ListStaff.getLength(); i++) {
+            for (int i = 1; i <= ListStaff.getLength(); i++) {
                 if (ownerID.equals(ListStaff.getEntry(i).getStaff_ID()) && ownerPass.equals(ListStaff.getEntry(i).getEntryKey())) {
                     session = 1;
-                }
-                else {
+                } else {
                     System.out.print("The Log In ID or Password is not matched !\n\n");
                     session = 0;
                 }
             }
         } while (session != 1);
-        
-        if(session == 1) {
+
+        if (session == 1) {
             mainMenu();
         }
     }
 
     public static void mainMenu() {
+        userRecords();
+        records(); //payment records
         Scanner input = new Scanner(System.in);
         OrderModule ordering = new OrderModule();
+        ordering.orderRecord();
         ItemModule item = new ItemModule();
         int index;
         do {

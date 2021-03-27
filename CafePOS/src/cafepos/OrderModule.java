@@ -22,7 +22,7 @@ public class OrderModule {
 
     char exit = 'a';
 
-    int orderNum = 1002, tbNum = 0;
+    int orderNum = 1003, tbNum = 0;
     String orderList = null;
     Scanner sc = new Scanner(System.in);
     static QueueWithIteratorInterface<Order> orderLine = new CircularCounterQueueWithIterator<>();
@@ -166,7 +166,7 @@ public class OrderModule {
                 System.out.println("Please enter yes (Y) or no (N): ");
                 order = sc.nextLine().charAt(0);
             }
-        } 
+        }
     }
 
     // remove the current queue first order
@@ -282,7 +282,7 @@ public class OrderModule {
         char more = 'n';
         switch (choice) {
             case 1:
-                
+
                 //retrieve the order record to get the first order in current queue
                 System.out.println(orderLine.getFirst().getOrderList());
                 oldTotal = orderLine.getFirst().getTotalPrice();
@@ -333,7 +333,7 @@ public class OrderModule {
                         System.out.println("Not found.");
                     }
                 } while (more == 'y' || more == 'Y');
-                
+
                 // calculate the total price of the order
                 for (int i = 1; i <= orderLine.getFirst().getOrderList().getLength(); i++) {
                     total += orderLine.getFirst().getOrderList().getEntry(i).getSubTotal();
@@ -620,7 +620,7 @@ public class OrderModule {
             }
         } while (choice != 0);
     }
-    
+
     // display current order in queue.
     private void showOrderQueue() {
         if (!orderLine.isEmpty()) {
@@ -674,7 +674,7 @@ public class OrderModule {
         }
 
     }
-    
+
     // retrieve the existing staff details
     public Staff staffIdValidation(String sid) {
         boolean ivalidS = true;
@@ -698,6 +698,45 @@ public class OrderModule {
             return staffIncharge;
         }
 
+    }
+
+    public void orderRecord() {
+        //first record;
+        Member member = ListMember.getEntry(1);
+        Staff staffIncharge = ListStaff.getEntry(1);
+        Order od = new Order(1001, 'T', 0, member, staffIncharge);
+        ItemOrderModule itemMenu = new ItemOrderModule();
+        Item itemsOrder = ItemSet.getEntry(1);
+        ItemOrder it = new ItemOrder(1, itemsOrder, 2, 10.0);
+        itemMenu.OrderList.add(it);
+        od.setOrderList(itemMenu.getItemOrderList());
+        double total = it.getSubTotal();
+        od.setTotalPrice(total);
+        completedOrder.addToQueue(od);
+        
+        member = ListMember.getEntry(2);
+        staffIncharge = ListStaff.getEntry(2);
+        od = new Order(1002, 'T', 0, member, staffIncharge);
+        itemMenu = new ItemOrderModule();
+        itemsOrder = ItemSet.getEntry(2);
+        it = new ItemOrder(1, itemsOrder, 2, 14.0);
+        itemMenu.OrderList.add(it);
+        od.setOrderList(itemMenu.getItemOrderList());
+        total = it.getSubTotal();
+        od.setTotalPrice(total);
+        completedOrder.addToQueue(od);
+        
+        member = ListMember.getEntry(3);
+        staffIncharge = ListStaff.getEntry(3);
+        od = new Order(1003, 'D', 1, member, staffIncharge);
+        itemMenu = new ItemOrderModule();
+        itemsOrder = ItemSet.getEntry(3);
+        it = new ItemOrder(1, itemsOrder, 2, 10.0);
+        itemMenu.OrderList.add(it);
+        od.setOrderList(itemMenu.getItemOrderList());
+        total = it.getSubTotal();
+        od.setTotalPrice(total);
+        orderLine.addToQueue(od);
     }
 
 }
