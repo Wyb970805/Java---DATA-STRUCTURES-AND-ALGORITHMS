@@ -94,17 +94,17 @@ public class OrderModule {
             String sid = sc.nextLine();
             Staff staffIncharge = staffIdValidation(sid);
             while (staffIncharge == null) {
-                System.out.println("Invalid staff! Please enter again. \nStaff Id (S1001): ");
+                System.out.println("Invalid staff! Please enter again. \nStaff Id (S1000): ");
                 sid = sc.nextLine();
                 staffIncharge = staffIdValidation(sid);
             }
 
             // to retrieve the valid member
-            System.out.print("Member ID (exp: M0000): ");
+            System.out.print("Member ID (exp: M1000 = Guest): ");
             String mid = sc.nextLine();
             Member member = memberIdValidation(mid);
             while (member == null) {
-                System.out.println("Invalid member! Please enter again. \nMember Id (M1001): ");
+                System.out.println("Invalid member! Please enter again. \nMember Id (M1000): ");
                 mid = sc.nextLine();
                 member = memberIdValidation(mid);
             }

@@ -46,7 +46,7 @@ public class StaffModule {
             Scanner scanner = new Scanner(System.in);
             
             // Main menu in staff module
-            System.out.print("---------------------Welcome to Staff Menu---------------------\n");
+            System.out.print("\n---------------------Welcome to Staff Menu---------------------\n");
             System.out.print("|\t\t    1. Add New Staff   \n");
             System.out.print("|\t\t    2. Modify Staff    \n");
             System.out.print("|\t\t    3. Delete Staff    \n");
@@ -105,7 +105,6 @@ public class StaffModule {
         // Local Variable Set
         String name, phoneNo, emailAddress, entryKey, roles = null;
         int choice, behavePoint = 1000;
-        int attendanceCount = 0;
         double salary = 0;
         
         // Scanner Object 
@@ -128,8 +127,8 @@ public class StaffModule {
         entryKey = scanner.nextLine();
         
         do {
-            System.out.print("Enter the number (1 - 6) represent roles.");
-            System.out.print("----------------------------------------\n");
+            System.out.print("Enter the number (1 - 6) represent roles: \n");
+            System.out.print("\n----------------------------------------\n");
             System.out.print("|\t1. Chief      \n");
             System.out.print("|\t2. Barista    \n");
             System.out.print("|\t3. Cashier    \n");
@@ -169,7 +168,7 @@ public class StaffModule {
             }
         } while (roles == null);
         
-        ListStaff.add(new Staff(name, phoneNo, emailAddress, entryKey, roles, attendanceCount, behavePoint, salary));
+        ListStaff.add(new Staff(name, phoneNo, emailAddress, entryKey, roles, behavePoint, salary));
         
     }
     
@@ -295,8 +294,8 @@ public class StaffModule {
             if(ListStaff.getEntry(i).getStaff_ID().equals(staff_ID)) {
                 
                 // Prompt Confirmation Message to Delete
-                System.out.print("Is this the staff you wish to delete: (Y or N)\n");
                 System.out.print(ListStaff.getEntry(i).toString() + " \n");
+                System.out.print("\nIs this the staff you wish to delete: (Y or N)");
                 choice = scanID.nextLine();
                 
                 // Confirm to delete the selected Staff in Array List
@@ -305,6 +304,7 @@ public class StaffModule {
                     System.out.print("The Staff have been deleted !\n");
                 }
                 else if (choice.equals("n") || choice.equals("N")) {
+                    System.out.print("You can now enter again correct Staff ID to delete.");
                     deleteStaff();
                 }
             }
@@ -363,7 +363,8 @@ public class StaffModule {
             // Now make the attendance of staff sort and prepare data
             for(int i = 0; i < HeapStaff.heapCount(); i++) {
 
-                System.out.println(HeapStaff.peekTop() + "\nDoes this staff present today: ");
+                System.out.println("\n" + HeapStaff.peekTop());
+                System.out.print("\nDoes this staff present today: ");
 
                 String choice = scan.nextLine();
                 Staff staffAttend = HeapStaff.popTop();
@@ -378,13 +379,10 @@ public class StaffModule {
                         ListStaff.getEntry(j).setSalary(ListStaff.getEntry(j).getSalary() + 700);
                         ListStaff.getEntry(j).setBehavePoint(ListStaff.getEntry(j).getBehavePoint() - 1500);
                     }
-                    else {
-                        System.out.print("Keep Attend to get Increment!\n");
-                    }
 
                 }
                 else if (choice.equals("N") || choice.equals("n")) {
-                    System.out.print("Absent status entered for current staff: " + staffAttend.getStaff_ID() + " " + staffAttend.getName() + "\n");
+                    System.out.print("\nAbsent status entered for current staff: " + staffAttend.getStaff_ID() + " " + staffAttend.getName() + "\n");
                     ListStaff.getEntry(j).setBehavePoint(ListStaff.getEntry(j).getBehavePoint() - 5);
                 }
                 
@@ -427,7 +425,7 @@ public class StaffModule {
     
     public static void dateAttendance() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the date of attendance of staff you wish to navigate: ");
+        System.out.print("\nEnter the date of attendance of staff you wish to navigate: ");
         String result = scanner.nextLine();
         
         try {
@@ -443,7 +441,7 @@ public class StaffModule {
             myReader.close();
             
             } catch (FileNotFoundException e) {
-              System.out.println("The Date you entered does not have record");
+              System.out.println("\nThe Date you entered does not have record");
               e.printStackTrace();
             }
         

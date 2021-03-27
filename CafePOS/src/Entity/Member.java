@@ -10,20 +10,18 @@ package Entity;
  * @author Chase Tan
  */
 public class Member extends Person {
-    private static final int startingID = 1000;
+    private static final int startingID = 999;
     private static int count;
     private String member_ID;
-    private int pointCollected;
 
     public Member() {
         
     }
     
-    public Member(String name, String phoneNo, String emailAddress, int pointCollected) {
+    public Member(String name, String phoneNo, String emailAddress) {
         super(name, phoneNo, emailAddress);
         this.count++;
         this.member_ID = countMemberID(count);
-        this.pointCollected = pointCollected;
     }
     
     public String countMemberID(int count) {
@@ -43,18 +41,9 @@ public class Member extends Person {
         return member_ID;
     }
 
-    public int getPointCollected() {
-        return pointCollected;
-    }
-
-    public void setPointCollected(int pointCollected) {
-        this.pointCollected = pointCollected;
-    }
-
     @Override
     public String toString() {
-        return "Member {" + "member_ID=" + member_ID + ", pointCollected=" + pointCollected + super.toString() + '}';
+        return String.format("Member : %8s  |", member_ID) + super.toString();
     }
-    
     
 }

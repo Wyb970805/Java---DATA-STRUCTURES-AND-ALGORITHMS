@@ -29,16 +29,47 @@ public class CafePOS {
         // TODO code application logic here
         userRecords();
         records(); //payment records
-        mainMenu();
+        checkLogIn();
     }
 
     public static void userRecords() {
-        ListStaff.add(new Staff("wegg", "rehteh", "etrhh", "ertehe", "roles", 0, 1000, 1500));
-        ListStaff.add(new Staff("wegg1", "rehteh1", "etrhh1", "ertehe1", "roles", 0, 1000, 1500));
-        ListStaff.add(new Staff("wegg2", "rehteh2", "etrhh2", "ertehe2", "roles", 0, 1000, 1500));
-        ListMember.add(new Member("name", "phoneNo", "emailAddress", 10));
-        ListMember.add(new Member("name1", "phoneNo1", "emailAddress1", 10));
-        ListMember.add(new Member("name2", "phoneNo2", "emailAddress2", 10));
+        ListStaff.add(new Staff("Jane", "012-4896247", "jane@gmail.com", "123456", "Barista", 1000, 1500));
+        ListStaff.add(new Staff("Jason", "017-1534798", "jason@gmail.com", "456789", "Chief", 1000, 1500));
+        ListStaff.add(new Staff("Alex", "019-4851365", "alex@gmail.com", "987654", "Waiter", 1000, 1500));
+        ListMember.add(new Member("Adam", "016-5486248", "adam@gmail.com"));
+        ListMember.add(new Member("David", "018-1364897", "david@gmail.com"));
+        ListMember.add(new Member("Davinson", "014-1236484", "davinson@gmail.com"));
+    }
+    
+    public static void checkLogIn() {
+        int session = 0;
+        
+        ListStaff.add(new Staff("owner", "ownerPhone", "ownerEmail@gmail.com", "123456", "Owner", 1500, 10000));
+        ListMember.add(new Member("guestName", "guestPhoneNo", "guestEmail@gmail.com"));
+        
+        Scanner scanlog = new Scanner(System.in);
+        
+        do {
+            System.out.print("Enter Log In User ID : ");
+            String ownerID = scanlog.nextLine();
+
+            System.out.print("Enter Log In Password : ");
+            String ownerPass = scanlog.nextLine();
+
+            for(int i = 1; i <= ListStaff.getLength(); i++) {
+                if (ownerID.equals(ListStaff.getEntry(i).getStaff_ID()) && ownerPass.equals(ListStaff.getEntry(i).getEntryKey())) {
+                    session = 1;
+                }
+                else {
+                    System.out.print("The Log In ID or Password is not matched !\n\n");
+                    session = 0;
+                }
+            }
+        } while (session != 1);
+        
+        if(session == 1) {
+            mainMenu();
+        }
     }
 
     public static void mainMenu() {
@@ -47,17 +78,18 @@ public class CafePOS {
         ItemModule item = new ItemModule();
         int index;
         do {
-            System.out.println("-------------------");
-            System.out.println("Welcome to 063 Cafe");
-            System.out.println("-------------------");
-            System.out.println("--------Menu-------");
-            System.out.println("1. Order");
-            System.out.println("2. Payment");
-            System.out.println("3. Item");
-            System.out.println("4. Staff");
-            System.out.println("5. Member");
-            System.out.println("0. Shut down");
-            System.out.printf("Please enter the index (1-4): ");
+            System.out.println("------------------------------------------------");
+            System.out.println("\t\tWelcome to 063 Cafe");
+            System.out.println("------------------------------------------------");
+            System.out.println("---------------------Menu-----------------------");
+            System.out.println("|\t\t1. Order");
+            System.out.println("|\t\t2. Payment");
+            System.out.println("|\t\t3. Item");
+            System.out.println("|\t\t4. Staff");
+            System.out.println("|\t\t5. Member");
+            System.out.println("|\t\t0. Shut down");
+            System.out.println("------------------------------------------------\n");
+            System.out.printf("  Please enter the index (1-5): ");
             while (!input.hasNextInt()) {
                 System.out.println("That's not a number! \nPlease enter again: ");
                 input.next(); // this is important!
@@ -81,10 +113,11 @@ public class CafePOS {
                     menuMember();
                     break;
                 case 0:
-                    System.out.println("Thank you. See you tomorrow");
+                    System.out.println("Thank you for using 603 Cafe POS System!");
+                    System.exit(0);
                     break;
                 default:
-                    System.out.println("Error! Please select between 1 - 4!");
+                    System.out.println("Error! Please select between 1 - 5!");
             }
         } while (index != 0);
     }

@@ -51,7 +51,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return " Name=" + name + ", Phone No=" + phoneNo + ", Email Address=" + emailAddress;
+        return String.format("%15s  | %11s  | %35s  |", name, phoneNo, emailAddress);
     }
    
     
