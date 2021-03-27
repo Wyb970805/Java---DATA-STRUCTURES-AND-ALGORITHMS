@@ -31,45 +31,48 @@ public class CafePOS {
         Scanner input = new Scanner(System.in);
         OrderModule ordering = new OrderModule();
         ItemModule item = new ItemModule();
-        System.out.println("-------------------");
-        System.out.println("Welcome to 063 Cafe");
-        System.out.println("-------------------");
-        System.out.println("--------Menu-------");
-        System.out.println("1. Order");
-        System.out.println("2. Payment");
-        System.out.println("3. Item");
-        System.out.println("4. Staff");
-        System.out.println("5. Member");
-        System.out.println("0. Shut down");
-        System.out.printf("Please enter the index (1-4): ");
-        while (!input.hasNextInt()) {
-            System.out.println("That's not a number! \nPlease enter again: ");
-            input.next(); // this is important!
-        }
-        int index = input.nextInt();
-        input.nextLine();
-        switch (index) {
-            case 1:
-                ordering.orderMenu();
-                break;
-            case 2:
-                selectAction();
-                break;
-            case 3:
-                item.itemMenu();
-                break;
-            case 4:
-                menuStaff();
-                break;
-            case 5:
-                menuMember();
-                break;
-            case 0:
-                System.out.println("Thank you. See you tomorrow");
-                break;
-            default:
-                System.out.println("Error! Please select between 1 - 4!");
-        }
+        int index;
+        do {
+            System.out.println("-------------------");
+            System.out.println("Welcome to 063 Cafe");
+            System.out.println("-------------------");
+            System.out.println("--------Menu-------");
+            System.out.println("1. Order");
+            System.out.println("2. Payment");
+            System.out.println("3. Item");
+            System.out.println("4. Staff");
+            System.out.println("5. Member");
+            System.out.println("0. Shut down");
+            System.out.printf("Please enter the index (1-4): ");
+            while (!input.hasNextInt()) {
+                System.out.println("That's not a number! \nPlease enter again: ");
+                input.next(); // this is important!
+            }
+            index = input.nextInt();
+            input.nextLine();
+            switch (index) {
+                case 1:
+                    ordering.orderMenu();
+                    break;
+                case 2:
+                    selectAction();
+                    break;
+                case 3:
+                    item.itemMenu();
+                    break;
+                case 4:
+                    menuStaff();
+                    break;
+                case 5:
+                    menuMember();
+                    break;
+                case 0:
+                    System.out.println("Thank you. See you tomorrow");
+                    break;
+                default:
+                    System.out.println("Error! Please select between 1 - 4!");
+            }
+        } while (index != 0);
     }
 
     // Menu of Payment Module

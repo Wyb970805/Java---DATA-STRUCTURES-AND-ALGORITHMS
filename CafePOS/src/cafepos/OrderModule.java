@@ -12,14 +12,14 @@ import static cafepos.ItemModule.ItemSet;
 import java.util.Iterator;
 import java.util.Scanner;
 import static cafepos.StaffModule.ListStaff;
+import static cafepos.MemberModule.ListMember;
 
 /**
  *
  * @author Wen
  */
 public class OrderModule {
-    
-    
+
     char exit = 'a';
 
     int orderNum = 1000, tbNum = 0;
@@ -27,23 +27,9 @@ public class OrderModule {
     Scanner sc = new Scanner(System.in);
     static QueueWithIteratorInterface<Order> orderLine = new CircularCounterQueueWithIterator<>();
     static QueueWithIteratorInterface<Order> completedOrder = new CircularCounterQueueWithIterator<>();
-    //ItemOrderModule itemMenu = new ItemOrderModule();
 
-    /*
-    // initialize existed order
-    Order a = new Order(1001, 'T', 0);
-    Order b = new Order(1002, 'T', 0);
-    Order c = new Order(1003, 'T', 0);
-    Order d = new Order(1004, 'T', 0);
-     */
     public void orderMenu() {
-        
-        //a.setOrderList();
-        /* orderLine.addToQueue(a);
-        orderLine.addToQueue(b);
-        orderLine.addToQueue(c);
-        orderLine.addToQueue(d);
-         */
+
         int choice;
 
         do {
@@ -53,7 +39,7 @@ public class OrderModule {
             System.out.println("----------------------------");
             System.out.println("1. Place Order");
             System.out.println("2. Update Status");
-            System.out.println("3. Modify and Requeue Order");
+            System.out.println("3. Modify Order");
             System.out.println("4. Remove Order");
             System.out.println("5. Show all order");
             System.out.println("0. Exit");
@@ -89,6 +75,7 @@ public class OrderModule {
         } while (choice != 0);
     }
 
+    // add the new order to queue
     public void placeOrder() {
         boolean error = false;
         System.out.println("New Order (Y/N)?");
@@ -101,8 +88,27 @@ public class OrderModule {
 
         while (order == 'Y' || order == 'y') {
 
-            //    System.out.print("Member ID: ");
-            //    String mid = sc.nextLine();
+            StaffModule.showAllStaff();
+            // to retrieve the valid staff 
+            System.out.print("Staff ID (exp: S0000): ");
+            String sid = sc.nextLine();
+            Staff staffIncharge = staffIdValidation(sid);
+            while (staffIncharge == null) {
+                System.out.println("Invalid staff! Please enter again. \nStaff Id (S1001): ");
+                sid = sc.nextLine();
+                staffIncharge = staffIdValidation(sid);
+            }
+
+            // to retrieve the valid member
+            System.out.print("Member ID (exp: M0000): ");
+            String mid = sc.nextLine();
+            Member member = memberIdValidation(mid);
+            while (member == null) {
+                System.out.println("Invalid member! Please enter again. \nMember Id (M1001): ");
+                mid = sc.nextLine();
+                member = memberIdValidation(mid);
+            }
+
             do {
                 System.out.print("Dine in - D, Take Away - T (q to exit): ");
                 char orderType = sc.nextLine().charAt(0);
@@ -121,10 +127,6 @@ public class OrderModule {
                             tbNum = sc.nextInt();
                             sc.nextLine();
                         } while (tbNum < 1 || tbNum > 20);
-
-                        /*tbNum = sc.nextInt();
-                        sc.nextLine();
-                         */
                     } else {
                         tbNum = 0;
                     }
@@ -135,7 +137,7 @@ public class OrderModule {
                     boolean created = itemMenu.createOrderList();
                     if (created) {
 
-                        Order od = new Order(orderNum/*, itemMenu.getItemOrderList()*/, orderType, tbNum);
+                        Order od = new Order(orderNum, orderType, tbNum, member, staffIncharge);
                         od.setOrderList(itemMenu.getItemOrderList());
                         od.setTotalPrice(itemMenu.getTotal());
                         boolean added = orderLine.addToQueue(od);
@@ -164,11 +166,10 @@ public class OrderModule {
                 System.out.println("Please enter yes (Y) or no (N): ");
                 order = sc.nextLine().charAt(0);
             }
-        } //System.out.println("Show first order");
-        //System.out.println(orderLine.getFirst());
-
+        } 
     }
 
+    // remove the current queue first order
     public void removeOrder() {
         Order removed = null;
         System.out.println("Are you sure you want to cancel the first order in queue (Y/N)?");
@@ -194,6 +195,7 @@ public class OrderModule {
 
     }
 
+    // remove the order from current queue and add to the completed queue which is a permanent queue.
     public void updateOrderStatus() {
         if (!orderLine.isEmpty()) {
             System.out.println("\nUpdate the Order to the completed status.");
@@ -216,9 +218,10 @@ public class OrderModule {
             System.out.println("\nAny changes of the order on? ");
             System.out.println("----------------------------");
             System.out.println("1. Ordered Item");
-            System.out.println("2. Member ID");
-            System.out.println("3. Table Number");
-            System.out.println("4. Order Type");
+            System.out.println("2. Table Number");
+            System.out.println("3. Order Type");
+            System.out.println("4. Member ID");
+            System.out.println("5. Staff Incharge");
             System.out.println("0. Back to preious");
             System.out.printf("Please enter the index (1-4): ");
             while (!sc.hasNextInt()) {
@@ -232,14 +235,16 @@ public class OrderModule {
                     editItem();
                     break;
                 case 2:
-                    //   editMember();
-                    break;
-                case 3:
                     editTableNum();
                     break;
-                case 4:
+                case 3:
                     editOrderType();
                     break;
+                case 4:
+                    editMember();
+                    break;
+                case 5:
+                    editStaff();
                 case 0:
                     break;
                 default:
@@ -249,6 +254,10 @@ public class OrderModule {
         }
     }
 
+    // modify the items ordered
+    // 1. additional items
+    // 2. change ordered items
+    // 3. cancel the items
     public void editItem() {
         System.out.println("\n--------Modify Item---------");
         System.out.println("----------------------------");
@@ -273,7 +282,8 @@ public class OrderModule {
         char more = 'n';
         switch (choice) {
             case 1:
-
+                
+                //retrieve the order record to get the first order in current queue
                 System.out.println(orderLine.getFirst().getOrderList());
                 oldTotal = orderLine.getFirst().getTotalPrice();
                 System.out.println("Current Total: " + oldTotal);
@@ -306,6 +316,7 @@ public class OrderModule {
                         }
                         int qty = sc.nextInt();
                         sc.nextLine();
+                        // retrieve the last items itemNum and increase for new item.
                         int lastIndex = orderLine.getFirst().getOrderList().getLength();
                         lastIndex++;
                         ItemOrder newEntry = new ItemOrder(lastIndex, itemsOrder, qty);
@@ -322,7 +333,8 @@ public class OrderModule {
                         System.out.println("Not found.");
                     }
                 } while (more == 'y' || more == 'Y');
-
+                
+                // calculate the total price of the order
                 for (int i = 1; i <= orderLine.getFirst().getOrderList().getLength(); i++) {
                     total += orderLine.getFirst().getOrderList().getEntry(i).getSubTotal();
                 }
@@ -447,6 +459,7 @@ public class OrderModule {
 
     }
 
+    // modify the order table number to serve
     public void editTableNum() {
         boolean error = false;
         if (!orderLine.isEmpty()) {
@@ -481,6 +494,7 @@ public class OrderModule {
 
     }
 
+    // modify the order type
     public void editOrderType() {
         boolean error = false;
         if (!orderLine.isEmpty()) {
@@ -497,6 +511,7 @@ public class OrderModule {
                     } else {
                         editTableNum();
                     }
+                    System.out.println("Your changes is done.");
                     System.out.println("----------------------------");
                     System.out.println(orderLine.getFirst());
                     System.out.println("----------------------------");
@@ -513,9 +528,68 @@ public class OrderModule {
             System.out.println("No order in queue.");
 
         }
-        //return changed;
+
     }
 
+    // modify the member in order
+    private void editMember() {
+        boolean error = false;
+        if (!orderLine.isEmpty()) {
+            do {
+                Order first = orderLine.getFirst();
+                System.out.println("Current Member = " + first.getMember());
+                System.out.println("New Member Id (exp: M0000): ");
+                String newMid = sc.nextLine();
+                Member newMember = memberIdValidation(newMid);
+                while (newMember == null) {
+                    System.out.println("Invalid member! Please enter again. \nMember Id (M1001): ");
+                    newMid = sc.nextLine();
+                    newMember = memberIdValidation(newMid);
+                }
+                orderLine.getFirst().setMember(newMember);
+                System.out.println("Your changes is done.");
+                System.out.println("----------------------------");
+                System.out.println(orderLine.getFirst());
+                System.out.println("----------------------------");
+
+            } while (error == true);
+
+        } else {
+            System.out.println("No order in queue.");
+
+        }
+    }
+
+    // modify the order incharge staff
+    private void editStaff() {
+        boolean error = false;
+        if (!orderLine.isEmpty()) {
+            do {
+                Order first = orderLine.getFirst();
+                System.out.println("Current staff Incharge = " + first.getStaffIncharge());
+                System.out.println("New Staff Id (exp: S0000): ");
+                String newSid = sc.nextLine();
+                Staff newStaff = staffIdValidation(newSid);
+                while (newStaff == null) {
+                    System.out.println("Invalid staff! Please enter again. \nStaff Id (S1001): ");
+                    newSid = sc.nextLine();
+                    newStaff = staffIdValidation(newSid);
+                }
+                orderLine.getFirst().setStaffIncharge(newStaff);
+                System.out.println("Your changes is done.");
+                System.out.println("----------------------------");
+                System.out.println(orderLine.getFirst());
+                System.out.println("----------------------------");
+
+            } while (error == true);
+
+        } else {
+            System.out.println("No order in queue.");
+
+        }
+    }
+
+    // display all order
     public void showOrder() {
         int choice = 0;
         do {
@@ -546,7 +620,8 @@ public class OrderModule {
             }
         } while (choice != 0);
     }
-
+    
+    // display current order in queue.
     private void showOrderQueue() {
         if (!orderLine.isEmpty()) {
             System.out.println("\n-------Show All Order-------");
@@ -561,6 +636,7 @@ public class OrderModule {
         }
     }
 
+    // display the completed permanently order.
     private void showCompletedQueue() {
         if (!completedOrder.isEmpty()) {
             System.out.println("\n--Show All Completed Order--");
@@ -573,6 +649,55 @@ public class OrderModule {
         } else {
             System.out.println("There is no completed order.");
         }
+    }
+
+    // retrieve the existing member details
+    public Member memberIdValidation(String mid) {
+        boolean ivalidM = true;
+        Member member = null;
+
+        mid = mid.toUpperCase();
+        for (int i = 1; i <= ListMember.getLength(); i++) {
+            if (ListMember.getEntry(i).getMember_ID().equals(mid)) {
+                member = ListMember.getEntry(i);
+                ivalidM = false;
+                break;
+            } else {
+                ivalidM = true;
+            }
+        }
+        if (ivalidM) {
+            return null;
+        } else {
+            System.out.println("Member: " + member);
+            return member;
+        }
+
+    }
+    
+    // retrieve the existing staff details
+    public Staff staffIdValidation(String sid) {
+        boolean ivalidS = true;
+        Staff staffIncharge = null;
+        sid = sid.toUpperCase();
+        // For Loop to search each staff in Array List
+        for (int i = 1; i <= ListStaff.getLength(); i++) {
+            // Use of if else statement to check whether any staff match the prompt result of user
+            if (ListStaff.getEntry(i).getStaff_ID().equals(sid)) {
+                staffIncharge = ListStaff.getEntry(i);
+                ivalidS = false;
+                break;
+            } else {
+                ivalidS = true;
+            }
+        }
+        if (ivalidS) {
+            return null;
+        } else {
+            System.out.println("Staff Incharge for order: " + staffIncharge);
+            return staffIncharge;
+        }
+
     }
 
 }

@@ -18,11 +18,11 @@ import java.util.Scanner;
 public class ItemOrderModule {
 
     public ArrayList<ItemOrder> OrderList = new ArrayList<ItemOrder>();
-    // ItemOrder items = new ItemOrder();
     int itemNum = 0;
     double total;
     Scanner sc = new Scanner(System.in);
 
+    // create the item list for the order 
     public boolean createOrderList() {
         boolean created = false;
         boolean found = false;
@@ -41,6 +41,7 @@ public class ItemOrderModule {
             Item itemsOrder = null;
             for (int i = 1; i <= ItemSet.getNum(); i++) {
 
+                // retrieve the existing item menu
                 if (ItemSet.getEntry(i).getItemId().equals(itemId)) {
                     itemsOrder = ItemSet.getEntry(i);
                     found = true;
@@ -76,11 +77,10 @@ public class ItemOrderModule {
             nextItem = Character.toUpperCase(nextItem);
         } while (nextItem == 'Y');
 
-        //    
-        //}
         return created;
     }
 
+    // display items added to the order
     public void displayList() {
         System.out.printf("%-3s  %-6s %-20s %3s %8s", "No.", "Item(s)", "Name", "Qty", "Price(RM)");
         //System.out.printf("No.  " + "Id   " + "     Item     " + " Qty " + "Subtotal\n");

@@ -14,21 +14,20 @@ public class Order {
 
     private int orderNum;        // 1001
     ArrayList<ItemOrder> OrderList;
-    // private ItemOrder itemList;   //
     private char orderType;         // T - take away, D - Dine in
     private int tableNo;            // 01-15
     private double totalPrice;       // 0.0
-    //private Member member;          // mid
-    //private Staff staffIncharge;    // sid
+    private Member member;          // mid
+    private Staff staffIncharge;    // sid
 
-    public Order(int orderNum, /*ArrayList<ItemOrder> orderList,*/ char orderType, int tableNo/*, double totalPrice*/ /*, Member mid,Staff sid*/) {
+    public Order(int orderNum, /*ArrayList<ItemOrder> orderList,*/ char orderType, int tableNo,/*, double totalPrice*/ Member member,Staff staffIncharge) {
         this.orderNum = orderNum;
         this.OrderList = new ArrayList<ItemOrder>();
         this.orderType = orderType;
         this.tableNo = tableNo;
         this.totalPrice = 0.0;
-        //this.member = member;
-        //this.staffIncharge = staffIncharge;
+        this.member = member;
+        this.staffIncharge = staffIncharge;
     }
 
     public Order getOrder() {
@@ -47,9 +46,6 @@ public class Order {
         this.OrderList = OrderList;
     }
 
-    //public ItemOrder getItemList() {
-    //    return itemList;
-    //}
     public double getTotalPrice() {
         return totalPrice;
     }
@@ -70,15 +66,28 @@ public class Order {
         this.orderNum = orderNum;
     }
 
-    //public void setItemList(ItemOrder itemList) {
-    //    this.itemList = itemList;
-    //}
     public void setTableNo(int tableNo) {
         this.tableNo = tableNo;
     }
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public Staff getStaffIncharge() {
+        return staffIncharge;
+    }
+
+    public void setStaffIncharge(Staff staffIncharge) {
+        this.staffIncharge = staffIncharge;
     }
 
     public String toString() {
@@ -89,7 +98,8 @@ public class Order {
                 + "\nOrder Type: " + orderType
                 + "\nTable No.: " + tableNo
                 + "\nTotal: RM" + totalPrice
-                /*+ "Membership: " + member + "Staff Incharge: " + staffIncharge*/ + "\n";
+                + "\nMembership: " + member.getMember_ID()
+                + "\nStaff Incharge: " + staffIncharge.getStaff_ID() + "\n";
     }
 
 }

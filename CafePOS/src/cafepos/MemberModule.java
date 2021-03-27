@@ -18,7 +18,7 @@ public class MemberModule {
     
     // This is the main menu for staff module
     public static void menuMember() {
-        
+                
         // This variable is for capture user's choice
         int option;
         boolean error;
