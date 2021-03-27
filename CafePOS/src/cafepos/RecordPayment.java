@@ -8,10 +8,12 @@ package cafepos;
 import java.util.Scanner;
 import Entity.*;
 import ADT.*;
+import static cafepos.MemberModule.ListMember;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import static cafepos.OrderModule.orderLine;
+import static cafepos.StaffModule.ListStaff;
 
 /**
  *
@@ -19,31 +21,37 @@ import static cafepos.OrderModule.orderLine;
  */
 public class RecordPayment {
 
-    OrderModule order = new OrderModule();
+    OrderModule orderModule = new OrderModule();
     EditPayment ep = new EditPayment();
     static IteratorInterface<Cash> cashIterator = new ListIterator<>();
     static IteratorInterface<CreditCard> creditCardIterator = new ListIterator<>();
     static Payment pay = new Payment();
     static Cash blc = new Cash();
     static CreditCard cc = new CreditCard();
-    float paymentAmount = (float) orderLine.getFirst().getTotalPrice();
-    int orderNum = orderLine.getFirst().getOrderNum();
+    static float paymentAmount = 0;
+    Order order = orderLine.getFirst();
     LocalDateTime paid = LocalDateTime.now();
 
     public static void records() {
+        //First Record
+        Member member = ListMember.getEntry(1);
+        Staff staff = ListStaff.getEntry(1);
+        Order order1 = new Order(1001, 'T', 1, member, staff);
         float income = 0;
         String dateTime = "2021-01-09 11:55:55";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime formatDateTime = LocalDateTime.parse(dateTime, formatter);
-        Cash cashList1 = new Cash(1, 1001, 100, "Cash", formatDateTime, 0, 100);
+        Cash cashList1 = new Cash(1, order1, 100, "Cash", formatDateTime, 0, 100);
         if (cashIterator.add(cashList1) == true) {
             blc.setBalance(100);
             income = pay.getTotalIncome() + 100;
             pay.setTotalIncome(income);
         }
+        //Second Record
+        Order order2 = new Order(1002, 'T', 1, member, staff);
         String ccdateTime = "2021-02-16 08:05:55";
         LocalDateTime ccformatDateTime = LocalDateTime.parse(ccdateTime, formatter);
-        CreditCard cardList1 = new CreditCard(1, 1002, 200, "Credit Card", ccformatDateTime, "1997080520000216", "Wang Yi Bo", "02/24");
+        CreditCard cardList1 = new CreditCard(1, order2, 200, "Credit Card", ccformatDateTime, "1997080520000216", "Wang Yi Bo", "02/24");
         if (creditCardIterator.add(cardList1) == true) {
             cc.setCCTotalAmt(200);
             income = pay.getTotalIncome() + 200;
@@ -70,19 +78,27 @@ public class RecordPayment {
             } while (selectIsDigit == false);
 
             if (selectOrderNo >= 1001 && selectOrderNo == orderLine.getFirst().getOrderNum()) {
-                rp.displayAmount(selectOrderNo);
-            } else if(selectOrderNo == 0){
+
+                System.out.println("Order No: " + selectOrderNo);
+                System.out.println("Customer: " + orderLine.getFirst().getMember().getName());
+                paymentAmount = (float) orderLine.getFirst().getTotalPrice();
+                // Not member price
+                System.out.printf("Total Amount: RM %.2f \n", paymentAmount);
+                
+                if ("M1000".equals(orderLine.getFirst().getMember().getMember_ID())) {
+                    System.out.printf("Total Amount for Guest: RM %.2f \n", paymentAmount);
+                } else {
+                    paymentAmount = paymentAmount * (float) 0.8;
+                    System.out.printf("Total Amount for Member: RM %.2f \n", paymentAmount);
+                }
+                rp.selectPaymentMethod();
                 break;
-            }else {
+            } else if (selectOrderNo == 0) {
+                break;
+            } else {
                 System.out.println("Wrong Order No.! Please enter correct Order No.!");
             }
         } while ((selectOrderNo < 1001 || selectOrderNo != orderLine.getFirst().getOrderNum()) && selectOrderNo != 0);
-    }
-
-    public void displayAmount(int selectOrderNo) {
-        System.out.println("Order No: " + selectOrderNo);
-        System.out.printf("Total Amount: RM %.2f \n", paymentAmount);
-        selectPaymentMethod();
     }
 
     public void selectPaymentMethod() {
@@ -120,7 +136,7 @@ public class RecordPayment {
                     yesNo();
                     break;
                 case 0:
-                    paymentSystem();
+                    break;
                 default:
                     errorMessage();
             }
@@ -161,7 +177,7 @@ public class RecordPayment {
         while (cashIterator.containsID(paymentID) == true) {
             paymentID++;
         }
-        Cash cash1 = new Cash(paymentID, orderNum, paymentAmount, paymentMethod, paid, change, amt);
+        Cash cash1 = new Cash(paymentID, order, paymentAmount, paymentMethod, paid, change, amt);
         if (cashIterator.add(cash1) == true) {
             blc.setChange(change);
             System.out.printf("\nReceived Cash: RM %.2f\n", amt);
@@ -169,7 +185,8 @@ public class RecordPayment {
             System.out.println("Pay by Cash successfully.");
             System.out.println("\nReceipt\n---------");
             System.out.println(cashIterator.getEntry(paymentID));
-            order.updateOrderStatus();
+            orderLine.getFirst().setTotalPrice(paymentAmount);
+            orderModule.updateOrderStatus();
         } else {
             System.out.println("ERROR!");
         }
@@ -226,13 +243,14 @@ public class RecordPayment {
         }
         float amt = cc.getCCTotalAmt() + paymentAmount;
         cc.setCCTotalAmt(amt);
-        CreditCard credit = new CreditCard(paymentID, orderNum, paymentAmount, paymentMethod, paid, cardNo, name, expiryDate);
+        CreditCard credit = new CreditCard(paymentID, order, paymentAmount, paymentMethod, paid, cardNo, name, expiryDate);
         if (creditCardIterator.add(credit) == true) {
             System.out.printf("\nPay by credit card: RM %.2f\n", paymentAmount);
             System.out.println("Credit Card Info was added Successfully.\n");
             System.out.println("\nReceipt\n---------");
             System.out.println(creditCardIterator.getEntry(paymentID));
-            order.updateOrderStatus();
+            orderLine.getFirst().setTotalPrice(paymentAmount);
+            orderModule.updateOrderStatus();
         } else {
             System.out.println("Credit Card Info was Failed to add in List");
         }

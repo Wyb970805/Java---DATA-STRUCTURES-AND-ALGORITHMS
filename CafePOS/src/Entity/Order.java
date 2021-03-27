@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class Order {
 
     private int orderNum;        // 1001
-    ArrayList<ItemOrder> OrderList;
+    private ArrayList<ItemOrder> orderList;
     private char orderType;         // T - take away, D - Dine in
     private int tableNo;            // 01-15
     private double totalPrice;       // 0.0
@@ -22,7 +22,7 @@ public class Order {
 
     public Order(int orderNum, /*ArrayList<ItemOrder> orderList,*/ char orderType, int tableNo,/*, double totalPrice*/ Member member,Staff staffIncharge) {
         this.orderNum = orderNum;
-        this.OrderList = new ArrayList<ItemOrder>();
+        this.orderList = new ArrayList<ItemOrder>();
         this.orderType = orderType;
         this.tableNo = tableNo;
         this.totalPrice = 0.0;
@@ -39,11 +39,11 @@ public class Order {
     }
 
     public ArrayList<ItemOrder> getOrderList() {
-        return OrderList;
+        return orderList;
     }
 
-    public void setOrderList(ArrayList<ItemOrder> OrderList) {
-        this.OrderList = OrderList;
+    public void setOrderList(ArrayList<ItemOrder> orderList) {
+        this.orderList = orderList;
     }
 
     public double getTotalPrice() {
@@ -94,7 +94,7 @@ public class Order {
         return "\nOrder Number: " + orderNum
                 + "\nItem Order: \n"
                 + String.format("%-3s %-6s %-20s %3s %8s\n", "No.", "Item(s)", "Name", "Qty", "Price(RM)")
-                + OrderList
+                + orderList
                 + "\nOrder Type: " + orderType
                 + "\nTable No.: " + tableNo
                 + "\nTotal: RM" + totalPrice

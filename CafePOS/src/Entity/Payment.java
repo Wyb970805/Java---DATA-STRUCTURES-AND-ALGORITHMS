@@ -1,9 +1,11 @@
-//backup
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Entity;
 
-import Entity.Order;
 import java.io.Serializable;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -18,25 +20,25 @@ public class Payment implements Serializable {
     private float paymentAmount;
     private String paymentMethod;
     private LocalDateTime paid = LocalDateTime.now();   
-    private int orderNum;
+    private Order order;
     private float totalIncome;
 
     //contructor
     public Payment() {
     }
 
-    public Payment(int paymentID, float paymentAmount, String paymentMethod, LocalDateTime paid, int orderNum, float totalIncome) {
+    public Payment(int paymentID, float paymentAmount, String paymentMethod, LocalDateTime paid, Order order, float totalIncome) {
         this.paymentID = paymentID;
         this.paymentAmount = paymentAmount;
         this.paymentMethod = paymentMethod;
         this.paid = paid;
-        this.orderNum = orderNum;
+        this.order = order;
         this.totalIncome = totalIncome;
     }
 
-    public Payment(int paymentID, int orderNum, float paymentAmount, String paymentMethod, LocalDateTime paid) {
+    public Payment(int paymentID, Order order, float paymentAmount, String paymentMethod, LocalDateTime paid) {
         this.paymentID = paymentID;
-        this.orderNum = orderNum;
+        this.order = order;
         this.paymentAmount = paymentAmount;
         this.paymentMethod = paymentMethod;
         this.paid = paid;
@@ -71,12 +73,12 @@ public class Payment implements Serializable {
         return paid;
     }
 
-    public int getOrderNum() {
-        return orderNum;
+    public Order getOrder() {
+        return order;
     }
     
-    public void setOrderNum(int orderNum){
-        this.orderNum = orderNum;
+    public void setOrder(Order order){
+        this.order = order;
     }
 
     public void setTotalIncome(float income) {
@@ -94,7 +96,7 @@ public class Payment implements Serializable {
         String formattedDate = paid.format(formatObj);
 
         return "Payment ID        : " + paymentID
-                + "\nOrder Number      : " + orderNum
+                + "\nOrder Number      : " + order.getOrderNum()
                 + "\nPayment Amount    : RM " + String.format("%.2f", paymentAmount)
                 + "\nPaid Date and Time: " + formattedDate
                 + "\nPayment Method    : " + paymentMethod

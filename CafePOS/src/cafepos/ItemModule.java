@@ -9,7 +9,7 @@ import ADT.ArraySet;
 import Entity.Item;
 import java.util.Scanner;
 import Entity.Ingredient;
-import static cafepos.CafePOS.mainMenu;
+
 
 /**
  *
@@ -58,7 +58,6 @@ public class ItemModule {
                 displayItem();
                 break;
             case 0:
-                mainMenu();
                 break;
             default:
                 System.out.println("Invalid number! Please re-enter: ");            

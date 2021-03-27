@@ -29,8 +29,8 @@ public class CreditCard extends Payment{
         this.totalCCAmount = totalCCAmount;
     }
     
-    public CreditCard(int paymentID, int orderNum, float paymentAmount, String paymentMethod, LocalDateTime paid, String cardNo, String nameOnCard, String expiryDate) {
-        super(paymentID, orderNum, paymentAmount, paymentMethod, paid);
+    public CreditCard(int paymentID, Order order, float paymentAmount, String paymentMethod, LocalDateTime paid, String cardNo, String nameOnCard, String expiryDate) {
+        super(paymentID, order, paymentAmount, paymentMethod, paid);
         this.cardNo = cardNo;
         this.nameOnCard = nameOnCard;
         this.expiryDate = expiryDate;
