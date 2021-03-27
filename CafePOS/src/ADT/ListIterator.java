@@ -16,7 +16,7 @@ public class ListIterator<T> implements IteratorInterface<T> {
 
     private T[] listArray;
     private int length;
-    private static final int DEFAULT_CAPACITY = 5;
+    private static final int DEFAULT_CAPACITY = 2;
 
     public ListIterator() {
         this(DEFAULT_CAPACITY);

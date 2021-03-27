@@ -8,11 +8,9 @@ package cafepos;
 import java.util.Scanner;
 import Entity.*;
 import ADT.*;
-import static cafepos.CafePOS.mainMenu;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
-import static cafepos.EditPayment.modifyPayment;
 import static cafepos.OrderModule.orderLine;
 
 /**
@@ -21,6 +19,7 @@ import static cafepos.OrderModule.orderLine;
  */
 public class RecordPayment {
 
+    OrderModule order = new OrderModule();
     EditPayment ep = new EditPayment();
     static IteratorInterface<Cash> cashIterator = new ListIterator<>();
     static IteratorInterface<CreditCard> creditCardIterator = new ListIterator<>();
@@ -49,7 +48,7 @@ public class RecordPayment {
             cc.setCCTotalAmt(200);
             income = pay.getTotalIncome() + 200;
             pay.setTotalIncome(income);
-        } 
+        }
     }
 
     public static void paymentSystem() {
@@ -61,7 +60,7 @@ public class RecordPayment {
             do {
                 try {
                     System.out.println("\n\t\t\t\t  Make Payment Module \n\t\t\t\t_________________");
-                    System.out.printf("Please enter Order No. :  ");
+                    System.out.printf("Please enter Order No. (0 = exit):  ");
                     selectOrderNo = scan.nextInt();
                     selectIsDigit = true;
                 } catch (Exception e) {
@@ -72,10 +71,12 @@ public class RecordPayment {
 
             if (selectOrderNo >= 1001 && selectOrderNo == orderLine.getFirst().getOrderNum()) {
                 rp.displayAmount(selectOrderNo);
-            } else {
+            } else if(selectOrderNo == 0){
+                break;
+            }else {
                 System.out.println("Wrong Order No.! Please enter correct Order No.!");
             }
-        } while (selectOrderNo < 1001 || selectOrderNo != orderLine.getFirst().getOrderNum());
+        } while ((selectOrderNo < 1001 || selectOrderNo != orderLine.getFirst().getOrderNum()) && selectOrderNo != 0);
     }
 
     public void displayAmount(int selectOrderNo) {
@@ -168,6 +169,7 @@ public class RecordPayment {
             System.out.println("Pay by Cash successfully.");
             System.out.println("\nReceipt\n---------");
             System.out.println(cashIterator.getEntry(paymentID));
+            order.updateOrderStatus();
         } else {
             System.out.println("ERROR!");
         }
@@ -230,6 +232,7 @@ public class RecordPayment {
             System.out.println("Credit Card Info was added Successfully.\n");
             System.out.println("\nReceipt\n---------");
             System.out.println(creditCardIterator.getEntry(paymentID));
+            order.updateOrderStatus();
         } else {
             System.out.println("Credit Card Info was Failed to add in List");
         }
@@ -243,34 +246,7 @@ public class RecordPayment {
     }
 
     public static void yesNo() {
-        Scanner scan = new Scanner(System.in);
-        int num;
-        System.out.println("\t\t\t\t _______________________________________");
-        System.out.println("\t\t\t\t| No. |            Actions              |");
-        System.out.println("\t\t\t\t|  1  | Make Payment                    |");
-        System.out.println("\t\t\t\t|  2  | Display Payment Record          |");
-        System.out.println("\t\t\t\t|  3  | Modify  Payment Record          |");
-        System.out.println("\t\t\t\t|  0  | Exit                            |");
-        System.out.println("\t\t\t\t|_____|_________________________________|\n");
-        System.out.printf("Do you want to continue? (1-3 or 0): ");
-        num = scan.nextInt();
-        switch (num) {
-            case 1:
-                paymentSystem();
-                break;
-            case 2:
-                displayRecords();
-                yesNo();
-                break;
-            case 3:
-                modifyPayment();
-                break;
-            case 0:
-                mainMenu();
-                break;
-            default:
-                errorMessage();
-        }
+        System.out.println("Do you want to continue?");
     }
 
     public static void errorMessage() {

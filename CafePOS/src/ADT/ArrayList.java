@@ -16,7 +16,7 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
 
     private T[] listArray;
     private int length;
-    private static final int DEFAULT_CAPACITY = 5;
+    private static final int DEFAULT_CAPACITY = 2;
 
     //constructor
     public ArrayList() {

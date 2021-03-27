@@ -22,7 +22,7 @@ public class OrderModule {
 
     char exit = 'a';
 
-    int orderNum = 1000, tbNum = 0;
+    int orderNum = 1002, tbNum = 0;
     String orderList = null;
     Scanner sc = new Scanner(System.in);
     static QueueWithIteratorInterface<Order> orderLine = new CircularCounterQueueWithIterator<>();
