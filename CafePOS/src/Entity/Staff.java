@@ -15,22 +15,34 @@ public class Staff extends Person {
     private static final int startingID = 1000;
     private static int count;
     private String staff_ID;
+    private String entryKey;
     private String roles;
     private int behavePoint;
     private double salary;    
+    private int attendanceCount;
     
     public Staff() {
         
     }
     
     //name, phoneNo, emailAddress, staff_ID, roles, behavePoint, salary
-    public Staff(String name, String phoneNo, String emailAddress, String roles, int behavePoint, double salary) {
+    public Staff(String name, String phoneNo, String emailAddress, String entryKey, String roles, int attendanceCount, int behavePoint, double salary) {
         super(name, phoneNo, emailAddress);
         this.count++;
         this.staff_ID = countStaffID(count);
+        this.entryKey = entryKey;
         this.roles = roles;
+        this.attendanceCount = attendanceCount;
         this.behavePoint = behavePoint;
         this.salary = salary;
+    }
+
+    public String getEntryKey() {
+        return entryKey;
+    }
+
+    public void setEntryKey(String entryKey) {
+        this.entryKey = entryKey;
     }
 
     public String countStaffID(int count) {
@@ -48,10 +60,6 @@ public class Staff extends Person {
     
     public String getStaff_ID() {
         return staff_ID;
-    }
-
-    public void setStaff_ID(String staff_ID) {
-        this.staff_ID = staff_ID;
     }
 
     public String getRoles() {
@@ -78,9 +86,29 @@ public class Staff extends Person {
         this.salary = salary;
     }
 
+    public String countEntry(String entryKey) {
+        String encryptPass = "";
+        
+        for(int i = 0; i < entryKey.length(); i++) {
+            encryptPass += "*";
+        }
+        
+        return encryptPass;
+    }
+    
+    public void countAttendance(String attend) {
+        
+        if(attend.equals("Y") || attend.equals("y")) {
+            attendanceCount++;
+        }
+        else {
+            attendanceCount--;
+        }
+    }
+    
     @Override
     public String toString() {
-        return super.toString() + " Staff{" + "staff_ID=" + staff_ID + ", roles=" + roles + ", behavePoint=" + behavePoint + ", salary=" + salary + '}';
+        return "Staff {" + "Staff ID=" + staff_ID + ", Entry Key=" + countEntry(entryKey) + ", Roles=" + roles + ", Behave Point=" + behavePoint + ", Salary=" + salary + super.toString() + '}';
     }
     
     

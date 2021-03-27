@@ -11,7 +11,7 @@ public class HeapArray<S> implements HeapInterface<S> {
   private S[] arrayVar; //make  a array  variable
   private int topIndexHeap; // index of top entry
   private static final int DEFAULT_CAPACITY = 50; // make the limit of stack
-  private int size = heapCount();
+  private int count;
   
     public HeapArray() {
       this(DEFAULT_CAPACITY); // this line cannot understand
@@ -25,6 +25,7 @@ public class HeapArray<S> implements HeapInterface<S> {
     @Override
     public void pushBottom(S promptResult) {
         ++topIndexHeap;
+        count++;
         
         arrayVar[topIndexHeap] = promptResult;
     }
@@ -59,7 +60,7 @@ public class HeapArray<S> implements HeapInterface<S> {
         S peekContent = null;
         
         if(!isEmpty()) {
-            for (int i=0; i < size; i++) {
+            for (int i=0; i < count; i++) {
                 if(i == enteredIndex) {
                     peekContent = arrayVar[i];
                 }
@@ -96,7 +97,7 @@ public class HeapArray<S> implements HeapInterface<S> {
         S contains = null;
         
         if(!isEmpty()) {
-            for (int i=0; i < size; i++) {
+            for (int i=0; i < count; i++) {
                 if(arrayVar[i] == promptResult) {
                     contains = arrayVar[i];
                 }
@@ -108,12 +109,7 @@ public class HeapArray<S> implements HeapInterface<S> {
 
     @Override
     public int heapCount() {
-        
-        while(arrayVar != null) {
-            size++;
-        }
-        
-        return size;
+        return count;
     }
     
     // Retrieve all result

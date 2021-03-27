@@ -7,8 +7,10 @@ package cafepos;
 
 import java.util.Scanner;
 import static cafepos.EditPayment.modifyPayment;
+import static cafepos.MemberModule.menuMember;
 import static cafepos.OrderModule.orderLine;
 import static cafepos.RecordPayment.*;
+import static cafepos.StaffModule.menuStaff;
 
 /**
  *
@@ -37,6 +39,7 @@ public class CafePOS {
         System.out.println("2. Payment");
         System.out.println("3. Item");
         System.out.println("4. Staff");
+        System.out.println("5. Member");
         System.out.println("0. Shut down");
         System.out.printf("Please enter the index (1-4): ");
         while (!input.hasNextInt()) {
@@ -50,14 +53,16 @@ public class CafePOS {
                 ordering.orderMenu();
                 break;
             case 2:
-                
                 selectAction();
                 break;
             case 3:
                 item.itemMenu();
                 break;
             case 4:
-
+                menuStaff();
+                break;
+            case 5:
+                menuMember();
                 break;
             case 0:
                 System.out.println("Thank you. See you tomorrow");
