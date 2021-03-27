@@ -158,6 +158,20 @@ public class ArraySet<T> implements SetInterface<T> {
         return outcome;
     }
     
+    public T delete(int items) {
+        T result = null;
+
+        if ((items >= 1) && (items <= numberOfElements)) {
+            result = setArray[items - 1];
+
+            if (items < numberOfElements) {
+                removeGap(items);
+            }
+            numberOfElements--;
+        }
+        return result;
+    }
+    
     
     public String toString(){
         String str="";

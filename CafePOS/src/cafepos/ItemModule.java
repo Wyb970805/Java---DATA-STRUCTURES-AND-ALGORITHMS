@@ -9,7 +9,7 @@ import ADT.ArraySet;
 import Entity.Item;
 import java.util.Scanner;
 import Entity.Ingredient;
-
+import static cafepos.CafePOS.mainMenu;
 
 /**
  *
@@ -39,7 +39,7 @@ public class ItemModule {
            System.out.println("0. Exit");
            System.out.printf("Enter number (1-4): ");
            while (!scan.hasNextInt()) {
-            System.out.println("Input invalid! Please re-enter: ");
+            System.out.print("Input invalid! Please re-enter: ");
             scan.next();
             }
         select = scan.nextInt();
@@ -58,6 +58,7 @@ public class ItemModule {
                 displayItem();
                 break;
             case 0:
+                mainMenu();
                 break;
             default:
                 System.out.println("Invalid number! Please re-enter: ");            
@@ -112,6 +113,7 @@ public class ItemModule {
         String editName;
         double editPrice;
         int select;
+        char confirm = 0;
         Scanner scan = new Scanner(System.in);
         Scanner scanName = new Scanner(System.in);
         Scanner scanPrice = new Scanner(System.in);
@@ -123,9 +125,12 @@ public class ItemModule {
         for(int i = 1; i <= ItemSet.getNum(); i++) {
             
             if(ItemSet.getEntry(i).getItemId().equals(itemID)) {
-                System.out.println("--------------------- Edit Item -----------------------");
+                System.out.println("\n--------------------- Edit Item -----------------------");
                 System.out.println(ItemSet.getEntry(i).toString() + " ");
                 System.out.println("-------------------------------------------------------");
+                System.out.print("Do you confirm edit this item? (Y/N): ");
+                confirm = scan.nextLine().charAt(0);
+                if(confirm == 'Y' || confirm == 'y'){
                 System.out.println("1. Edit Item Name: ");
                 System.out.println("2. Edit Item Price: ");
                 System.out.println("3. Edit Item Ingredient: ");
@@ -141,6 +146,7 @@ public class ItemModule {
                     editName = scanName.nextLine();
                     
                     ItemSet.getEntry(i).setItemName(editName);
+                    System.out.println("This item successfully changed!");
                 }
                 else if (select == 2) {
                     System.out.println("Old Item Price: " + ItemSet.getEntry(i).getPrice() + "");
@@ -148,6 +154,7 @@ public class ItemModule {
                     editPrice = scanPrice.nextDouble();
                     
                     ItemSet.getEntry(i).setPrice(editPrice);
+                    System.out.println("This item successfully changed!");
                 }
                 else if (select == 4) {
                     int editCategory;
@@ -166,47 +173,60 @@ public class ItemModule {
                 category = 'B';
             }
                     ItemSet.getEntry(i).setCategory(category);
+                    System.out.println("This item successfully changed!");
                 }
                 else{
                     itemMenu();
                 }
                 
     
-            }
+            }else{
+                    itemMenu();
+                }
         }
-        
+        }
     }
    
    public void deleteItem() {
         
         String itemID;
         char confirm;
-        Item delete = null;
+        //Item delete = null;
         Scanner scan = new Scanner(System.in);
         
         
         System.out.print("Enter ItemID to delete the item: ");
         itemID = scan.nextLine();
         
+        
         for(int i = 1; i <= ItemSet.getNum(); i++) {
             
         if(ItemSet.getEntry(i).getItemId().equals(itemID)){
+        System.out.println("\n------------------- Delete Item -------------------");
+        System.out.println(ItemSet.getEntry(i).toString() + "");
+        System.out.println("---------------------------------------------------");
         System.out.print("Do you confirm delete this item? (Y/N): ");
         confirm = scan.nextLine().charAt(0);
         
-        if(confirm == 'Y'){
-            ItemSet.getEntry(i).toString();
+        if(confirm == 'Y' || confirm == 'y'){
+            ItemSet.delete(i);
+            System.out.println("This item have been deleted!");
         }
         else{
             itemMenu();
         }
         }
+        //else{
+           // System.out.print("Invalid Item ID! Please re-enter: ");
+           // scan.next();
+        //}
         }
    }
    
    public static void displayItem() {
-        System.out.print(ItemSet.getNum());
-        
+        System.out.println("");
+        System.out.println("---------- Total " +ItemSet.getNum()+ " Items ----------");
+        System.out.println("-----------------------------------");
         if (!ItemSet.isEmpty()) {
         for(int i = 1; i <= ItemSet.getNum(); i++){
             System.out.println(ItemSet.getEntry(i).toString());

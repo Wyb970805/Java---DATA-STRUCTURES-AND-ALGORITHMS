@@ -44,7 +44,7 @@ public class Ingredient {
         return stockName;
     }
 
-    public void setItemName(String stockName) {
+    public void setStockName(String stockName) {
         this.stockName = stockName;
     }
     
@@ -71,4 +71,10 @@ public class Ingredient {
     public void setLowestAllowed(int lowestAllowed) {
         this.lowestAllowed = lowestAllowed;
     }
+    
+    public String toString() {
+        return "stockId: " + stockId + "\nstockName: " + stockName + "\nstockQuantity: " + stockQuantity + "\nlowestQuantity: " + lowestQuantity + "\nlowestAllowed: " + lowestAllowed +"\n";
+    }
+   
 }
+
