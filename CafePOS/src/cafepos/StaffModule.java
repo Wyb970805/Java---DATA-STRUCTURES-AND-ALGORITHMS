@@ -352,8 +352,8 @@ public class StaffModule {
 
         if(hour <= 8 && hour >= 7 && error != true) {
             
-            HeapArray<Staff> HeapAttendDaily = new HeapArray<Staff>();
-            HeapArray<Staff> HeapStaff = new HeapArray<Staff>();
+            HeapArray<Staff> HeapAttendDaily = new HeapArray<>();
+            HeapArray<Staff> HeapStaff = new HeapArray<>();
     
             // From List Array put to Stack
             for(int i = 1; i <= ListStaff.getLength(); i++) {

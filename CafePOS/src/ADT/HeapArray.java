@@ -39,6 +39,9 @@ public class HeapArray<S> implements HeapInterface<S> {
             arrayVar[topIndexHeap] = null;
             topIndexHeap--;
         }
+        else {
+            System.out.println("The Heap Array is Empty.\n");
+        }
         
         return topContent;
     }
@@ -65,6 +68,10 @@ public class HeapArray<S> implements HeapInterface<S> {
                     peekContent = arrayVar[i];
                 }
             }
+            
+            if(peekContent == null) {
+                System.out.println("The entered index " + enteredIndex + " doesnt contain results.\n");
+            } 
         }
         
         return peekContent;
@@ -75,13 +82,14 @@ public class HeapArray<S> implements HeapInterface<S> {
         Scanner scanner = new Scanner(System.in);
         String ans = null;
         
-        while(ans != "y" || ans != "n" || ans != "Y" || ans != "N") {
-            System.out.print("are you sure you want to clear heap array (Y or N) ?");
-            ans = scanner.nextLine();
-            
-            if(ans == "Y" || ans == "y") {
-                arrayVar = null;
-            }
+        System.out.print("are you sure you want to clear heap array (Y or y) ?");
+        ans = scanner.nextLine();
+
+        if(ans == "Y" || ans == "y") {
+            arrayVar = null;
+        }
+        else {
+            System.out.println("The heap array is not deleted.\n");
         }
         
     }
