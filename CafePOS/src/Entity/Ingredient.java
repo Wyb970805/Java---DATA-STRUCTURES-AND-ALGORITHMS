@@ -10,18 +10,16 @@ package Entity;
  * @author User10
  */
 public class Ingredient {
-    String stockId;
-    String stockName;
-    int stockQuantity;
-    int lowestQuantity;
-    int lowestAllowed;
+    private String stockId;
+    private String stockName;
+    private int stockQuantity;
+    private int lowestQuantity;
     
-    public Ingredient(String stockId, String stockName, int stockQuantity, int lowestQuantity, int lowestAllowed){
+    public Ingredient(String stockId, String stockName, int stockQuantity, int lowestQuantity){
         this.stockId = stockId;
         this.stockName = stockName;
         this.stockQuantity = stockQuantity;
         this.lowestQuantity = lowestQuantity;
-        this.lowestAllowed = lowestAllowed;
     }
     
     public Ingredient getIngredient(){
@@ -64,17 +62,9 @@ public class Ingredient {
         this.lowestQuantity = lowestQuantity;
     }
     
-    public int getLowestAllowed() {
-        return lowestAllowed;
-    }
-
-    public void setLowestAllowed(int lowestAllowed) {
-        this.lowestAllowed = lowestAllowed;
-    }
-    
+    @Override
     public String toString() {
-        return "stockId: " + stockId + "\nstockName: " + stockName + "\nstockQuantity: " + stockQuantity + "\nlowestQuantity: " + lowestQuantity + "\nlowestAllowed: " + lowestAllowed +"\n";
+        return "Ingredient ID: " + stockId + "\nIngredient Name: " + stockName + "\nIngredient Quantity: " + stockQuantity + "\nLowest Quantity: " + lowestQuantity + "\n";
     }
    
 }
-

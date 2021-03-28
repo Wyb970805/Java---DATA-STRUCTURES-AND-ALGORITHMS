@@ -83,6 +83,7 @@ public class CafePOS {
         OrderModule ordering = new OrderModule();
         ordering.orderRecord();
         ItemModule item = new ItemModule();
+        IngredientModule ingredient = new IngredientModule();
         int index;
         do {
             System.out.println("------------------------------------------------");
@@ -92,8 +93,9 @@ public class CafePOS {
             System.out.println("|\t\t1. Order");
             System.out.println("|\t\t2. Payment");
             System.out.println("|\t\t3. Item");
-            System.out.println("|\t\t4. Staff");
-            System.out.println("|\t\t5. Member");
+            System.out.println("|\t\t4. Stock");
+            System.out.println("|\t\t5. Staff");
+            System.out.println("|\t\t6. Member");
             System.out.println("|\t\t0. Shut down");
             System.out.println("------------------------------------------------\n");
             System.out.printf("  Please enter the index (1-5): ");
@@ -114,9 +116,12 @@ public class CafePOS {
                     item.itemMenu();
                     break;
                 case 4:
-                    menuStaff();
+                    ingredient.ingredientMenu();
                     break;
                 case 5:
+                    menuStaff();
+                    break;
+                case 6:
                     menuMember();
                     break;
                 case 0:

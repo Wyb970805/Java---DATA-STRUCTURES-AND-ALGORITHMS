@@ -7,22 +7,20 @@ package Entity;
 import ADT.ArraySet;
 /**
  *
- * @author Wen
+ * @author User10
  */
-public class Item {
+public class IngredientsAdd {
     private String itemId;
     private String itemName;
     private double price;
     private Ingredient Ingredients;
     private char category;
-    private ArraySet<IngredientsAdd> IngredientList;
+    //ArraySet<Ingredient> IngredientList;
     
-    public Item(String itemId, String itemName, double price, char category){
-        this.itemId = itemId;
-        this.itemName = itemName;
-        this.price = price;
+    public IngredientsAdd(Ingredient Ingredients){
+        
         this.Ingredients = Ingredients;
-        this.IngredientList = new ArraySet<IngredientsAdd>();
+        //this.IngredientList = new ArraySet<Ingredient>();
         //this.IngredientList = new Ingredient();
         this.category = category;
     }
@@ -51,16 +49,12 @@ public class Item {
         this.price = price;
     }
     
-    public Item getIngredients() {
+    public IngredientsAdd getIngredients() {
         return this;
     }
 
-    public ArraySet<IngredientsAdd> getIngredientList() {
-        return IngredientList;
-    }
-
-    public void setIngredientList(ArraySet<IngredientsAdd> IngredientList) {
-        this.IngredientList = IngredientList;
+    public void setIngredients(Ingredient Ingredients) {
+        this.Ingredients = Ingredients;
     }
 
     public char getCategory() {
@@ -73,12 +67,10 @@ public class Item {
 
     @Override
     public String toString() {
-        return "ItemId: " + itemId + "\nItemName: " + itemName + "\nPrice: " + price + IngredientList + "\nCategory: " + category + "\n";
+        return ""+ Ingredients.getStockName();
     }
     
     
     
 }
-
-
 

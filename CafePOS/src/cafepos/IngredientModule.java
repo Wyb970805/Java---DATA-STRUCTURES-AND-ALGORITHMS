@@ -22,20 +22,20 @@ public class IngredientModule {
    public void ingredientMenu(){
        
        // add exist item into adt set
-       IngredientSet.add(new Ingredient("S1001","food1",52,12,32));
-       IngredientSet.add(new Ingredient("S1002","food2",72,32,54));
-       IngredientSet.add(new Ingredient("N1001","drink1",5,76,23));
-       IngredientSet.add(new Ingredient("N1002","drink2",3,34,23));
+       IngredientSet.add(new Ingredient("S1001","Fish",32,10));
+       IngredientSet.add(new Ingredient("S1002","Chicken",32,5));
        
        int select;
        do{
-           System.out.println("----------- Ingredient Module -----------");
-           System.out.println("-----------------------------------------");
-           System.out.println("1. Add new Stock");
-           System.out.println("2. Edit Stock");
-           System.out.println("3. Delete Stock");
-           System.out.println("4. Display All Stock");
-           System.out.println("0. Exit");
+           System.out.println("\n ------------------------------------ ");
+           System.out.println("|----------- Stock Module -----------|");
+           System.out.println("|------------------------------------|");
+           System.out.println("|  1. Add new Ingredient             |");
+           System.out.println("|  2. Edit Ingredient                |");
+           System.out.println("|  3. Delete Ingredient              |");
+           System.out.println("|  4. Display All Ingredients        |");
+           System.out.println("|  0. Exit                           |");
+           System.out.println(" ------------------------------------ ");
            System.out.printf("Enter number (1-4): ");
            while (!scan.hasNextInt()) {
             System.out.println("Input invalid! Please re-enter: ");
@@ -57,7 +57,7 @@ public class IngredientModule {
                 displayStock();
                 break;
             case 0:
-                //mainMenu();
+                mainMenu();
                 break;
             default:
                 System.out.println("Invalid number! Please re-enter: ");            
@@ -65,19 +65,20 @@ public class IngredientModule {
         }while(select != 0 );
     }
 
-   public static void addStock() {
+   public void addStock() {
         
         String stockId, stockName;
-        int stockQuantity, stockLowQuantity, stockLowAllow;
+        int stockQuantity, stockLowQuantity;
         int select;
         char category = 0;
+        char confirm = 0;
         
         Scanner scan = new Scanner(System.in);
         
-        System.out.print("Enter Stock Id: ");
+        System.out.print("Enter Ingredient Id: ");
         stockId = scan.nextLine();
         
-        System.out.print("Enter Stock Name: ");
+        System.out.print("Enter Ingredient Name: ");
         stockName = scan.nextLine();
         
         System.out.print("Enter Ingredient Quantity: ");
@@ -85,11 +86,9 @@ public class IngredientModule {
         
         System.out.print("Enter Ingredient LowestQuanity: ");
         stockLowQuantity = scan.nextInt();
-        
-        System.out.print("Enter Ingredient LowestAllowed: ");
-        stockLowAllow = scan.nextInt();
-            
-        IngredientSet.add(new Ingredient(stockId, stockName, stockQuantity, stockLowQuantity, stockLowAllow));
+       
+        IngredientSet.add(new Ingredient(stockId, stockName, stockQuantity, stockLowQuantity));
+        System.out.println("Ingredient Added Successfully!");
         
     }
    
@@ -106,58 +105,53 @@ public class IngredientModule {
         Scanner scanLowQuantity = new Scanner(System.in);
         Scanner scanLowAllow = new Scanner(System.in);
         
-        System.out.print("Enter StockID to modify stock: ");
+        System.out.print("Enter IngredientID to modify stock: ");
         stockID = scan.nextLine();
         
         for(int i = 1; i <= IngredientSet.getNum(); i++) {
             
             if(IngredientSet.getEntry(i).getStockId().equals(stockID)) {
-                System.out.println("--------------------- Edit Stock -----------------------");
-                System.out.println(IngredientSet.getEntry(i).toString() + " ");
+                System.out.println("\n------------------ Edit Ingredient --------------------");
+                System.out.print(IngredientSet.getEntry(i).toString());
                 System.out.println("-------------------------------------------------------");
-                System.out.print("Do you confirm edit this item? (Y/N): ");
+                System.out.print("Do you confirm edit this ingredient? (Y/N): ");
                 confirm = scan.nextLine().charAt(0);
                 if(confirm == 'Y' || confirm == 'y'){
-                System.out.println("1. Edit Stock Name: ");
-                System.out.println("2. Edit Stock Quantity: ");
-                System.out.println("3. Edit Stock Lowest Quantity: ");
-                System.out.println("4. Edit Stock Lowest Allowed: ");
-                System.out.println("0. Exit: ");
-                System.out.print("Enter number (1-4): ");
+                System.out.println("\n ------------------------------------- ");
+                System.out.println("|------------- Edit Stock ------------|");
+                System.out.println("|-------------------------------------|");
+                System.out.println("|  1. Edit Ingredient Name            |");
+                System.out.println("|  2. Edit Ingredient Quantity        |");
+                System.out.println("|  3. Edit Ingredient Lowest Quantity |");
+                System.out.println("|  0. Exit:                           |");
+                System.out.println(" ------------------------------------- ");
+                System.out.print("Enter number (1-3): ");
                 select = scan.nextInt();
 
                 if (select == 1) {
                     
-                    System.out.println("Old Stock Name: " + IngredientSet.getEntry(i).getStockName() + "");//.toString()
-                    System.out.print("Enter New Stock Name: ");
+                    System.out.println("Old Ingredient Name: " + IngredientSet.getEntry(i).getStockName() + "");//.toString()
+                    System.out.print("Enter New Ingredient Name: ");
                     editName = scanName.nextLine();
                     
                     IngredientSet.getEntry(i).setStockName(editName);
-                    System.out.println("This stock successfully changed!");
+                    System.out.println("This Ingredient successfully changed!");
                 }
                 else if (select == 2) {
-                    System.out.println("Old Stock Quantity: " + IngredientSet.getEntry(i).getStockQuantity() + "");
-                    System.out.print("Enter New Stock Quantity: ");
+                    System.out.println("Old Ingredient Quantity: " + IngredientSet.getEntry(i).getStockQuantity() + "");
+                    System.out.print("Enter New Ingredient Quantity: ");
                     editQuantity = scanQuantity.nextInt();
                     
                     IngredientSet.getEntry(i).setStockQuantity(editQuantity);
-                    System.out.println("This stock successfully changed!");
+                    System.out.println("This Ingredient successfully changed!");
                 }
                 else if (select == 3) {
-                    System.out.println("Old Stock Lowest Quantity: " + IngredientSet.getEntry(i).getLowestQuantity() + "");
-                    System.out.print("Enter New Stock Lowest Quantity: ");
+                    System.out.println("Old Ingredient Lowest Quantity: " + IngredientSet.getEntry(i).getLowestQuantity() + "");
+                    System.out.print("Enter New Ingredient Lowest Quantity: ");
                     editLowQuantity = scanLowQuantity.nextInt();
                     
                     IngredientSet.getEntry(i).setLowestQuantity(editLowQuantity);
-                    System.out.println("This stock successfully changed!");
-                }
-                else if (select == 4) {
-                    System.out.println("Old Stock Lowest Allow: " + IngredientSet.getEntry(i).getLowestAllowed() + "");
-                    System.out.print("Enter New Stock Lowest Allow: ");
-                    editLowAllow = scanLowAllow.nextInt();
-                    
-                    IngredientSet.getEntry(i).setLowestAllowed(editLowAllow);
-                    System.out.println("This stock successfully changed!");
+                    System.out.println("This Ingredient successfully changed!");
                 }
                 else{
                     ingredientMenu();
@@ -181,22 +175,22 @@ public class IngredientModule {
         Scanner scan = new Scanner(System.in);
         
         
-        System.out.print("Enter stockID to delete the stock: ");
+        System.out.print("Enter IngredientID to delete the stock: ");
         stockID = scan.nextLine();
         
         
         for(int i = 1; i <= IngredientSet.getNum(); i++) {
             
         if(IngredientSet.getEntry(i).getStockId().equals(stockID)){
-        System.out.println("----------------- Delete Item -----------------");
-        System.out.println(IngredientSet.getEntry(i).toString() + "");
-        System.out.println("------------------------------------------");
-        System.out.print("Do you confirm delete this item? (Y/N): ");
+        System.out.println("\n-------------- Delete Ingredient --------------");
+        System.out.print(IngredientSet.getEntry(i).toString() + "");
+        System.out.println("-----------------------------------------------");
+        System.out.print("Do you confirm delete this ingredient? (Y/N): ");
         confirm = scan.nextLine().charAt(0);
         
         if(confirm == 'Y' || confirm == 'y'){
-            IngredientSet.delete(i);
-            System.out.println("This item have been deleted!");
+            IngredientSet.remove(i);
+            System.out.println("This Ingredient have been deleted!");
         }
         else{
             ingredientMenu();
@@ -210,8 +204,9 @@ public class IngredientModule {
    }
    
    public static void displayStock() {
-        System.out.println("-------------- Total "+IngredientSet.getNum()+" Stock --------------");
-        System.out.println("------------------------------------------------");
+       System.out.println("\n ------------------------------------");
+        System.out.println("|---------- Total " +IngredientSet.getNum()+ " Stock -----------|");
+        System.out.println(" ------------------------------------");
         if (!IngredientSet.isEmpty()) {
         for(int i = 1; i <= IngredientSet.getNum(); i++){
             System.out.println(IngredientSet.getEntry(i).toString());

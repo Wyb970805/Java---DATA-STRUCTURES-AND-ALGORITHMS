@@ -47,6 +47,20 @@ public class ArraySet<T> implements SetInterface<T> {
         return true;
     }
     
+    public T remove(int items) {
+        T result = null;
+
+        if ((items >= 1) && (items <= numberOfElements)) {
+            result = setArray[items - 1];
+
+            if (items < numberOfElements) {
+                removeGap(items);
+            }
+            numberOfElements--;
+        }
+        return result;
+    }
+    
     public boolean remove(T anElement){//remove an element from the set
             //search for anElement
         for (int i = 0; i<numberOfElements; i++){
@@ -156,20 +170,6 @@ public class ArraySet<T> implements SetInterface<T> {
         }
 
         return outcome;
-    }
-    
-    public T delete(int items) {
-        T result = null;
-
-        if ((items >= 1) && (items <= numberOfElements)) {
-            result = setArray[items - 1];
-
-            if (items < numberOfElements) {
-                removeGap(items);
-            }
-            numberOfElements--;
-        }
-        return result;
     }
     
     
