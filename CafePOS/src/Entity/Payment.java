@@ -19,7 +19,7 @@ public class Payment implements Serializable {
     private int paymentID;
     private float paymentAmount;
     private String paymentMethod;
-    private LocalDateTime paid = LocalDateTime.now();   
+    private LocalDateTime paid;  
     private Order order;
     private float totalIncome;
 
@@ -95,12 +95,13 @@ public class Payment implements Serializable {
         DateTimeFormatter formatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = paid.format(formatObj);
 
-        return "Payment ID        : " + paymentID
-                + "\nOrder Number      : " + order.getOrderNum()
-                + "\nPayment Amount    : RM " + String.format("%.2f", paymentAmount)
-                + "\nPaid Date and Time: " + formattedDate
-                + "\nPayment Method    : " + paymentMethod
-                + "\n\n";
+        return "Payment ID             : " + paymentID
+                + "\nOrder Number           : " + order.getOrderNum()
+                + "\nPayment Amount         : RM " + String.format("%.2f", paymentAmount)
+                + "\nPaid Date and Time     : " + formattedDate
+                + "\nPayment Method         : " + paymentMethod
+                + "\nMemeber                : " + order.getMember().getMember_ID()
+                + "\nStaff                  : " + order.getStaffIncharge().getStaff_ID()
+                + "\n";
     }
-
 }

@@ -33,25 +33,28 @@ public class RecordPayment {
     LocalDateTime paid = LocalDateTime.now();
 
     public static void records() {
+        float income = 0;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+         
         //First Record
         Member member = ListMember.getEntry(1);
         Staff staff = ListStaff.getEntry(1);
-        Order order1 = new Order(1001, 'T', 1, member, staff);
-        float income = 0;
+        Order orderRecord1 = new Order(1001, 'T', 0, member, staff);
         String dateTime = "2021-01-09 11:55:55";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime formatDateTime = LocalDateTime.parse(dateTime, formatter);
-        Cash cashList1 = new Cash(1, order1, 100, "Cash", formatDateTime, 0, 100);
+        Cash cashList1 = new Cash(1, orderRecord1, 100, "Cash", formatDateTime, 0, 100);
         if (cashIterator.add(cashList1) == true) {
             blc.setBalance(100);
             income = pay.getTotalIncome() + 100;
             pay.setTotalIncome(income);
         }
         //Second Record
-        Order order2 = new Order(1002, 'T', 1, member, staff);
+        member = ListMember.getEntry(2);
+        staff = ListStaff.getEntry(2);
+        Order orderRecord2 = new Order(1002, 'T', 0, member, staff);
         String ccdateTime = "2021-02-16 08:05:55";
         LocalDateTime ccformatDateTime = LocalDateTime.parse(ccdateTime, formatter);
-        CreditCard cardList1 = new CreditCard(1, order2, 200, "Credit Card", ccformatDateTime, "1997080520000216", "Wang Yi Bo", "02/24");
+        CreditCard cardList1 = new CreditCard(1, orderRecord2, 200, "Credit Card", ccformatDateTime, "1997080520000216", "Wang Yi Bo", "02/24");
         if (creditCardIterator.add(cardList1) == true) {
             cc.setCCTotalAmt(200);
             income = pay.getTotalIncome() + 200;
@@ -84,7 +87,7 @@ public class RecordPayment {
                 paymentAmount = (float) orderLine.getFirst().getTotalPrice();
                 // Not member price
                 System.out.printf("Total Amount: RM %.2f \n", paymentAmount);
-                
+
                 if ("M1000".equals(orderLine.getFirst().getMember().getMember_ID())) {
                     System.out.printf("Total Amount for Guest: RM %.2f \n", paymentAmount);
                 } else {

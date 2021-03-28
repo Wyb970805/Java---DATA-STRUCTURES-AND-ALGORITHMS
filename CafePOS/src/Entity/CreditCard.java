@@ -82,9 +82,9 @@ public class CreditCard extends Payment{
     @Override
     public String toString() {
         return super.toString()
-                + "Card No         : " + cardNo
-                + "\nCard Holder     : " + nameOnCard
-                + "\nCard Expiry Date: " + expiryDate
+                + "Card No                : " + cardNo
+                + "\nCard Holder            : " + nameOnCard
+                + "\nCard Expiry Date       : " + expiryDate
                 + "\n";
     }
 }
