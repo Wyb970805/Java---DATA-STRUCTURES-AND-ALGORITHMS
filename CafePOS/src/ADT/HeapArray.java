@@ -3,6 +3,7 @@ import java.util.Scanner;
 /**
  *
  * @author Chase Tan
+ * @param <S>
  */
 
 //Wrong thing I did, top forever is top, btm forever is btm, cannot change its value
