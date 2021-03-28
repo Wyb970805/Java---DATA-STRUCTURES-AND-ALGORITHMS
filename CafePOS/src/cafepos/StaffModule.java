@@ -53,7 +53,7 @@ public class StaffModule {
             System.out.print("|\t\t    0. Back To Menu    \n");
             System.out.print("---------------------------------------------------------------\n");
             
-            System.out.print("\t\t     Choose (1 - 6) : ");
+            System.out.print("\t\t     Choose (1 - 6)(0 to exit) : ");
             
             while (!scanner.hasNextInt()) {
                 System.out.print("\nPlease Enter numeric number only, number 1-6: ");
@@ -90,7 +90,7 @@ public class StaffModule {
                     break; // Go back to the largest main menu of the system
                     
                 default:
-                    System.out.print("You entered wrong input!\n");
+                    System.out.print("You entered wrong input, please enter only number 1-6 or 0!\n");
             }
             
         }while (option != 0);
@@ -161,7 +161,7 @@ public class StaffModule {
                 salary = 2000.00;
             }
             else {
-                System.out.print("Wrong Input !\n");
+                System.out.print("Wrong Input, please enter only number 1-6 or 0 !\n");
             }
         } while (roles == null);
         
@@ -203,7 +203,7 @@ public class StaffModule {
                     System.out.print("|\t7. Modify Staff Salary:                   \n");
                     System.out.print("|\t0. Cancel Modifying or Switch Staff:      \n");
                     System.out.print("-------------------------------------------------\n");
-                    System.out.print("\t Enter your choice to edit (1 - 7) : ");
+                    System.out.print("\t Enter your choice to edit (1 - 7)(0 to exit) : ");
                     choice = scanner.nextInt();
 
                     // New Scanner object to prevent violation

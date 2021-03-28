@@ -32,9 +32,9 @@ public class MemberModule {
             System.out.print("|\t\t2. Modify Member    \n");
             System.out.print("|\t\t3. Delete Member    \n");
             System.out.print("|\t\t4. Show All Member  \n");
-            System.out.print("|\t\t5. Back To Menu     \n");
+            System.out.print("|\t\t0. Back To Menu     \n");
             System.out.print("-----------------------------------------------------------------\n");
-            System.out.print("\t\t    Choose (1 - 5) : ");
+            System.out.print("\t\t    Choose (1 - 4)(0 to exit) : ");
             option = scanner.nextInt();
             
             switch(option) {
@@ -57,8 +57,7 @@ public class MemberModule {
                 menuMember();
                 break;
                 
-            case 5:
-                CafePOS.mainMenu();
+            case 0:
                 break;
                 
             default:
@@ -118,7 +117,7 @@ public class MemberModule {
                     System.out.print("|\t4. Cancel Modifying or Switch Member:      \n");
                     System.out.print("----------------------------------------------\n");
 
-                    System.out.print("Enter your choice to edit (1 - 5) : ");
+                    System.out.print("Enter your choice to edit (1 - 3)(0 to exit) : ");
                     choice = scanner.nextInt();
 
                     Scanner scan = new Scanner(System.in);
@@ -145,10 +144,10 @@ public class MemberModule {
 
                         ListMember.getEntry(i).setEmailAddress(inputEmail);
                     }
-                    else if (choice == 4){
-                        menuMember();
+                    else if (choice == 0){
+                        break;
                     }
-                } while(choice != 4);
+                } while(choice != 0);
             }
         }
     }
