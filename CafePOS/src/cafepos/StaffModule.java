@@ -32,16 +32,13 @@ public class StaffModule {
     
     public static ArrayList<Staff> ListStaff = new ArrayList<Staff>();
     
-    // This is the main menu for staff module
+    // This is the main menu  for staff module
     public static void menuStaff() {
         
         // This variable is for capture user's choice
         int option;
-        boolean error; // Loop Validation if user enter wrong result
         
         do{
-            error = false; // By default, no error first
-            
             // Scanner object insert
             Scanner scanner = new Scanner(System.in);
             
@@ -56,7 +53,7 @@ public class StaffModule {
             System.out.print("|\t\t    0. Back To Menu    \n");
             System.out.print("---------------------------------------------------------------\n");
             
-            System.out.print("\t\t     Choose (1 - 5) : ");
+            System.out.print("\t\t     Choose (1 - 6) : ");
             
             while (!scanner.hasNextInt()) {
                 System.out.print("\nPlease Enter numeric number only, number 1-6: ");
@@ -86,7 +83,7 @@ public class StaffModule {
                     break;
                     
                 case 6:
-                    dateAttendance(); 
+                    dateAttendanceChecking(); 
                     break;
 
                 case 0:
@@ -295,7 +292,7 @@ public class StaffModule {
                 
                 // Prompt Confirmation Message to Delete
                 System.out.print(ListStaff.getEntry(i).toString() + " \n");
-                System.out.print("\nIs this the staff you wish to delete: (Y or N)");
+                System.out.print("\nIs this the staff you wish to delete: (Y or y)");
                 choice = scanID.nextLine();
                 
                 // Confirm to delete the selected Staff in Array List
@@ -303,7 +300,7 @@ public class StaffModule {
                     ListStaff.remove(i);
                     System.out.print("The Staff have been deleted !\n");
                 }
-                else if (choice.equals("n") || choice.equals("N")) {
+                else {
                     System.out.print("You can now enter again correct Staff ID to delete.");
                     deleteStaff();
                 }
@@ -423,7 +420,7 @@ public class StaffModule {
         }
     }
     
-    public static void dateAttendance() {
+    public static void dateAttendanceChecking() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("\nEnter the date of attendance of staff you wish to navigate: ");
         String result = scanner.nextLine();
