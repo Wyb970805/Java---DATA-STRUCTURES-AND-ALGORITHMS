@@ -64,7 +64,6 @@ public class ItemOrderModule {
                 total += it.getSubTotal();
 
                 System.out.printf("%-3s  %-6s %-20s %3s %8s", "No.", "Item(s)", "Name", "Qty", "Price(RM)");
-                //System.out.printf("No.    Item(s)      Name       Qty      Price(RM)\n");
                 System.out.print("\n" + OrderList);
                 System.out.println("----------------------------");
                 System.out.println("Total : RM" + total);
@@ -83,7 +82,6 @@ public class ItemOrderModule {
     // display items added to the order
     public void displayList() {
         System.out.printf("%-3s  %-6s %-20s %3s %8s", "No.", "Item(s)", "Name", "Qty", "Price(RM)");
-        //System.out.printf("No.  " + "Id   " + "     Item     " + " Qty " + "Subtotal\n");
         System.out.print(OrderList);
     }
 

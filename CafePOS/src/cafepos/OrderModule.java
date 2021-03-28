@@ -20,10 +20,7 @@ import static cafepos.MemberModule.ListMember;
  */
 public class OrderModule {
 
-    char exit = 'a';
-
     int orderNum = 1003, tbNum = 0;
-    String orderList = null;
     Scanner sc = new Scanner(System.in);
     static QueueWithIteratorInterface<Order> orderLine = new CircularCounterQueueWithIterator<>();
     static QueueWithIteratorInterface<Order> completedOrder = new CircularCounterQueueWithIterator<>();
@@ -135,8 +132,8 @@ public class OrderModule {
                     ItemOrderModule itemMenu = new ItemOrderModule();
 
                     boolean created = itemMenu.createOrderList();
+                    
                     if (created) {
-
                         Order od = new Order(orderNum, orderType, tbNum, member, staffIncharge);
                         od.setOrderList(itemMenu.getItemOrderList());
                         od.setTotalPrice(itemMenu.getTotal());
@@ -190,9 +187,7 @@ public class OrderModule {
             } else {
                 System.out.println("There is no order in queue.");
             }
-
         }
-
     }
 
     // remove the order from current queue and add to the completed queue which is a permanent queue.
@@ -344,7 +339,7 @@ public class OrderModule {
                 System.out.printf("%-3s  %-6s %-20s %3s %8s", "No.", "Item(s)", "Name", "Qty", "Price(RM)");
                 System.out.print("\n" + orderLine.getFirst().getOrderList());
                 System.out.println("----------------------------");
-                System.out.println("Total : RM" + orderLine.getFirst().getTotalPrice()); // total is wrong - recalculate subtotal
+                System.out.println("Total : RM" + orderLine.getFirst().getTotalPrice()); 
 
                 System.out.println("Additional payment: " + addPayment);
                 break;
@@ -404,7 +399,7 @@ public class OrderModule {
                     System.out.printf("%-3s  %-6s %-20s %3s %8s", "No.", "Item(s)", "Name", "Qty", "Price(RM)");
                     System.out.print("\n" + orderLine.getFirst().getOrderList());
                     System.out.println("----------------------------");
-                    System.out.println("Total : RM" + orderLine.getFirst().getTotalPrice()); // total is wrong - recalculate subtotal
+                    System.out.println("Total : RM" + orderLine.getFirst().getTotalPrice()); 
 
                     System.out.println("Additional payment: " + addPayment);
 
@@ -445,7 +440,7 @@ public class OrderModule {
                 System.out.printf("%-3s  %-6s %-20s %3s %8s", "No.", "Item(s)", "Name", "Qty", "Price(RM)");
                 System.out.print("\n" + orderLine.getFirst().getOrderList());
                 System.out.println("----------------------------");
-                System.out.println("Total : RM" + orderLine.getFirst().getTotalPrice()); // total is wrong - recalculate subtotal
+                System.out.println("Total : RM" + orderLine.getFirst().getTotalPrice()); 
 
                 System.out.println("Additional payment: " + addPayment);
 

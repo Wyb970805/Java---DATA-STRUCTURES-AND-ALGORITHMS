@@ -13,14 +13,14 @@ import java.util.regex.Pattern;
 public class Order {
 
     private int orderNum;        // 1001
-    private ArrayList<ItemOrder> orderList;
+    private ArrayList<ItemOrder> orderList; //item ordered list
     private char orderType;         // T - take away, D - Dine in
     private int tableNo;            // 01-15
     private double totalPrice;       // 0.0
     private Member member;          // mid
     private Staff staffIncharge;    // sid
 
-    public Order(int orderNum, /*ArrayList<ItemOrder> orderList,*/ char orderType, int tableNo,/*, double totalPrice*/ Member member,Staff staffIncharge) {
+    public Order(int orderNum, char orderType, int tableNo, Member member,Staff staffIncharge) {
         this.orderNum = orderNum;
         this.orderList = new ArrayList<ItemOrder>();
         this.orderType = orderType;
